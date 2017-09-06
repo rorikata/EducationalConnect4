@@ -1,12 +1,12 @@
-Home Page
+### Home Page
 - register button
 - login button
 - simple description box: about our website
-Register Page
+### Register Page
 - submit button
-Login Page
+### Login Page
 - submit button
-Top Page
+### Top Page
 - Category
 - Crate questions button
 - Sort
@@ -15,8 +15,8 @@ Top Page
 - Questions
 - profile button
 - Game button
-Crete Questions (Pop up)
+### Crete Questions (Pop up)
 - provide template
-Game
+### Game
 - AI
 - Game system
