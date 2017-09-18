@@ -1,19 +1,19 @@
-Header
+# Header
     - Sign up button
     - Sign in button
-Top
-    HomePage
+# Top
+    * HomePage
         - text field
         - Sign up button
         - Sign in button
-    ChooseCategory
+    * ChooseCategory
         - Category dropdown
         - profile button
         - Sort field
         - filter field
         - Question Posts
         - Game button
-    Game
+    * Game
         - Title by Category
         - setting
             - select size
@@ -24,14 +24,14 @@ Top
         - Local 2P button
         - Start game button
         - Help button
-    Profile
+    * Profile
         - Nickname
         - Image
         - Ranking
         - Unsolved Questions
         - My Created Questions
         - Favorites
-Popup
+# Popup
     - Sign up popup
         - Email
         - Nickname
@@ -46,7 +46,8 @@ Popup
         - select question type (T/F or multiple choice)
         - Text fields for answer
 
-UserData
+# Database
+- UserData
     - id
     - email
     - Nickname
@@ -55,7 +56,7 @@ UserData
     - MyQuestionPost
     - Ranking
     - unsolved question
-QuestionPost
+- QuestionPost
     - id
     - userId
     - Category
