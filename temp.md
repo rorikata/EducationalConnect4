@@ -3,29 +3,27 @@
 - Sign in button
 # Top
 * HomePage
-        - text field
-        - Sign up button
-        - Sign in button
- * ChooseCategory
-        - Category dropdown
-        - profile button
-        - Sort field
-        - filter field
-        - Question Posts
-        - Game button
- * Game
-        - Title by Category
-        - setting
-        
-        select size
-        
-        connect size
-        - question text field
-        - answer text fields
-        - AI(NPC) button
-        - Local 2P button
-        - Start game button
-        - Help button
+    - text field
+    - Sign up button
+    - Sign in button
+* ChooseCategory
+    - Category dropdown
+    - profile button
+    - Sort field
+    - filter field
+    - Question Posts
+    - Game button
+* Game
+    - Title by Category
+    - setting
+        - select size
+        - connect size
+    - question text field
+    - answer text fields
+    - AI(NPC) button
+    - Local 2P button
+    - Start game button
+    - Help button
 * Profile
 - Nickname
 - Image
