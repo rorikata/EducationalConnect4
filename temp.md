@@ -16,8 +16,10 @@
  * Game
         - Title by Category
         - setting
-        * select size
-        * connect size
+        
+        select size
+        
+        connect size
         - question text field
         - answer text fields
         - AI(NPC) button
