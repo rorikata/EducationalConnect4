@@ -40,37 +40,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div id="vue-app">
   <header class="w3-container w3-center" style="padding:128px 16px">
 
-    <h1 class="w3-margin w3-jumbo">Add a Question</h1>
-
-    <button v-on:click="tf = !tf ">True/False</button>
-    <button v-on:click="mc = !mc">Multiple Choice</button><br/><br/>
-
-  <p v-if="tf">
-    <label>Question:</label>
-    <input type="text" v-model="question"/>
-    <label>Answer:</label>
-    <input type="text" v-model="answer"/>
-  </p>
-
-  <p v-if="mc">
-    <p v-if="tf">
-      tf = !tf
-    </p>
-    <label>Question:</label>
-    <input type="text" v-model="question"/>
-    <label>Answers:</label>
-    <input type="text" v-model="answer1"/>
-    <input type="text" v-model="answer2"/>
-    <input type="text" v-model="answer3"/>
-    <input type="text" v-model="answer4"/>
-    <input type="text" v-model="answer5"/>
-  </p>
-
-    <button v-on:click="submit">Submit</button>
+    <h1 class="w3-margin w3-jumbo">Categories</h1>
+    <select v-model="selectedValue">
+      <option disabled value="">Please select one</option>
+      <option v-for="item in filters" :value="item">{{item}}</option>
+    </select>
 
   </header>
-
-
   </div>
 
 <script src="app.js"></script>
