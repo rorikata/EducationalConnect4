@@ -40,6 +40,7 @@ module.exports = function(passport) {
 				user.comparePassword(req.body.password, function(err, isMatch) {
 					if(isMatch && !err) {
 						// create the token
+						// there was a bug if I use user instead of {data: user}.
 						var token = jwt.sign({data: user}, config.secret, {
 							expiresIn: 10080 // in seconds
 						});
@@ -55,7 +56,7 @@ module.exports = function(passport) {
 	// protect dashboard route with jwt
 	router.get('/dashboard', passport.authenticate('jwt', { session: false}), function(req, res) {
 		res.send('It worked! User id is: ' + req.user._id + '.');
-		return res.redirect('/top');
+		return res.json({success: true});
 	});
 
 	return router;

@@ -7,10 +7,13 @@ var questionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    category: {
-        type: String,
-        required: true
-    },
+    category: [{
+        category_type: String,
+        subcategory_type: String
+    }],
+    // answer_type is 0 or 1.
+    // 0: multiple_choice
+    // 1: true_false
     answer_type: {
         type: String,
         required: true
