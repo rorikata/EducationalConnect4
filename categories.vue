@@ -5,10 +5,10 @@
         <h4>Categories</h4>
         <select >
           <option v-for="category in categories">{{category.color}} </option>
-            
+
         </select>
       </div>
-      <button type="submit" class="btn btn-large btn-block btn-primary full-width" v-on:click="addToAPI">Submit</button>
+      <button type="submit" class="btn btn-large btn-block btn-primary full-width" v-on:click="addC">Submit</button>
       <button class="btn btn-large btn-block btn-success full-width">Go User</button> </br></br>
 
     </form>
@@ -24,19 +24,17 @@ export default {
         {color:'red'},
         {color:'yellow'},
         {color:'blue'}
-      ]
+      ],
+      newC: ''
     }
   },
   methods: {
-    addToAPI () {
-      let newUser = {
-        email: this.User.email,
-        nickname: this.User.nickname,
-        password: this.User.password,
-        confirmation_password: this.User.confirmation_password
+    addC () {
+      let newCat = {
+        newC: this.newC
       }
-      console.log(newUser)
-      axios.post('http://localhost:3000/users', newUser)
+      console.log(newC)
+      axios.post('http://localhost:3000/users', newC)
         .then((response) => {
           console.log(response)
         })

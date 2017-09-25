@@ -5,10 +5,9 @@
         <h4>Settings</h4>
       </div>
 
-      <button class="btn btn-large btn-block btn-primary full-width" v-on:click="addToAPI">Grid Size</button></br></br>
-      <button class="btn btn-large btn-block btn-success full-width">Amount of blocks connected to win</button> </br></br>
-      <button class="btn btn-large btn-block btn-success full-width">Rules Page</button> </br></br>
-      <button @click="showModal = true">Show Modal</button>
+      <button class="btn btn-large btn-block btn-primary full-width" v-on:click="grid">Grid Size</button></br></br>
+      <button class="btn btn-large btn-block btn-success full-width" v-on:click="win">Amount of blocks connected to win</button> </br></br>
+      <button @click="showModal = true">Rules Page</button>
 
       <div v-if="showModal">
         <transition name="modal">
@@ -55,26 +54,38 @@
 export default {
   data () {
     return {
-      showModal: false
+      showModal: false,
+      gridSize: '',
+      winNum: '',
     }
   },
   methods: {
-    addToAPI () {
-      let newUser = {
-        email: this.User.email,
-        nickname: this.User.nickname,
-        password: this.User.password,
-        confirmation_password: this.User.confirmation_password
+    grid () {
+      let newGrid = {
+        gridSize = this.gridSize
       }
-      console.log(newUser)
-      axios.post('http://localhost:3000/users', newUser)
+      console.log(newGrid)
+      axios.post('http://localhost:3000/users', newGrid)
         .then((response) => {
           console.log(response)
         })
         .catch((error) => {
           console.log(error)
         })
-    }
+    },
+    win() {
+      let newWin = {
+        winNum = this.winNum
+      }
+      console.log(newWin)
+      axios.post('http://localhost:3000/users', newWin)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
   }
 }
 

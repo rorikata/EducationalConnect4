@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     addToAPI () {
-      let newUser = {
+      let newUser = { //what to send?
         email: this.User.email,
         nickname: this.User.nickname,
         password: this.User.password,

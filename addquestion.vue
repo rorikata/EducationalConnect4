@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-large btn-block btn-primary full-width" v-on:click="addToAPI">Submit</button>
+      <button type="submit" class="btn btn-large btn-block btn-primary full-width" v-on:click="addQ">Submit</button>
       <button class="btn btn-large btn-block btn-success full-width">Go User</button>
     </form>
   </div>
@@ -45,21 +45,27 @@ export default {
           fake3: '',
           ans: ''
         },
-        true_false: {},
+        true_false: '',
         category: ''
       }
     }
   },
   methods: {
-    addToAPI () {
-      let newUser = {
-        email: this.User.email,
-        nickname: this.User.nickname,
-        password: this.User.password,
-        confirmation_password: this.User.confirmation_password
+    addQ () {
+      let newQ = {
+        question: this.Question.question,
+        answer_type: this.Question.answer_type,
+        multiple_choice: {
+          fake1: this.Question.multiple_choice.fake1,
+          fake2: this.Question.multiple_choice.fake2,
+          fake3: this.Question.multiple_choice.fake3,
+          ans: this.Question.ans
+        },
+        true_false: this.Question.true_false,
+        category: this.Question.category
       }
-      console.log(newUser)
-      axios.post('http://localhost:3000/users', newUser)
+      console.log(newQ)
+      axios.post('http://localhost:3000/users', newQ)
         .then((response) => {
           console.log(response)
         })
