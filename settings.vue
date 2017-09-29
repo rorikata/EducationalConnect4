@@ -5,9 +5,25 @@
         <h4>Settings</h4>
       </div>
 
-      <button class="btn btn-large btn-block btn-primary full-width" v-on:click="grid">Grid Size</button></br></br>
-      <button class="btn btn-large btn-block btn-success full-width" v-on:click="win">Amount of blocks connected to win</button> </br></br>
-      <button @click="showModal = true">Rules Page</button>
+      <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="showGrid = true">Change Grid Size</button>
+
+      <form>
+      <input type="answer" class="form-control" placeholder="Grid Size" v-model="gridSize" v-if="showGrid === true">
+      <button type="button" class = "btn btn-large btn-block btn-success full-width" v-if= "showGrid === true" v-on:click="submitGrid">Submit</button> </br></br>
+    </form>
+
+    <p> Grid Size : {{gridSize}} </p>
+
+    <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="showWin = true">Set Amount of blocks to connect to Win</button>
+
+    <form>
+    <input type="answer" class="form-control" placeholder="Win Number" v-model="winNum" v-if="showWin === true">
+    <button type="button" class = "btn btn-large btn-block btn-success full-width" v-if= "showWin === true" v-on:click="submitWin">Submit</button> </br></br>
+  </form>
+
+  <p> Blocks to connect to win: {{winNum}} </p>
+
+      <button @click="showModal = true">Rules Page</button> </br></br>
 
       <div v-if="showModal">
         <transition name="modal">
@@ -29,7 +45,6 @@
 
                 <div class="modal-footer">
                   <slot name="footer">
-                    default footer
                     <button class="modal-default-button" @click="showModal = false">
                       OK
                     </button>
@@ -41,15 +56,17 @@
         </transition>
       </div>
       <!-- use the modal component, pass in the prop -->
-      <modal v-if="showModal" @close="showModal = false">
+      <button class="btn btn-large btn-block btn-success full-width" v-on:click="start">Start Game</button> </br></br>
+      <div class="alert alert-success" v-if="success">
+        <p>{{ success }}</p>
+      </div>
 
-        <h3 slot="header">custom header</h3>
-      </modal>
   </div>
 </template>
 
 <script>
 
+import axios from 'axios';
 
 export default {
   data () {
@@ -57,35 +74,21 @@ export default {
       showModal: false,
       gridSize: '',
       winNum: '',
+      showGrid: false,
+      showWin: false,
+      success: ''
     }
   },
   methods: {
-    grid () {
-      let newGrid = {
-        gridSize = this.gridSize
-      }
-      console.log(newGrid)
-      axios.post('http://localhost:3000/users', newGrid)
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+    submitGrid () {
+      this.showGrid = false;
     },
-    win() {
-      let newWin = {
-        winNum = this.winNum
-      }
-      console.log(newWin)
-      axios.post('http://localhost:3000/users', newWin)
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+    submitWin () {
+      this.showWin = false;
     },
+    start() {
+      this.success = 'Game Started!';
+    }
   }
 }
 

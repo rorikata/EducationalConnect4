@@ -5,12 +5,15 @@
         <h4>Profile</h4>
       </div>
 
-      <button class="btn btn-large btn-block btn-primary full-width" v-on:click="addToAPI">Wrong Questions</button></br></br>
-      <button class="btn btn-large btn-block btn-success full-width">Starred Questions</button> </br></br>
-      <button class="btn btn-large btn-block btn-success full-width">Ranking</button> </br></br>
-      <button @click="showModal = true">Show Modal</button>
+      <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="showNick = true">Edit Nickname</button>
 
-      <div v-if="showModal">
+      <form>
+      <input type="answer" class="form-control" placeholder="Nickname" v-model="nickname" v-if="showNick === true">
+      <button type="button" class = "btn btn-large btn-block btn-success full-width" v-if= "showNick === true" v-on:click="submitNick">Submit</button> </br></br>
+    </form>
+
+      <button @click="showModal1 = true">Wrong Questions</button></br></br>
+      <div v-if="showModal1">
         <transition name="modal">
           <div class="modal-mask">
             <div class="modal-wrapper">
@@ -18,20 +21,19 @@
 
                 <div class="modal-header">
                   <slot name="header">
-                    default header
+                    Wrong Questions
                   </slot>
                 </div>
 
                 <div class="modal-body">
                   <slot name="body">
-                    default body
+                    {{Wbody}}
                   </slot>
                 </div>
 
                 <div class="modal-footer">
                   <slot name="footer">
-                    default footer
-                    <button class="modal-default-button" @click="showModal = false">
+                    <button class="modal-default-button" @click="showModal1 = false">
                       OK
                     </button>
                   </slot>
@@ -41,25 +43,99 @@
           </div>
         </transition>
       </div>
-      <!-- use the modal component, pass in the prop -->
+
+      <button @click="showModal2 = true">Starred Questions</button></br></br>
+      <div v-if="showModal2">
+        <transition name="modal">
+          <div class="modal-mask">
+            <div class="modal-wrapper">
+              <div class="modal-container">
+
+                <div class="modal-header">
+                  <slot name="header">
+                    Starred Questions
+                  </slot>
+                </div>
+
+                <div class="modal-body">
+                  <slot name="body">
+                    <p> hi: {{SBody}} </p>
+                  </slot>
+                </div>
+
+                <div class="modal-footer">
+                  <slot name="footer">
+                    <button class="modal-default-button" @click="showModal2 = false">
+                      OK
+                    </button>
+                  </slot>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+
+      <button @click="showModal3 = true">Ranking</button>
+      <div v-if="showModal3">
+        <transition name="modal">
+          <div class="modal-mask">
+            <div class="modal-wrapper">
+              <div class="modal-container">
+
+                <div class="modal-header">
+                  <slot name="header">
+                    Ranking
+                  </slot>
+                </div>
+
+                <div class="modal-body">
+                  <slot name="body">
+                    {{RBody}}
+                  </slot>
+                </div>
+
+                <div class="modal-footer">
+                  <slot name="footer">
+                    <button class="modal-default-button" @click="showModal3 = false">
+                      OK
+                    </button>
+                  </slot>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <!-- use the modal component, pass in the prop
       <modal v-if="showModal" @close="showModal = false">
 
         <h3 slot="header">custom header</h3>
       </modal>
+    -->
   </div>
 </template>
 
 <script>
 
 
+import axios from 'axios';
+
 export default {
   data () {
     return {
-      showModal: false
+      Wbody: '',
+      Sbody: '',
+      Rbody: '',
+      showNick: false,
+      nickname: '',
+      showModal1: false,
+      showModal2: false,
+      showModal3: false
     }
   },
   methods: {
-    addToAPI () {
+    getW () {
       let newUser = { //what to send?
         email: this.User.email,
         nickname: this.User.nickname,
@@ -74,6 +150,17 @@ export default {
         .catch((error) => {
           console.log(error)
         })
+    },
+    getS() {
+      //get info, store into Sbody
+    },
+
+    getR() {
+
+    },
+
+    submitNick() {
+      this.showNick = false
     }
   }
 }
