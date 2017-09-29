@@ -20,12 +20,15 @@ export default {
     login(context, creds, redirect) {
         axios.post(LOGIN_URL, creds)
             .then((response) => {
-                //console.log('hello')
-                localStorage.setItem('token_id', response.data.token)
-                this.user.authenticated = true
+                if(response.data.success === false) {
+                    context.error = response.data.message;
+                } else {
+                    localStorage.setItem('token_id', response.data.token)
+                    this.user.authenticated = true
 
-                if(redirect) {
-                    context.$router.push(redirect)
+                    if(redirect) {
+                        context.$router.push(redirect)
+                    }
                 }
             })
             .catch((error) => {
@@ -37,13 +40,14 @@ export default {
     signup(context, creds, redirect) {
         axios.post(SIGNUP_URL, creds)
             .then((response) => {
-                console.log(response.data.success);
+                console.log(response.data);
                 if(response.data.success === false) {
-                    console.log('here');
+                    //console.log('here');
+                    context.error = response.data.message;
                 } else {
                     localStorage.setItem('token_id', response.data.token)
                     //this.user.authenticated = true
-                    context.success = response
+                    context.success = response.data.message;
                 }
 
             })
@@ -73,4 +77,17 @@ export default {
                 this.user.authenticated = false;
             })
     },
+
+    getUserData(context) {
+        var jwt = localStorage.getItem('token_id')
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('token_id');
+        axios.get(TOKEN_URL)
+            .then((res) => {
+                context.data = res;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
 }

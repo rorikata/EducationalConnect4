@@ -62,5 +62,15 @@ router.route('/getSubcats')
         });
     });
 
+router.route('/getAll')
+    // get all categories.
+    .get(function(req, res) {
+        Subcategory.find(function(err, subcats) {
+            if(err) {
+                return res.send(500);
+            }
+            return res.json(subcats);
+        });
+    });
 
 module.exports = router;

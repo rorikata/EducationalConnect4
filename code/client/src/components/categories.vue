@@ -1,30 +1,39 @@
 <template>
-  <div class="col-sm-4 col-sm-offset-4" id="addquestion">
+  <div class="container" id="addquestion">
+    <form>
       <div class="well">
         <h4>Categories</h4>
         <select v-model="catNum">
-          <option v-for="category in categories" v-bind:value="category.num">
-            {{category.name}}
-          </option>
+          <option v-for="category in categories" v-bind:value="category.num">{{category.name}} </option>
         </select>
+        <p>{{catNum}}</p>
       </div>
-      <select v-model="subCatNum">
-        <option
-          v-for="subcategory in filteredSubCats">
-          {{subcategory.name}}
-        </option>
+      <select v-model="subCat">
+        <option v-for="subcategory in filteredSubCats">{{subcategory.name}} </option>
       </select>
-    <button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="submit()" >Submit</button>
+
+
+    </form>
+
+
+    <!--<button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI()" >Submit</button> -->
+    <ul>
+      <li v-for="question in filteredQs">
+        {{question.question}}
+      </li>
+  </ul>
+
   </div>
 </template>
 
 <script>
+import auth from '../auth/index'
 import axios from 'axios';
 export default {
   data () {
     return {
       catNum: '',
-      subCatNum: '',
+      subCat: '',
       categories: [
         {name: 'cs', num: 0},
         {name: 'eng', num: 1},
@@ -35,87 +44,87 @@ export default {
         {name: '408', numP: 0, num: 1},
         {name: 'Writing', numP: 1, num: 0},
         {name: 'Lit', numP: 1, num: 1},
-        {name: 'Calc 2', numP: 2, num: 0},
+        {name: 'Calc', numP: 2, num: 0},
         {name: 'Linear', numP: 2, num: 1}
       ],
       questions: [
-        {question: 'compilers', answer_type: 'mc', multiple_choice: [
+        {question: 'compilers1', answer_type: 'mc', multiple_choice: [
           {fake1: 'yello'},
           {fake2: 'rello'},
           {fake3: 'mello'},
           {ans: 'u rite'}
-        ], true_false: '', category: 0.0},
+        ], true_false: '', catP: 'cs', catS: 'compilers'},
         {question: 'compilers2', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 0.0},
+        ], true_false: 'T', catP: 'cs', catS: 'compilers'},
         {question: '408', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 0.1},
+        ], true_false: 'T', catP: 'cs', catS: '408'},
         {question: '4082', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 0.1},
+        ], true_false: 'T', catP: 'cs', catS: '408'},
         {question: 'Writing', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 1.0},
+        ], true_false: 'T', catP: 'eng', catS: 'Writing'},
         {question: 'Writing2', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 1.0},
+        ], true_false: 'T', catP: 'eng', catS: 'Writing'},
         {question: 'Lit', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 1.1},
+        ], true_false: 'T', catP: 'eng', catS: 'Lit'},
         {question: 'Lit2', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 1.1},
+        ], true_false: 'T', catP: 'eng', catS: 'Lit'},
         {question: 'Calc', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 2.0},
+        ], true_false: 'T', catP: 'math', catS: 'Calc'},
         {question: 'Calc2', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 2.0},
+        ], true_false: 'T', catP: 'math', catS: 'Calc'},
         {question: 'Linear', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 2.1},
+        ], true_false: 'T', catP: 'math', catS: 'Linear'},
         {question: 'Linear2', answer_type:'tf', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
-        ], true_false: 'T', category: 2.1},
+        ], true_false: 'T', catP: 'math', catS: 'Linear'}
       ]
     }
   },
   methods: {
-    submit() {
+    addToAPI() {
       let subcatres = this.subCatNum
       console.log(subcatres);
       axios.post('https://localhost:8080/categories', subcatres)
@@ -130,9 +139,42 @@ export default {
   computed: {
     filteredSubCats: function() {
       return this.subcategories.filter((subcategory) => {
-        return subcategory.numP === this.catNum;
+        return subcategory.parentId === this.catNum;
+      });
+    },
+    filteredQs: function() {
+
+      return this.questions.filter((question) => {
+        return question.subcategory_type === this.subCat;
       });
     }
+  },
+  created:function() {
+    axios.get('http://localhost:3000/category/get')
+      .then((response) => {
+        console.log(response)
+        this.categories = response.data;
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      console.log(this.categories)
+    axios.get('http://localhost:3000/subcategory/getAll')
+        .then((response) => {
+          console.log(response)
+          this.subcategories = response.data;
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    axios.get('http://localhost:3000/question/get')
+          .then((response) => {
+            console.log(response)
+            //this.questions = response.data;
+          })
+          .catch((error) => {
+            console.log(error)
+          })
   }
 }
 </script>
