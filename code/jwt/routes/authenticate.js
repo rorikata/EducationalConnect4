@@ -9,24 +9,38 @@ var config = require('../config/main');
 
 module.exports = function(passport) {
 	router.post('/register', function(req, res) {
-		if(!req.body.email || !req.body.password) {
-			res.json({success: false, message: 'Please enter an email and password to register.'});
+		if(!req.body.email || !req.body.password || !req.body.nickname) {
+			res.json({success: false, message: 'Please enter an email, password and nickname to register.'});
 		} else {
-			var newUser = new User({
-				email: req.body.email,
-				password: req.body.password
-			});
-			// Attempt to save the new users
-			newUser.save(function(err) {
+			User.findOne({
+				email: req.body.email
+			}, function(err, user) {
 				if(err) {
-					return res.json({ success: false, message: 'That email address already exists.'});
+					throw err;
 				}
-				res.json({ success: true, message: 'successfully created new user.'});
+				if(!user) {
+					var newUser = new User({
+						email: req.body.email,
+						password: req.body.password,
+						nickname: req.body.nickname
+					});
+					// Attempt to save the new users
+					console.log('here');
+					newUser.save(function(err) {
+						if(err) {
+							res.json({ success: false, message: 'That email address already exists.'});
+						}
+						res.json({ success: true, message: 'successfully created new user.'});
+					});
+				} else {
+					res.json({ success: false, message: 'That email address already exists.'});
+				}
+
 			});
 		}
 	});
 
-	router.post('/token', function(req, res) {
+	router.post('/login', function(req, res) {
 		User.findOne({
 			email: req.body.email
 		}, function(err, user) {
@@ -54,9 +68,19 @@ module.exports = function(passport) {
 	});
 
 	// protect dashboard route with jwt
-	router.get('/dashboard', passport.authenticate('jwt', { session: false}), function(req, res) {
-		res.send('It worked! User id is: ' + req.user._id + '.');
-		return res.json({success: true});
+	router.get('/authToken', passport.authenticate('jwt', { session: false}), function(req, res) {
+		//res.send('It worked! User id is: ' + req.user._id + '.');
+		var user_info = {
+			nickname: ''
+		}
+		User.findById(req.user._id, function(err, user) {
+			if(err) {
+				res.send(err);
+			}
+			user_info.nickname = user.nickname;
+			res.send(user_info);
+		})
+		//return res.json({success: true});
 	});
 
 	return router;

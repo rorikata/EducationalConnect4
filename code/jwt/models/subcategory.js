@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
-// user schema
-var UserSchema = new mongoose.Schema({
-    email: {
+// category schema
+var CategorySchema = new mongoose.Schema({
+    num: {
         type: String,
         lowercase: true,
         unique: true,

@@ -6,10 +6,12 @@ var mongoose = require('mongoose');
 var Question = mongoose.model('Question');
 var User = mongoose.model('User');
 
-router.use('./questions')
-
+router.route('/questions')
     // add question
     .post(function(req, res) {
+
+        console.log(req.body);
+
         var question = new Question();
         question.userId = req.body.question.uerId;
         question.category.category_type = req.body.question.category.category_type;
@@ -42,9 +44,11 @@ router.use('./questions')
             // error
             return res.send(500);
         }
+
     })
 
     // get all questions.
+
     .get(function(req, res) {
         Question.find(function(err, questions) {
             if(err) {

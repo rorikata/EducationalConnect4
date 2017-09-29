@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var _ = require('lodash');
+var cors = require('cors');
 var config = require('./config/main');
 var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
@@ -31,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // initialize passport for user
 app.use(passport.initialize());
-
+app.use(cors());
 // connect to db
 mongoose.connect(config.database);
 
