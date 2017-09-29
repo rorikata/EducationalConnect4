@@ -25,14 +25,15 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-large btn-block btn-primary full-width" v-on:click="addQ" @click=addToAPI>Submit</button>
+      <button type="submit" class="btn btn-large btn-block btn-primary full-width" v-on:click="addQ">Submit</button>
       <button class="btn btn-large btn-block btn-success full-width">Go User</button>
     </form>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+
+import axios from 'axios';
 
 export default {
   data () {
