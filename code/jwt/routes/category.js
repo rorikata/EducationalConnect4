@@ -32,7 +32,7 @@ router.route('/add')
     });
 
 router.route('/get')
-    // get specific questions.
+    // get specific category.
     .post(function(req, res) {
         Category.findOne({
             name: req.body.name
@@ -47,8 +47,7 @@ router.route('/get')
         })
     })
 
-    // get all questions
-    // get all questions.
+    // get all categories.
     .get(function(req, res) {
         Category.find(function(err, categories) {
             if(err) {

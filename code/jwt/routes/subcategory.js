@@ -28,7 +28,7 @@ router.route('/add')
                 res.send({success: false, message: 'subcategory is already exists'});
             }
         });
-    })
+    });
 
 router.route('/get')
     .post(function(req, res) {
@@ -45,5 +45,22 @@ router.route('/get')
                 res.json({success: true, data: subcat});
             })
     });
+
+router.route('/getSubcats')
+
+    .post(function(req, res) {
+        Subcategory.find({
+            parentId: req.body.parentId
+        }, function(err, subcats) {
+            if(err) {
+                throw err;
+            }
+            if(!subcats) {
+                res.send({success: false, message: 'subcategory does not exists'});
+            }
+            res.json({success: true, data: subcats});
+        });
+    });
+
 
 module.exports = router;
