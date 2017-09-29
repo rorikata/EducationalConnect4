@@ -12,10 +12,19 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var User = require('./models/user');
 var Question = require('./models/question');
+var Category = require('./models/category');
+var autoIncrement = require('mongoose-auto-increment');
 
+var connection = mongoose.connect(config.database);
+autoIncrement.initialize(connection);
+
+
+// routes
 var index = require('./routes/index');
 var authenticate = require('./routes/authenticate')(passport);
 var api = require('./routes/api');
+var cat = require('./routes/category');
+var subcat = require('./routes/subcategory');
 
 var app = express();
 
@@ -34,7 +43,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(cors());
 // connect to db
-mongoose.connect(config.database);
+var connection = mongoose.connect(config.database);
+autoIncrement.initialize(connection);
 
 // Bring in passport strategy we just defined
 require('./config/passport')(passport);
@@ -42,6 +52,8 @@ require('./config/passport')(passport);
 app.use('/', index);
 app.use('/auth', authenticate);
 app.use('/api', api);
+app.use('/category', cat);
+app.use('/subcategory', subcat);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

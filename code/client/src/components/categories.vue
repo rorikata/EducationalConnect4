@@ -14,7 +14,7 @@
           {{subcategory.name}}
         </option>
       </select>
-    <button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI()" >Submit</button>
+    <button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="submit()" >Submit</button>
   </div>
 </template>
 
@@ -115,7 +115,7 @@ export default {
     }
   },
   methods: {
-    addToAPI() {
+    submit() {
       let subcatres = this.subCatNum
       console.log(subcatres);
       axios.post('https://localhost:8080/categories', subcatres)
