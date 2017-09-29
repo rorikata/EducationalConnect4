@@ -15,7 +15,8 @@ router.route('/add')
             }
             if(!subcat) {
                 var newSubcat = new Subcategory({
-                    name: req.body.name
+                    name: req.body.name,
+                    parentId: req.body.parentId
                 });
                 newSubcat.save(function(err) {
                     if(err) {
@@ -28,5 +29,21 @@ router.route('/add')
             }
         });
     })
+
+router.route('/get')
+    .post(function(req, res) {
+            Subcategory.findOne({
+                name: req.body.name,
+                parentId: req.body.parentId
+            }, function(err, subcat) {
+                if(err) {
+                    throw err;
+                }
+                if(!subcat) {
+                    res.send({success: false, message: 'category does not exists'});
+                }
+                res.json({success: true, data: subcat});
+            })
+    });
 
 module.exports = router;

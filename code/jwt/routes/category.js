@@ -29,10 +29,22 @@ router.route('/add')
                     res.send({success: false, message: 'category is already exists'});
                 }
             });
-    })
-    // get all questions.
-    .get(function(req, res) {
+    });
 
+router.route('/get')
+    // get all questions.
+    .post(function(req, res) {
+        Category.findOne({
+            name: req.body.name
+        }, function(err, cat) {
+            if(err) {
+                throw err;
+            }
+            if(!cat) {
+                res.send({success: false, message: 'category does not exists'});
+            }
+            res.json({success: true, data: cat});
+        })
     });
 
 module.exports = router;

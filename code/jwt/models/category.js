@@ -16,6 +16,9 @@ var CategorySchema = new mongoose.Schema({
 var SubcategorySchema = new mongoose.Schema({
     name: {
         type: String
+    },
+    parentId: {
+        type: Number
     }
 })
 
