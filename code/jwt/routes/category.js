@@ -32,7 +32,7 @@ router.route('/add')
     });
 
 router.route('/get')
-    // get all questions.
+    // get specific questions.
     .post(function(req, res) {
         Category.findOne({
             name: req.body.name
@@ -45,6 +45,17 @@ router.route('/get')
             }
             res.json({success: true, data: cat});
         })
+    })
+
+    // get all questions
+    // get all questions.
+    .get(function(req, res) {
+        Category.find(function(err, categories) {
+            if(err) {
+                return res.send(500);
+            }
+            return res.json(categories);
+        });
     });
 
 module.exports = router;

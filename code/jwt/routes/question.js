@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var Question = mongoose.model('Question');
 var User = mongoose.model('User');
 
-router.route('/questions')
+router.route('/add')
     // add question
     .post(function(req, res) {
 
@@ -48,7 +48,6 @@ router.route('/questions')
     })
 
     // get all questions.
-
     .get(function(req, res) {
         Question.find(function(err, questions) {
             if(err) {

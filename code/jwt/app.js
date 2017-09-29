@@ -18,13 +18,13 @@ var autoIncrement = require('mongoose-auto-increment');
 var connection = mongoose.connect(config.database);
 autoIncrement.initialize(connection);
 
-
 // routes
 var index = require('./routes/index');
 var authenticate = require('./routes/authenticate')(passport);
-var api = require('./routes/api');
+var ques = require('./routes/question');
 var cat = require('./routes/category');
 var subcat = require('./routes/subcategory');
+var profile = require('./routes/profile');
 
 var app = express();
 
@@ -51,9 +51,10 @@ require('./config/passport')(passport);
 
 app.use('/', index);
 app.use('/auth', authenticate);
-app.use('/api', api);
+app.use('/question', ques);
 app.use('/category', cat);
 app.use('/subcategory', subcat);
+app.use('/profile', profile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
