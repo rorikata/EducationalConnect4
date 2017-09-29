@@ -1,3 +1,4 @@
+
 <template>
   <div class="container" id="addquestion">
     <form>
@@ -6,6 +7,17 @@
         <div class="form-group">
           <label class="pull-left">Question</label>
           <input type="question" class="form-control" placeholder="Question" v-model="Question.question">
+          <h5>Question Category</h5>
+          <select v-model="catNum" v-on:input="getSub()">
+            <option v-for="category in categories" v-bind:value="category.num">
+              {{category.name}}
+            </option>
+          </select>
+          <select v-model="subCat">
+            <option v-for="subcategory in filteredSubCats">
+              {{subcategory.name}}
+            </option>
+          </select>
         </div>
         <div class="form-group">
           <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="Question.answer_type = 'tf'">T/F</button>
@@ -32,7 +44,7 @@
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
   data () {
     return {
@@ -46,11 +58,25 @@ export default {
           ans: ''
         },
         true_false: '',
-        category: ''
-      }
+        category: '',
+        subCat: ''
+      },
+      categories: '',
+      subcategories: '',
+      catNum: ''
     }
   },
   methods: {
+    /*getSub() {
+      axios.post('http://localhost:3000/subcategory/getSubcats', )
+        .then((response) => {
+          console.log(response)
+          this.subcategories = response.data;
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },*/
     addQ () {
       let newQ = {
         question: this.Question.question,
@@ -73,9 +99,27 @@ export default {
           console.log(error)
         })
     }
+  },
+  created: function() {
+    axios.get('http://localhost:3000/category/get')
+      .then((response) => {
+        console.log(response)
+        this.categories = response.data;
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    console.log(this.categories);
+  },
+  computed: {
+    filteredSubCats: function() {
+      return this.subcategories.filter((subcategory) => {
+        return subcategory.numP === this.catNum;
+      });
+    }
   }
-}
 
+}
 </script>
 
 <style scoped>
@@ -83,17 +127,14 @@ h1,
 h2 {
   font-weight: normal;
 }
-
 ul {
   list-style-type: none;
   padding: 0;
 }
-
 li {
   display: inline-block;
   margin: 0 10px;
 }
-
 a {
   color: #42b983;
 }

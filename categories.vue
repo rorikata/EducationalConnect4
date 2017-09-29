@@ -148,6 +148,17 @@ export default {
       });
     }
 
+  },
+  created:function() {
+    axios.get('http://localhost:3000/category/get')
+      .then((respone) => {
+        console.log(response)
+        this.categories = response.data;
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      console.log(this.categories)
   }
 }
 </script>
