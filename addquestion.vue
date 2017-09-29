@@ -6,6 +6,18 @@
         <div class="form-group">
           <label class="pull-left">Question</label>
           <input type="question" class="form-control" placeholder="Question" v-model="Question.question">
+          <h5>Question Category</h5>
+          <select v-model="catNum">
+            <option v-for="category in categories" v-bind:value="category.num">
+              {{category.name}}
+            </option>ls
+          </select>
+
+          <select v-model="subCatNum">
+            <option v-for="subcategory in filteredSubCats">
+              {{subcategory.name}}
+            </option>
+          </select>
         </div>
         <div class="form-group">
           <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="Question.answer_type = 'tf'">T/F</button>
@@ -32,9 +44,7 @@
 </template>
 
 <script>
-
 import axios from 'axios';
-
 export default {
   data () {
     return {
@@ -48,11 +58,15 @@ export default {
           ans: ''
         },
         true_false: '',
-        category: ''
+        category: '',
+        subCat: ''
       }
     }
   },
   methods: {
+    getCategories() {
+      axios.get('localhost/categories')
+    },
     addQ () {
       let newQ = {
         question: this.Question.question,
@@ -75,9 +89,16 @@ export default {
           console.log(error)
         })
     }
+  },
+  created: function() {
+    this.category = [//call function to get the data
+      {name: 'cs', num: 0},
+      {name: 'eng', num: 1},
+      {name: 'math', num: 2}
+    ]
+    console.log()
   }
 }
-
 </script>
 
 <style scoped>
@@ -85,17 +106,14 @@ h1,
 h2 {
   font-weight: normal;
 }
-
 ul {
   list-style-type: none;
   padding: 0;
 }
-
 li {
   display: inline-block;
   margin: 0 10px;
 }
-
 a {
   color: #42b983;
 }
