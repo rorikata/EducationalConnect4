@@ -32,6 +32,7 @@ export default {
   },
   methods: {
     submit() {
+        console.log(this.user._id);
       var credentials = {
         id: this.user._id,
         nickname: this.credentials.nickname
