@@ -81,8 +81,8 @@ module.exports = function(passport) {
 			if(err) {
 				res.send(err);
 			}
-			user_info.nickname = user.nickname;
-			res.send(user_info);
+			//user_info.nickname = user.nickname;
+			res.send(user);
 		})
 		//return res.json({success: true});
 	});

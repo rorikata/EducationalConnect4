@@ -3,21 +3,21 @@
 var mongoose = require('mongoose');
 
 var questionSchema = new mongoose.Schema({
-    userId: '',
+    userId: String,
     category_type: String,
     subcategory_type: String,
     // answer_type is 0 or 1.
     // 0: multiple_choice
     // 1: true_false
-    answer_type: '',
-    q: String,
+    checkMul: Boolean,
+    text: String,
     multiple_choice: {
             a: String,
             b: String,
             c: String,
             ans: String
         },
-    true_false: '',
+    true_false: Boolean,
     created_at: {type: Date, default: Date.now}
 
 });

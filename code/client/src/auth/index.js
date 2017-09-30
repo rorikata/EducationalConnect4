@@ -83,7 +83,20 @@ export default {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('token_id');
         axios.get(TOKEN_URL)
             .then((res) => {
-                context.data = res;
+                //console.log(res.data);
+                context.user = res.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    },
+
+    update(context, creds) {
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('token_id');
+        axios.post(API_URL + 'profile/updateNickname', creds)
+            .then((res) => {
+                //console.log(res.data);
+                context.user = res.data;
             })
             .catch((error) => {
                 console.log(error);

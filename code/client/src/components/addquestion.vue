@@ -1,44 +1,33 @@
 <template>
   <div class="container" id="addquestion">
-    <form>
       <div class="well">
         <h4>Add a Question</h4>
         <div class="form-group">
           <label class="pull-left">Question</label>
-          <input type="question" class="form-control" placeholder="Question" v-model="Question.question">
+          <input type="question" class="form-control" placeholder="Question" v-model="Question.text">
           <h5>Question Category</h5>
-          <select v-model="catNum" v-on:input="getSub()">
-            <option v-for="category in categories" v-bind:value="category.num">
-              {{category.name}}
-            </option>
+          <select v-model="catNum">
+            <option v-for="category in categories" v-bind:value="category._id">{{category.name}}</option>
           </select>
-          <select v-model="subCatNum">
-            <option v-for="subcategory in filteredSubCats">
-              {{subcategory.name}}
-            </option>
+          <select v-model="subCat">
+            <option v-for="subcategory in filterSubcategory">{{subcategory.name}}</option>
           </select>
         </div>
         <div class="form-group">
-          <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="Question.answer_type = 'tf'">T/F</button>
-          <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="Question.answer_type = 'mc'">M/C</button> </br></br>
-
+          <!-- checkMul is boolean: 0 => true 1 => false  -->
+          <button type="button" v-on:click="Question.checkMul = false">T/F</button>
+          <button type="button"  v-on:click="Question.checkMul = true">M/C</button> </br></br>
           <label class="pull-left">Answer</label>
-
-          <input type="answer" class="form-control" placeholder="True/ False" v-model="Question.answer" v-if="Question.answer_type === 'tf'">
+          <input type="answer" class="form-control" placeholder="True/ False" v-model="Question.true_false" v-if="Question.checkMul === false">
           <div v-else>
-            <input type="answer" class="form-control" placeholder="Fake Answer 1" v-model="Question.multiple_choice.fake1">
-            <input type="answer" class="form-control" placeholder="Fake Answer 2" v-model="Question.multiple_choice.fake2">
-            <input type="answer" class="form-control" placeholder="Fake Answer 3" v-model="Question.multiple_choice.fake3">
-            <input type="answer" class="form-control" placeholder="Real Answer" v-model="Question.multiple_choice.ans">
-
+            <input type="answer" class="form-control" placeholder="Fake Answer 1" v-model="Question.mc_a">
+            <input type="answer" class="form-control" placeholder="Fake Answer 2" v-model="Question.mc_b">
+            <input type="answer" class="form-control" placeholder="Fake Answer 3" v-model="Question.mc_c">
+            <input type="answer" class="form-control" placeholder="Real Answer" v-model="Question.mc_ans">
           </div>
-
         </div>
       </div>
-
-      <button type="submit" class="btn btn-large btn-block btn-primary full-width" v-on:click="addQ">Submit</button>
-      <button class="btn btn-large btn-block btn-success full-width">Go User</button>
-    </form>
+      <button type="submit" v-on:click="submit()">Submit</button>
   </div>
 </template>
 
@@ -48,21 +37,18 @@ export default {
   data () {
     return {
       Question: {
-        question: '',
-        answer_type: '',
-        multiple_choice: {
-          fake1: '',
-          fake2: '',
-          fake3: '',
-          ans: ''
-        },
-        true_false: '',
-        category: '',
-        subCat: ''
+        text: '',
+        checkMul: true,
+        mc_a: '',
+        mc_b: '',
+        mc_c: '',
+        mc_ans: '',
+        true_false: ''
       },
-      categories: '',
-      subcategories: '',
-      catNum: ''
+      categories: [''],
+      subcategories: [''],
+      catNum: '',
+      subCat: ''
 
     }
   },
@@ -77,21 +63,20 @@ export default {
           console.log(error)
         })
     },*/
-    addQ () {
+    submit() {
       let newQ = {
-        question: this.Question.question,
-        answer_type: this.Question.answer_type,
-        multiple_choice: {
-          fake1: this.Question.multiple_choice.fake1,
-          fake2: this.Question.multiple_choice.fake2,
-          fake3: this.Question.multiple_choice.fake3,
-          ans: this.Question.ans
-        },
+        text: this.Question.text,
+        checkMul: this.Question.checkMul,
+        fake1: this.Question.mc_a,
+        fake2: this.Question.mc_b,
+        fake3: this.Question.mc_c,
+        ans: this.Question.ans,
         true_false: this.Question.true_false,
-        category: this.Question.category
+        category_type: this.catNum,
+        subcategory_type: this.subCat
       }
       console.log(newQ)
-      axios.post('http://localhost:3000/users', newQ)
+      axios.post('http://localhost:3000/question/add', newQ)
         .then((response) => {
           console.log(response)
         })
@@ -100,7 +85,20 @@ export default {
         })
     }
   },
-  created: function() {
+  computed: {
+    filterQuestion: function() {
+      return this.questions.filter((question) => {
+        return question.subcategory_type === this.subCat;
+      });
+    },
+    filterSubcategory: function() {
+      console.log(this.catNum);
+      return this.subcategories.filter((subcategory) => {
+        return subcategory.parentId == this.catNum;
+      });
+    }
+  },
+  created:function() {
     axios.get('http://localhost:3000/category/get')
       .then((response) => {
         console.log(response)
@@ -109,7 +107,15 @@ export default {
       .catch((error) => {
         console.log(error)
       })
-    console.log(this.categories);
+      console.log(this.categories)
+    axios.get('http://localhost:3000/subcategory/getAll')
+        .then((response) => {
+          console.log(response)
+          this.subcategories = response.data;
+        })
+        .catch((error) => {
+          console.log(error)
+        })
   }
 }
 </script>

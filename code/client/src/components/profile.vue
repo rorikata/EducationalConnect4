@@ -1,82 +1,46 @@
 
 <template>
-  <div class="container" id="addquestion">
-      <div class="well">
-        <h4>Profile</h4>
+  <div class="col-sm-4 col-sm-offset-4" id="addquestion">
+      <h2>Profile</h2>
+      <div class="alert alert-danger" v-if="error">
+        <p>{{ error }}</p>
       </div>
-
-      <button class="btn btn-large btn-block btn-primary full-width" v-on:click="addToAPI">Wrong Questions</button></br></br>
-      <button class="btn btn-large btn-block btn-success full-width">Starred Questions</button> </br></br>
-      <button class="btn btn-large btn-block btn-success full-width">Ranking</button> </br></br>
-      <button @click="showModal = true">Show Modal</button>
-
-      <div v-if="showModal">
-        <transition name="modal">
-          <div class="modal-mask">
-            <div class="modal-wrapper">
-              <div class="modal-container">
-
-                <div class="modal-header">
-                  <slot name="header">
-                    default header
-                  </slot>
-                </div>
-
-                <div class="modal-body">
-                  <slot name="body">
-                    default body
-                  </slot>
-                </div>
-
-                <div class="modal-footer">
-                  <slot name="footer">
-                    default footer
-                    <button class="modal-default-button" @click="showModal = false">
-                      OK
-                    </button>
-                  </slot>
-                </div>
-              </div>
-            </div>
-          </div>
-        </transition>
+      <div>
+        <input type="text"  placeholder="Edit your nickname" v-model="credentials.nickname">
+        <button type="submit" class="btn btn-primary" v-on:click="submit()">Submit</button>
       </div>
-      <!-- use the modal component, pass in the prop -->
-      <modal v-if="showModal" @close="showModal = false">
-
-        <h3 slot="header">custom header</h3>
-      </modal>
+      <button >Wrong Questions</button>
+      <button>Starred Questions</button>
+      <button>Ranking</button>
   </div>
 </template>
 
 <script>
-
-
 import axios from 'axios';
+import auth from '../auth/index';
 
 export default {
   data () {
     return {
-      showModal: false
+      credentials: {
+        nickname: ''
+      },
+      showModal: false,
+      error: '',
+      user: ['']
     }
   },
   methods: {
-    addToAPI () {
-      let newUser = { //what to send?
-        email: this.User.email,
-        nickname: this.User.nickname,
-        password: this.User.password,
-        confirmation_password: this.User.confirmation_password
+    submit() {
+      var credentials = {
+        id: this.user._id,
+        nickname: this.credentials.nickname
       }
-      console.log(newUser)
-      axios.post('http://localhost:3000/users', newUser)
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      auth.update(this, credentials)
     }
+  },
+  created: function() {
+    auth.getUserData(this);
   }
 }
 
