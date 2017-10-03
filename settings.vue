@@ -1,4 +1,5 @@
 
+
 <template>
   <div class="container" id="addquestion">
       <div class="well">
@@ -80,15 +81,7 @@ export default {
     }
   },
   methods: {
-    submitGrid () {
-      this.showGrid = false;
-    },
-    submitWin () {
-      this.showWin = false;
-    },
-    start() {
-      this.success = 'Game Started!';
-    }
+
   }
 }
 
