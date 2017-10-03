@@ -81,7 +81,15 @@ export default {
     }
   },
   methods: {
-
+    submitGrid () {
+      this.showGrid = false;
+    },
+    submitWin () {
+      this.showWin = false;
+    },
+    start() {
+      this.success = 'Game Started!';
+    }
   }
 }
 
