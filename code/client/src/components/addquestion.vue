@@ -53,16 +53,6 @@ export default {
     }
   },
   methods: {
-    /*getSub() {
-      axios.post('http://localhost:3000/subcategory/getSubcats', )
-        .then((response) => {
-          console.log(response)
-          this.subcategories = response.data;
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },*/
     submit() {
       let newQ = {
         text: this.Question.text,
