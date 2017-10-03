@@ -35,7 +35,7 @@ export default {
         email: this.credentials.email,
         password: this.credentials.password
       }
-      auth.login(this, credentials, 'showQuestions')
+      auth.login(this, credentials, '/')
     }
   }
 }

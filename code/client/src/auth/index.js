@@ -37,7 +37,7 @@ export default {
             })
     },
 
-    signup(context, creds, redirect) {
+    signup(context, creds) {
         axios.post(SIGNUP_URL, creds)
             .then((response) => {
                 console.log(response.data);
@@ -45,7 +45,7 @@ export default {
                     //console.log('here');
                     context.error = response.data.message;
                 } else {
-                    localStorage.setItem('token_id', response.data.token)
+                    //localStorage.setItem('token_id', response.data.token)
                     //this.user.authenticated = true
                     context.success = response.data.message;
                 }
@@ -65,17 +65,19 @@ export default {
     },
 
     checkAuth() {
-        var jwt = localStorage.getItem('token_id')
-        axios.defaults.headers.common['Authorization'] =　localStorage.getItem('token_id');
-        axios.get(TOKEN_URL)
-            .then((res) => {
-                console.log('success: ' + res);
-                this.user.authenticated = true;
-            })
-            .catch((error) => {
-                console.log('error: ' + error);
-                this.user.authenticated = false;
-            })
+        if(localStorage.getItem('token_id')) {
+            var jwt = localStorage.getItem('token_id')
+            axios.defaults.headers.common['Authorization'] =　localStorage.getItem('token_id');
+            axios.get(TOKEN_URL)
+                .then((res) => {
+                    console.log('success: ' + res);
+                    this.user.authenticated = true;
+                })
+                .catch((error) => {
+                    console.log('error: ' + error);
+                    this.user.authenticated = false;
+                })
+        }
     },
 
     getUserData(context) {

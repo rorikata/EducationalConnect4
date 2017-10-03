@@ -1,4 +1,4 @@
-import home from './components/home.vue'
+import Home from './components/Home.vue'
 import showQuestions from './components/showQuestions.vue';
 import signin from './components/signin.vue';
 import signup from './components/signup.vue';
@@ -9,7 +9,7 @@ import settings from './components/settings.vue';
 
 
 export default[
-    { path: '/', component: home},
+    { path: '/', component: Home},
     { path: '/top', component: showQuestions },
     { path: '/signin', component: signin },
     { path: '/signup', component: signup },

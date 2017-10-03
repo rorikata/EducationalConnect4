@@ -6,32 +6,132 @@
         <p>{{ error }}</p>
       </div>
       <div>
-        <input type="text"  placeholder="Edit your nickname" v-model="credentials.nickname">
-        <button type="submit" class="btn btn-primary" v-on:click="submit()">Submit</button>
+        <button type="button" v-on:click="showNick = true">Edit Nickname</button>
+        <input type="text"  placeholder="Edit your nickname" v-model="credentials.nickname" v-if="showNick === true">
+        <button type="submit" class="btn btn-primary" v-if= "showNick === true" v-on:click="submit()">Submit</button>
       </div>
-      <button >Wrong Questions</button>
-      <button>Starred Questions</button>
-      <button>Ranking</button>
+      <button @click="showModal1 = true">Wrong Questions</button></br></br>
+      <div v-if="showModal1">
+        <transition name="modal">
+          <div class="modal-mask">
+            <div class="modal-wrapper">
+              <div class="modal-container">
+
+                <div class="modal-header">
+                  <slot name="header">
+                    Wrong Questions
+                  </slot>
+                </div>
+
+                <div class="modal-body">
+                  <slot name="body">
+                    {{Wbody}}
+                  </slot>
+                </div>
+
+                <div class="modal-footer">
+                  <slot name="footer">
+                    <button class="modal-default-button" @click="showModal1 = false">
+                      OK
+                    </button>
+                  </slot>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+
+      <button @click="showModal2 = true">Starred Questions</button></br></br>
+      <div v-if="showModal2">
+        <transition name="modal">
+          <div class="modal-mask">
+            <div class="modal-wrapper">
+              <div class="modal-container">
+
+                <div class="modal-header">
+                  <slot name="header">
+                    Starred Questions
+                  </slot>
+                </div>
+
+                <div class="modal-body">
+                  <slot name="body">
+                    <p> hi: {{SBody}} </p>
+                  </slot>
+                </div>
+
+                <div class="modal-footer">
+                  <slot name="footer">
+                    <button class="modal-default-button" @click="showModal2 = false">
+                      OK
+                    </button>
+                  </slot>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+
+      <button @click="showModal3 = true">Ranking</button>
+      <div v-if="showModal3">
+        <transition name="modal">
+          <div class="modal-mask">
+            <div class="modal-wrapper">
+              <div class="modal-container">
+
+                <div class="modal-header">
+                  <slot name="header">
+                    Ranking
+                  </slot>
+                </div>
+
+                <div class="modal-body">
+                  <slot name="body">
+                    {{RBody}}
+                  </slot>
+                </div>
+
+                <div class="modal-footer">
+                  <slot name="footer">
+                    <button class="modal-default-button" @click="showModal3 = false">
+                      OK
+                    </button>
+                  </slot>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import auth from '../auth/index';
-
 export default {
   data () {
     return {
       credentials: {
         nickname: ''
       },
-      showModal: false,
+      Wbody: '',
+      Sbody: '',
+      Rbody: '',
+      showNick: false,
+      nickname: '',
+      showModal1: false,
+      showModal2: false,
+      showModal3: false,
       error: '',
       user: ['']
     }
   },
   methods: {
     submit() {
+      this.showNick=false
         console.log(this.user._id);
       var credentials = {
         id: this.user._id,
@@ -44,7 +144,6 @@ export default {
     auth.getUserData(this);
   }
 }
-
 </script>
 
 
@@ -58,14 +157,11 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
   display: table;
-
 }
-
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
 }
-
 .modal-container {
   width: 300px;
   margin: 0px auto;
@@ -76,20 +172,16 @@ export default {
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
-
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;
 }
-
 .modal-body {
   margin: 20px 0;
 }
-
 .modal-default-button {
   float: right;
 }
-
 /*
  * The following styles are auto-applied to elements with
  * transition="modal" when their visibility is toggled
@@ -98,15 +190,12 @@ export default {
  * You can easily play with the modal transition by editing
  * these styles.
  */
-
 .modal-enter {
   opacity: 0;
 }
-
 .modal-leave-active {
   opacity: 0;
 }
-
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);

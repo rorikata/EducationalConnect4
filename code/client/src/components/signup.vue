@@ -50,7 +50,7 @@ export default {
             password: this.credentials.password,
             nickname: this.credentials.nickname
           }
-          auth.signup(this, credentials, 'signin')
+          auth.signup(this, credentials)
       } else {
         this.error = "Password and confirmation password does not match.";
       }

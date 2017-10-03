@@ -1,13 +1,30 @@
 
+
 <template>
   <div class="container" id="addquestion">
       <div class="well">
         <h4>Settings</h4>
       </div>
 
-      <button class="btn btn-large btn-block btn-primary full-width" v-on:click="grid">Grid Size</button></br></br>
-      <button class="btn btn-large btn-block btn-success full-width" v-on:click="win">Amount of blocks connected to win</button> </br></br>
-      <button @click="showModal = true">Rules Page</button>
+      <button type="button" class = "btn btn-large btn-block btn-success" v-on:click="showGrid = true">Change Grid Size</button>
+
+      <form>
+      <input type="answer" class="form-control" placeholder="Grid Size" v-model="gridSize" v-if="showGrid === true">
+      <button type="button" class = "btn btn-large btn-block btn-success" v-if= "showGrid === true" v-on:click="submitGrid">Submit</button> </br></br>
+    </form>
+
+    <p> Grid Size : {{gridSize}} </p>
+
+    <button type="button" class = "btn btn-large btn-block btn-success" v-on:click="showWin = true">Set Amount of blocks to connect to Win</button>
+
+    <form>
+    <input type="answer" class="form-control" placeholder="Win Number" v-model="winNum" v-if="showWin === true">
+    <button type="button" class = "btn btn-large btn-block btn-success" v-if= "showWin === true" v-on:click="submitWin">Submit</button> </br></br>
+  </form>
+
+  <p> Blocks to connect to win: {{winNum}} </p>
+
+      <button @click="showModal = true">Rules Page</button> </br></br>
 
       <div v-if="showModal">
         <transition name="modal">
@@ -29,7 +46,6 @@
 
                 <div class="modal-footer">
                   <slot name="footer">
-                    default footer
                     <button class="modal-default-button" @click="showModal = false">
                       OK
                     </button>
@@ -41,30 +57,39 @@
         </transition>
       </div>
       <!-- use the modal component, pass in the prop -->
-      <modal v-if="showModal" @close="showModal = false">
+      <button class="btn btn-large btn-block btn-success" v-on:click="start">Start Game</button> </br></br>
+      <div class="alert alert-success" v-if="success">
+        <p>{{ success }}</p>
+      </div>
 
-        <h3 slot="header">custom header</h3>
-      </modal>
   </div>
 </template>
 
 <script>
-
 import axios from 'axios';
-
 export default {
   data () {
     return {
       showModal: false,
       gridSize: '',
       winNum: '',
+      showGrid: false,
+      showWin: false,
+      success: ''
     }
   },
   methods: {
-
+    submitGrid () {
+      this.showGrid = false;
+    },
+    submitWin () {
+      this.showWin = false;
+    },
+    start() {
+      this.success = 'Game Started!';
+    }
   }
 }
-
 </script>
 
 
@@ -78,14 +103,11 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
   display: table;
-
 }
-
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
 }
-
 .modal-container {
   width: 300px;
   margin: 0px auto;
@@ -96,20 +118,16 @@ export default {
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
-
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;
 }
-
 .modal-body {
   margin: 20px 0;
 }
-
 .modal-default-button {
   float: right;
 }
-
 /*
  * The following styles are auto-applied to elements with
  * transition="modal" when their visibility is toggled
@@ -118,15 +136,12 @@ export default {
  * You can easily play with the modal transition by editing
  * these styles.
  */
-
 .modal-enter {
   opacity: 0;
 }
-
 .modal-leave-active {
   opacity: 0;
 }
-
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
