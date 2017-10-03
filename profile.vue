@@ -1,17 +1,15 @@
 
 <template>
-  <div class="container" id="addquestion">
-      <div class="well">
-        <h4>Profile</h4>
+  <div class="col-sm-4 col-sm-offset-4" id="addquestion">
+      <h2>Profile</h2>
+      <div class="alert alert-danger" v-if="error">
+        <p>{{ error }}</p>
       </div>
-
-      <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="showNick = true">Edit Nickname</button>
-
-      <form>
-      <input type="answer" class="form-control" placeholder="Nickname" v-model="nickname" v-if="showNick === true">
-      <button type="button" class = "btn btn-large btn-block btn-success full-width" v-if= "showNick === true" v-on:click="submitNick">Submit</button> </br></br>
-    </form>
-
+      <div>
+        <button type="button" v-on:click="showNick = true">Edit Nickname</button>
+        <input type="text"  placeholder="Edit your nickname" v-model="credentials.nickname" v-if="showNick === true">
+        <button type="submit" class="btn btn-primary" v-if= "showNick === true" v-on:click="submit()">Submit</button>
+      </div>
       <button @click="showModal1 = true">Wrong Questions</button></br></br>
       <div v-if="showModal1">
         <transition name="modal">
@@ -107,23 +105,19 @@
           </div>
         </transition>
       </div>
-      <!-- use the modal component, pass in the prop
-      <modal v-if="showModal" @close="showModal = false">
-
-        <h3 slot="header">custom header</h3>
-      </modal>
-    -->
   </div>
 </template>
 
 <script>
-
-
 import axios from 'axios';
+import auth from '../auth/index';
 
 export default {
   data () {
     return {
+      credentials: {
+        nickname: ''
+      },
       Wbody: '',
       Sbody: '',
       Rbody: '',
@@ -131,37 +125,24 @@ export default {
       nickname: '',
       showModal1: false,
       showModal2: false,
-      showModal3: false
+      showModal3: false,
+      error: '',
+      user: ['']
     }
   },
   methods: {
-    getW () {
-      let newUser = { //what to send?
-        email: this.User.email,
-        nickname: this.User.nickname,
-        password: this.User.password,
-        confirmation_password: this.User.confirmation_password
+    submit() {
+      this.showNick=false
+        console.log(this.user._id);
+      var credentials = {
+        id: this.user._id,
+        nickname: this.credentials.nickname
       }
-      console.log(newUser)
-      axios.post('http://localhost:3000/users', newUser)
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
-    getS() {
-      //get info, store into Sbody
-    },
-
-    getR() {
-
-    },
-
-    submitNick() {
-      this.showNick = false
+      auth.update(this, credentials)
     }
+  },
+  created: function() {
+    auth.getUserData(this);
   }
 }
 
