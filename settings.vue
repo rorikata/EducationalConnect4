@@ -1,12 +1,11 @@
 
-
 <template>
   <div class="container" id="addquestion">
       <div class="well">
         <h4>Settings</h4>
       </div>
 
-      <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="showGrid = true">Change Grid Size</button>
+      <button type="button" v-on:click="showGrid = true">Change Grid Size</button>
 
       <form>
       <input type="answer" class="form-control" placeholder="Grid Size" v-model="gridSize" v-if="showGrid === true">
@@ -80,12 +79,32 @@ export default {
       success: ''
     }
   },
+  computed: {
+    wrongGrid() {
+      return (this.gridSize > 7 || this.gridSize < 2 || this.isNumeric(this.gridSize) === false)
+    },
+    wrongWin() {
+      return (this.winNum > 5 || this.winNum < 2 || this.isNumeric(this.winNum) === false)
+
+    }
+  },
   methods: {
     submitGrid () {
       this.showGrid = false;
+      if (this.wrongGrid) {
+        this.gridSize = '';
+        //error
+      }
+    },
+    isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
     },
     submitWin () {
       this.showWin = false;
+      if (this.wrongWin) {
+        this.winNum = '';
+        //error
+      }
     },
     start() {
       this.success = 'Game Started!';
