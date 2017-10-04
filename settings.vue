@@ -1,10 +1,9 @@
-
 <template>
   <div class="container" id="addquestion">
       <div class="well">
         <h4>Settings</h4>
       </div>
-
+      <p v-if= "error1 === true"> {{msg1}}</p>
       <button type="button" v-on:click="showGrid = true">Change Grid Size</button>
 
       <form>
@@ -14,6 +13,7 @@
 
     <p> Grid Size : {{gridSize}} </p>
 
+    <p v-if= "error2 === true"> {{msg2}}</p>
     <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="showWin = true">Set Amount of blocks to connect to Win</button>
 
     <form>
@@ -76,7 +76,11 @@ export default {
       winNum: '',
       showGrid: false,
       showWin: false,
-      success: ''
+      success: '',
+      msg1: '',
+      msg2: '',
+      error1: false,
+      error2: false
     }
   },
   computed: {
@@ -92,8 +96,13 @@ export default {
     submitGrid () {
       this.showGrid = false;
       if (this.wrongGrid) {
+        this.error1 = true;
+        this.msg1 = 'Grid Size incorrect format or size!'
         this.gridSize = '';
         //error
+      }
+      else {
+        this.error1 = false;
       }
     },
     isNumeric(n) {
@@ -102,8 +111,13 @@ export default {
     submitWin () {
       this.showWin = false;
       if (this.wrongWin) {
+        this.error2 = true;
+        this.msg2 = 'The number of blocks to win is too large, too small, or the wrong format'
         this.winNum = '';
         //error
+      }
+      else {
+        this.error2 = false;
       }
     },
     start() {
@@ -113,6 +127,7 @@ export default {
 }
 
 </script>
+
 
 
 <style scoped>
