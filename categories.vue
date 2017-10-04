@@ -1,20 +1,28 @@
 <template>
   <div class="container" id="addquestion">
-    <form>
+
       <div class="well">
         <h4>Categories</h4>
         <select v-model="catNum">
           <option v-for="category in categories" v-bind:value="category.num">{{category.name}} </option>
         </select>
-        <p>{{catNum}}</p>
+        <button v-on:click="showAddCat = true">+</button>
+        <form>
+          <input type="answer" class="form-control" placeholder="Add Category"v-model="addCat" v-if="showAddCat === true">
+          <button type="button" v-if="showAddCat === true" v-on:click="submitCat">Submit</button>
+        </form>
+
       </div>
       <select v-model="subCat">
         <option v-for="subcategory in filteredSubCats">{{subcategory.name}} </option>
       </select>
 
-
-    </form>
-
+      <button v-on:click="showAddSub = true, addSub.numP = catNum" v-if="catNum != -1">+</button>
+      <p> {{catNum}} </p>
+      <form>
+        <input type="answer" class="form-control" placeholder="Add Subcategory"v-model="addSub.name" v-if="showAddSub === true">
+        <button type="button" v-if="showAddSub === true" v-on:click="submitSub">Submit</button>
+      </form>
 
     <!--<button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI()" >Submit</button> -->
     <ul>
@@ -31,7 +39,13 @@ import axios from 'axios';
 export default {
   data () {
     return {
-      catNum: '',
+      addCat: '',
+      catNum: -1,
+      addSub: [
+        {name: '', numP: ''}
+      ],
+      showAddCat: false,
+      showAddSub: false,
       subCat: '',
       categories: [
         {name: 'cs', num: 0},
@@ -123,6 +137,30 @@ export default {
     }
   },
   methods: {
+    submitCat() {
+      let newCat = this.addCat
+      this.showAddCat = false
+      console.log(newCat);
+      axios.post('https://localhost:8080/categories', newCat)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  },
+  submitSub() {
+    let newSub = this.addSub
+    this.showAddSub = false
+    console.log(newSub);
+    axios.post('https://localhost:8080/categories', newSub)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+},
     addToAPI() {
       let subcatres = this.subCatNum
       console.log(subcatres);
