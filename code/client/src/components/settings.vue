@@ -1,25 +1,24 @@
-
-
 <template>
   <div class="container" id="addquestion">
       <div class="well">
         <h4>Settings</h4>
       </div>
-
-      <button type="button" class = "btn btn-large btn-block btn-success" v-on:click="showGrid = true">Change Grid Size</button>
+      <p v-if= "error1 === true"> {{msg1}}</p>
+      <button type="button" v-on:click="showGrid = true">Change Grid Size</button>
 
       <form>
       <input type="answer" class="form-control" placeholder="Grid Size" v-model="gridSize" v-if="showGrid === true">
-      <button type="button" class = "btn btn-large btn-block btn-success" v-if= "showGrid === true" v-on:click="submitGrid">Submit</button> </br></br>
+      <button type="button" class = "btn btn-large btn-block btn-success full-width" v-if= "showGrid === true" v-on:click="submitGrid">Submit</button> </br></br>
     </form>
 
     <p> Grid Size : {{gridSize}} </p>
 
-    <button type="button" class = "btn btn-large btn-block btn-success" v-on:click="showWin = true">Set Amount of blocks to connect to Win</button>
+    <p v-if= "error2 === true"> {{msg2}}</p>
+    <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="showWin = true">Set Amount of blocks to connect to Win</button>
 
     <form>
     <input type="answer" class="form-control" placeholder="Win Number" v-model="winNum" v-if="showWin === true">
-    <button type="button" class = "btn btn-large btn-block btn-success" v-if= "showWin === true" v-on:click="submitWin">Submit</button> </br></br>
+    <button type="button" class = "btn btn-large btn-block btn-success full-width" v-if= "showWin === true" v-on:click="submitWin">Submit</button> </br></br>
   </form>
 
   <p> Blocks to connect to win: {{winNum}} </p>
@@ -57,7 +56,7 @@
         </transition>
       </div>
       <!-- use the modal component, pass in the prop -->
-      <button class="btn btn-large btn-block btn-success" v-on:click="start">Start Game</button> </br></br>
+      <button class="btn btn-large btn-block btn-success full-width" v-on:click="start">Start Game</button> </br></br>
       <div class="alert alert-success" v-if="success">
         <p>{{ success }}</p>
       </div>
@@ -75,15 +74,48 @@ export default {
       winNum: '',
       showGrid: false,
       showWin: false,
-      success: ''
+      success: '',
+      msg1: '',
+      msg2: '',
+      error1: false,
+      error2: false
+    }
+  },
+  computed: {
+    wrongGrid() {
+      return (this.gridSize > 7 || this.gridSize < 2 || this.isNumeric(this.gridSize) === false)
+    },
+    wrongWin() {
+      return (this.winNum > 5 || this.winNum < 2 || this.isNumeric(this.winNum) === false)
     }
   },
   methods: {
     submitGrid () {
       this.showGrid = false;
+      if (this.wrongGrid) {
+        this.error1 = true;
+        this.msg1 = 'Grid Size incorrect format or size!'
+        this.gridSize = '';
+        //error
+      }
+      else {
+        this.error1 = false;
+      }
+    },
+    isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
     },
     submitWin () {
       this.showWin = false;
+      if (this.wrongWin) {
+        this.error2 = true;
+        this.msg2 = 'The number of blocks to win is too large, too small, or the wrong format'
+        this.winNum = '';
+        //error
+      }
+      else {
+        this.error2 = false;
+      }
     },
     start() {
       this.success = 'Game Started!';
@@ -91,6 +123,7 @@ export default {
   }
 }
 </script>
+
 
 
 <style scoped>

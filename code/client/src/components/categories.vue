@@ -9,6 +9,9 @@
       </select>
     <!--<button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI()" >Submit</button> -->
     <ul>
+      <li v-if="catNum === 0" v-for="question in questions">
+          {{ question.text }}
+      </li>
       <li v-for="question in filterQuestion">
           {{ question.text }}
       </li>
@@ -22,8 +25,8 @@ import axios from 'axios';
 export default {
   data () {
       return {
-        catNum: '',
-        subCat: '',
+        catNum: 0,
+        subCat: 'ALL',
         categories: [''],
         subcategories: [''],
         questions: [''],
