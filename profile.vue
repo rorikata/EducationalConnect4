@@ -1,123 +1,138 @@
 
 <template>
-  <div class="col-sm-4 col-sm-offset-4" id="addquestion">
-      <h2>Profile</h2>
-      <div class="alert alert-danger" v-if="error">
-        <p>{{ error }}</p>
+  <div class="container" id="addquestion">
+      <div class="well">
+        <h4>Profile</h4>
       </div>
-      <div>
-        <button type="button" v-on:click="showNick = true">Edit Nickname</button>
-        <input type="text"  placeholder="Edit your nickname" v-model="credentials.nickname" v-if="showNick === true">
-        <button type="submit" class="btn btn-primary" v-if= "showNick === true" v-on:click="submit()">Submit</button>
-      </div>
-      <button @click="showModal1 = true">Wrong Questions</button></br></br>
-      <div v-if="showModal1">
-        <transition name="modal">
-          <div class="modal-mask">
-            <div class="modal-wrapper">
-              <div class="modal-container">
+      <div class="container">
+      <div class="row profile">
+		  <div class="col-md-3">
+      <div class="profile-sidebar">
+      <div class="profile-userbuttons">
+        <button type="button"  v-on:click="showNick = true">Edit Nickname</button>
 
-                <div class="modal-header">
-                  <slot name="header">
-                    Wrong Questions
-                  </slot>
-                </div>
+        <form>
+        <input type="answer" class="form-control" placeholder="Nickname" v-model="nickname" v-if="showNick === true">
+        <button type="button" class = "btn btn-large btn-block btn-success full-width" v-if= "showNick === true" v-on:click="submitNick">Submit</button> </br></br>
+      </form>
 
-                <div class="modal-body">
-                  <slot name="body">
-                    {{Wbody}}
-                  </slot>
-                </div>
+        <button  class="btn btn-large btn-block btn-success full-width" @click="showModal1 = true">Wrong Questions</button></br></br>
+        <div v-if="showModal1">
+          <transition name="modal">
+            <div class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
 
-                <div class="modal-footer">
-                  <slot name="footer">
-                    <button class="modal-default-button" @click="showModal1 = false">
-                      OK
-                    </button>
-                  </slot>
+                  <div class="modal-header">
+                    <slot name="header">
+                      Wrong Questions
+                    </slot>
+                  </div>
+
+                  <div class="modal-body">
+                    <slot name="body">
+                      {{Wbody}}
+                    </slot>
+                  </div>
+
+                  <div class="modal-footer">
+                    <slot name="footer">
+                      <button class="modal-default-button" @click="showModal1 = false">
+                        OK
+                      </button>
+                    </slot>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </transition>
-      </div>
+          </transition>
+        </div>
 
-      <button @click="showModal2 = true">Starred Questions</button></br></br>
-      <div v-if="showModal2">
-        <transition name="modal">
-          <div class="modal-mask">
-            <div class="modal-wrapper">
-              <div class="modal-container">
+        <button  class="btn btn-large btn-block btn-success full-width" @click="showModal2 = true">Starred Questions</button></br></br>
+        <div v-if="showModal2">
+          <transition name="modal">
+            <div class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
 
-                <div class="modal-header">
-                  <slot name="header">
-                    Starred Questions
-                  </slot>
-                </div>
+                  <div class="modal-header">
+                    <slot name="header">
+                      Starred Questions
+                    </slot>
+                  </div>
 
-                <div class="modal-body">
-                  <slot name="body">
-                    <p> hi: {{SBody}} </p>
-                  </slot>
-                </div>
+                  <div class="modal-body">
+                    <slot name="body">
+                      <p> hi: {{SBody}} </p>
+                    </slot>
+                  </div>
 
-                <div class="modal-footer">
-                  <slot name="footer">
-                    <button class="modal-default-button" @click="showModal2 = false">
-                      OK
-                    </button>
-                  </slot>
-                </div>
-              </div>
-            </div>
-          </div>
-        </transition>
-      </div>
-
-      <button @click="showModal3 = true">Ranking</button>
-      <div v-if="showModal3">
-        <transition name="modal">
-          <div class="modal-mask">
-            <div class="modal-wrapper">
-              <div class="modal-container">
-
-                <div class="modal-header">
-                  <slot name="header">
-                    Ranking
-                  </slot>
-                </div>
-
-                <div class="modal-body">
-                  <slot name="body">
-                    {{RBody}}
-                  </slot>
-                </div>
-
-                <div class="modal-footer">
-                  <slot name="footer">
-                    <button class="modal-default-button" @click="showModal3 = false">
-                      OK
-                    </button>
-                  </slot>
+                  <div class="modal-footer">
+                    <slot name="footer">
+                      <button class="modal-default-button" @click="showModal2 = false">
+                        OK
+                      </button>
+                    </slot>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </transition>
+          </transition>
+        </div>
+
+        <button  class="btn btn-large btn-block btn-success full-width" @click="showModal3 = true">Ranking</button>
+        <div v-if="showModal3">
+          <transition name="modal">
+            <div class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+
+                  <div class="modal-header">
+                    <slot name="header">
+                      Ranking
+                    </slot>
+                  </div>
+
+                  <div class="modal-body">
+                    <slot name="body">
+                      {{RBody}}
+                    </slot>
+                  </div>
+
+                  <div class="modal-footer">
+                    <slot name="footer">
+                      <button class="modal-default-button" @click="showModal3 = false">
+                        OK
+                      </button>
+                    </slot>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
       </div>
+    </div>
+    </div>
+    </div>
+    </div>
+      <!-- use the modal component, pass in the prop
+      <modal v-if="showModal" @close="showModal = false">
+
+        <h3 slot="header">custom header</h3>
+      </modal>
+    -->
   </div>
 </template>
 
 <script>
+
+
 import axios from 'axios';
-import auth from '../auth/index';
 
 export default {
   data () {
     return {
-      credentials: {
-        nickname: ''
-      },
       Wbody: '',
       Sbody: '',
       Rbody: '',
@@ -125,24 +140,37 @@ export default {
       nickname: '',
       showModal1: false,
       showModal2: false,
-      showModal3: false,
-      error: '',
-      user: ['']
+      showModal3: false
     }
   },
   methods: {
-    submit() {
-      this.showNick=false
-        console.log(this.user._id);
-      var credentials = {
-        id: this.user._id,
-        nickname: this.credentials.nickname
+    getW () {
+      let newUser = { //what to send?
+        email: this.User.email,
+        nickname: this.User.nickname,
+        password: this.User.password,
+        confirmation_password: this.User.confirmation_password
       }
-      auth.update(this, credentials)
+      console.log(newUser)
+      axios.post('http://localhost:3000/users', newUser)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    getS() {
+      //get info, store into Sbody
+    },
+
+    getR() {
+
+    },
+
+    submitNick() {
+      this.showNick = false
     }
-  },
-  created: function() {
-    auth.getUserData(this);
   }
 }
 
@@ -213,4 +241,5 @@ export default {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+
 </style>
