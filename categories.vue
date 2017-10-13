@@ -3,31 +3,36 @@
 
       <div class="well">
         <h4>Categories</h4>
-        <select v-model="catNum">
+        <select class="form-control" v-model="catNum">
           <option v-for="category in categories" v-bind:value="category.num">{{category.name}} </option>
         </select>
-        <button v-on:click="showAddCat = true">+</button>
+        <button class="btn btn-b btn-success" v-on:click="showAddCat = true">Add Category</button>
         <form>
+          <br>
           <input type="answer" class="form-control" placeholder="Add Category"v-model="addCat" v-if="showAddCat === true">
-          <button type="button" v-if="showAddCat === true" v-on:click="submitCat">Submit</button>
+          <button class="btn btn-large btn-block btn-success full-width" type="button" v-if="showAddCat === true" v-on:click="submitCat">Submit</button>
         </form>
-
+        <br>
       </div>
-      <select v-model="subCat">
+
+      <select class="form-control" v-model="subCat">
         <option v-for="subcategory in filteredSubCats">{{subcategory.name}} </option>
       </select>
 
-      <button v-on:click="showAddSub = true, addSub.numP = catNum" v-if="catNum != -1">+</button>
-      <p> {{catNum}} </p>
-      <form>
-        <input type="answer" class="form-control" placeholder="Add Subcategory"v-model="addSub.name" v-if="showAddSub === true">
-        <button type="button" v-if="showAddSub === true" v-on:click="submitSub">Submit</button>
-      </form>
+      <button class="btn btn-b btn-success" v-on:click="showAddSub = true, addSub.numP = catNum" v-if="catNum != -1">Add Subcategory</button>
 
+      <form>
+        <br>
+        <input type="answer" class="form-control" placeholder="Add Subcategory"v-model="addSub.name" v-if="showAddSub === true">
+        <button class="btn btn-large btn-block btn-success full-width" type="button" v-if="showAddSub === true" v-on:click="submitSub">Submit</button>
+      </form>
+      <br>
     <!--<button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI()" >Submit</button> -->
-    <ul>
-      <li v-for="question in filteredQs">
-        {{question.question}}
+    <h4>Questions</h4>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="question in filteredQs">
+         {{question.question}}
+
       </li>
   </ul>
 
@@ -61,73 +66,73 @@ export default {
         {name: 'Linear', numP: 2, num: 1}
       ],
       questions: [
-        {question: 'compilers1', answer_type: 'mc', multiple_choice: [
+        {question: 'compilers1', answer_type: '0', multiple_choice: [
           {fake1: 'yello'},
           {fake2: 'rello'},
           {fake3: 'mello'},
           {ans: 'u rite'}
-        ], true_false: '', catP: 'cs', catS: 'compilers'},
-        {question: 'compilers2', answer_type:'tf', multiple_choice: [
+        ], true_false: '0', catP: 'cs', catS: 'compilers'},
+        {question: 'compilers2', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
         ], true_false: 'T', catP: 'cs', catS: 'compilers'},
-        {question: '408', answer_type:'tf', multiple_choice: [
+        {question: '408', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
         ], true_false: 'T', catP: 'cs', catS: '408'},
-        {question: '4082', answer_type:'tf', multiple_choice: [
+        {question: '4082', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
         ], true_false: 'T', catP: 'cs', catS: '408'},
-        {question: 'Writing', answer_type:'tf', multiple_choice: [
+        {question: 'Writing', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
         ], true_false: 'T', catP: 'eng', catS: 'Writing'},
-        {question: 'Writing2', answer_type:'tf', multiple_choice: [
+        {question: 'Writing2', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
         ], true_false: 'T', catP: 'eng', catS: 'Writing'},
-        {question: 'Lit', answer_type:'tf', multiple_choice: [
+        {question: 'Lit', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
         ], true_false: 'T', catP: 'eng', catS: 'Lit'},
-        {question: 'Lit2', answer_type:'tf', multiple_choice: [
+        {question: 'Lit2', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
         ], true_false: 'T', catP: 'eng', catS: 'Lit'},
-        {question: 'Calc', answer_type:'tf', multiple_choice: [
+        {question: 'Calc', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
         ], true_false: 'T', catP: 'math', catS: 'Calc'},
-        {question: 'Calc2', answer_type:'tf', multiple_choice: [
+        {question: 'Calc2', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
         ], true_false: 'T', catP: 'math', catS: 'Calc'},
-        {question: 'Linear', answer_type:'tf', multiple_choice: [
+        {question: 'Linear', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
           {ans:''}
         ], true_false: 'T', catP: 'math', catS: 'Linear'},
-        {question: 'Linear2', answer_type:'tf', multiple_choice: [
+        {question: 'Linear2', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
@@ -217,4 +222,5 @@ li {
 a {
   color: #42b983;
 }
+
 </style>
