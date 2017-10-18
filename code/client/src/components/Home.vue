@@ -1,8 +1,8 @@
 <template>
     <div id="app-home">
       <h1 v-if="!user.authenticated">Need to Login</h1>
-      <h1 v-if="user.authenticated">Welcome to Sugar World</h1>
-      <div class="container" id="addquestion">
+      <div v-if="user.authenticated" class="container" id="addquestion">
+          <h1 >Welcome to Sugar World</h1>
           <h4>Categories</h4>
           <select v-model="catNum">
             <option v-for="category in categories" v-bind:value="category._id">{{category.name}}</option>
@@ -55,31 +55,34 @@ computed: {
   }
 },
 created:function() {
-  axios.get('http://localhost:3000/category/get')
-    .then((response) => {
-      console.log(response)
-      this.categories = response.data;
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-    console.log(this.categories)
-  axios.get('http://localhost:3000/subcategory/getAll')
+  if(this.user.authenticated === true) {
+    console.log(this.user);
+    axios.get('http://localhost:3000/category/get')
       .then((response) => {
         console.log(response)
-        this.subcategories = response.data;
+        this.categories = response.data;
       })
       .catch((error) => {
         console.log(error)
       })
-  axios.get('http://localhost:3000/question/get')
+      console.log(this.categories)
+    axios.get('http://localhost:3000/subcategory/getAll')
         .then((response) => {
-          console.log( response.data)
-          this.questions = response.data;
+          console.log(response)
+          this.subcategories = response.data;
         })
         .catch((error) => {
           console.log(error)
         })
-}
+    axios.get('http://localhost:3000/question/get')
+          .then((response) => {
+            console.log( response.data)
+            this.questions = response.data;
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    }
+  }
 }
 </script>

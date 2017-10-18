@@ -6,6 +6,7 @@ import addquestion from './components/addquestion.vue';
 import categories from './components/categories.vue';
 import profile from './components/profile.vue';
 import settings from './components/settings.vue';
+import game from './components/game.vue';
 
 
 export default[
@@ -16,5 +17,6 @@ export default[
     { path: '/addquestion', component: addquestion },
     { path: '/categories', component: categories },
     { path: '/profile', component: profile },
-    { path: '/settings', component: settings }
+    { path: '/settings', component: settings },
+    { path: '/game', component: game}
 ]
