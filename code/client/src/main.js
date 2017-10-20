@@ -13,6 +13,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 Vue.use(BootstrapVue);
 Vue.use(VueResource);
 Vue.use(VueRouter);
+Vue.use(require('vue-script2'));
 
 // check the user's auth status when the app starts
 auth.checkAuth()

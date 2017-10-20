@@ -7,7 +7,11 @@ import categories from './components/categories.vue';
 import profile from './components/profile.vue';
 import settings from './components/settings.vue';
 import game from './components/game.vue';
-
+import check_win from './game/check_win.js';
+import data from './game/data.js';
+import make_moves from './game/make_moves.js';
+import setup_game from './game/setup_game.js';
+import jquery from '../node_modules/jquery/dist/jquery.min.js'
 
 export default[
     { path: '/', component: Home},
@@ -18,5 +22,11 @@ export default[
     { path: '/categories', component: categories },
     { path: '/profile', component: profile },
     { path: '/settings', component: settings },
-    { path: '/game', component: game}
+    { path: '/game', component: game},
+    { path: '/game/checkWin', component: check_win},
+    { path: '/game/data', component: data},
+    { path: '/game/makeMoves', component: make_moves},
+    { path: '/game/setupGame', component: setup_game},
+    { path: '/game/jquery', component: jquery}
+
 ]

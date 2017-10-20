@@ -11,18 +11,18 @@
 		</div>
 		<div id="dialog">Is this a 3 button dialog?</div>
 		<div class = "row">
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-			<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-  			<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-			<script src="data.js"></script>
-			<script src="setup_game.js"></script>
-			<script src="make_moves.js"></script>
-			<script src="check_win.js"></script>
-
-
+<!--			<script2 src="/game/jquery"></script2> -->
+<!--			<script2 src="/game/data"></script2> -->
+			<script2 src="/game/setupGame"></script2>
+<!--			<script2 src="/game/makeMoves"></script2>
+			<script2 src="/game/checkWin"></script2> -->
+		</div>
+  </div>
 </template>
 
 <script>
+
+
 export default {
   name: 'hello',
   data () {
@@ -35,21 +35,170 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+html {
+	font-family: "Montserrat", Futura, Helvetica, sans-serif;
+	text-align: center;
+	-webkit-font-smoothing: subpixel-antialiased;
+	color: #333;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+#title {
+	cursor: pointer;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
+.container {
+	width: 670px;
+	margin: 0 auto;
+	text-align: center;
 }
 
-a {
-  color: #42b983;
+.buttons-row {
+	width: 100%;
+	margin: 0 auto;
 }
+
+.row {
+	margin: 30px auto 7vh auto;
+	padding: 20px 10px;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+}
+
+button {
+	font-family: "Montserrat", Futura, Helvetica, sans-serif;;
+	font-size: 1.25em;
+	color: #fff;
+	background-color: #3DC4A7;
+	padding: 15px 40px;
+    border: none;
+    border-radius: 5px;
+    margin: 20px 0 30px 0;
+    transition: all .2s ease;
+}
+
+button:hover {
+  	background-color: #FFDF00;
+}
+
+button:focus {
+	outline:0;
+}
+
+#submit {
+	margin-left: 10px;
+}
+
+#red-btn, #blue-btn {
+	display: none;
+}
+
+input {
+	font-family: "Montserrat", Futura, Helvetica, sans-serif;;
+	font-size: 1.25em;
+	padding: 15px 30px;
+	background-color: #f4f4f4;
+	border: 1px solid #B3B3B3;
+	border-radius: 5px;
+	margin: 10px auto;
+	transition: all .25s ease;
+}
+
+input:focus {
+	outline: 0;
+	border: 1px solid #333;
+}
+
+h1 {
+	font-size: 4em;
+	margin-top: 7vh;
+}
+
+#disclaimer {
+	display: none;
+}
+
+#pick-color {
+	display: none;
+}
+
+h2 {
+	font-size: 1.5em;
+	margin: 10px 0;
+	line-height: 1.5;
+}
+
+.circle {
+	position: relative;
+	display: inherit;
+	width: 75px;
+	height: 75px;
+	display: inline-block;
+	margin: 3px 5px;
+	border: 3px solid #b3b3b3;
+	border-radius: 50%;
+	background-color: #fff;
+	vertical-align: center;
+	transition: all .25s ease;
+}
+
+.circle:hover, .circle:active {
+	border: 3px solid #797979;
+}
+
+.circle > p {
+	font-family: 'Inconsolata', Helvetica, Arial, sans-serif;
+	position: absolute;
+	font-size: 4em;
+	color: #fff;
+	top: 15px;
+	left: 35px;
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+
+}
+
+.circle-background-color-blue {
+	background-color: #4189C7;
+	border: 3px solid #4189C7;
+}
+
+.circle-background-color-blue:hover {
+	border: 3px solid #4189C7;
+}
+
+.circle-background-color-red {
+	background-color: #C73D47;
+	border: 3px solid #C73D47;
+}
+
+.circle-background-color-red:hover {
+	border: 3px solid #C73D47;
+}
+
+@media (max-width: 785px) {
+
+	#disclaimer {
+		display: inline;
+	}
+
+	.container {
+		padding-top: 20vh;
+	}
+
+	#title {
+		display: none;
+	}
+
+	.row {
+		display:none;
+	}
+
+	.buttons-row {
+		display:none;
+	}
+
+}
+
 </style>
