@@ -10,10 +10,14 @@ import auth from './auth/index'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
+
+
 Vue.use(BootstrapVue);
 Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(require('vue-script2'));
+
+//Vue.use(require('jquery-ui'));
 
 // check the user's auth status when the app starts
 auth.checkAuth()

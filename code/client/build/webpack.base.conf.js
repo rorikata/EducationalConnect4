@@ -23,6 +23,10 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      // bind version of jquery-ui
+      "jquery-ui": "jquery-ui/jquery-ui.js",
+      // bind to modules;
+      modules: path.join(__dirname, "node_modules"),
     }
   },
   module: {
@@ -60,7 +64,7 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+    }
     ]
   }
 }

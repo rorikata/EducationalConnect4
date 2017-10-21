@@ -104,7 +104,6 @@ $(document).ready(function() {
   var $blue_btn = $("#blue-btn");
 
   var $row = $(".row");
-  console.log($row);
 
   var $circles = $(".circle");
 
@@ -216,19 +215,15 @@ $(document).ready(function() {
 
 	function make_board () {
 
+
 		for (var i = 0; i < 6; i++) {
-
 			for (var j = 0; j < 7; j++) {
-
-
 				var $circle = $("<div class = 'circle' data-name = 'nothing'></div>");
 				$circle.addClass("col-" + j);
 				$circle.addClass("row-" + i);
 				$row.append($circle);
 				$row.css("background-color", "#FFDF00");
-
 			}
-
 		}
 		var $circles = $(".circle");
 
@@ -291,6 +286,7 @@ $(document).ready(function() {
 
   function make_move (position, new_classname, mark) {
 
+    console.log($("#dialog").dialog);
       $("#dialog").dialog({
 
       autoOpen: true,

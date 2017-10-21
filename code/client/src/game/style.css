@@ -1,41 +1,3 @@
-<template>
-  <div class = "container">
-	  <link rel="stylesheet" href="/game/css">
-		<h1 id = "disclaimer">Please make your browser bigger!</h1>
-		<div class = "buttons-row">
-			<h2 id = "question">Do you want to play with a friend or with the ultra unbeatable computer?</h2>
-			<button id = "two-players-btn">With a Friend</button>
-			<button id = "one-player-btn">Bring on the Computer</button>
-			<h2 id = "pick-color"></h2>
-			<button id = "red-btn">Hotter than the Sun</button>
-			<button id = "blue-btn">Ice Cold</button>
-		</div>
-		<div id="dialog">Is this a 3 button dialog?</div>
-		<div class = "row">
-			<script2 src="/game/jquery"></script2>
-<!--			<script2 src="/game/data"></script2> -->
-			<script2 src="/game/setupGame"></script2>
-<!--			<script2 src="/game/makeMoves"></script2>
-			<script2 src="/game/checkWin"></script2> -->
-		</div>
-  </div>
-</template>
-
-<script>
-
-
-export default {
-  name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
-}
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
 html {
 	font-family: "Montserrat", Futura, Helvetica, sans-serif;
 	text-align: center;
@@ -157,6 +119,7 @@ h2 {
 	display: block;
 	margin: 0 auto;
 	text-align: center;
+
 }
 
 .circle-background-color-blue {
@@ -200,5 +163,3 @@ h2 {
 	}
 
 }
-
-</style>

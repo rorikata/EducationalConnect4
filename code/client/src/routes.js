@@ -11,8 +11,9 @@ import check_win from './game/check_win.js';
 import data from './game/data.js';
 import make_moves from './game/make_moves.js';
 import setup_game from './game/setup_game.js';
-import jquery from '../node_modules/jquery/dist/jquery.min.js'
-
+import jquery from '../node_modules/jquery-ui/ui//widgets/dialog.js';
+import css from './game/style.css';
+//'jquery-ui/ui/widgets/dialog.js'
 export default[
     { path: '/', component: Home},
     { path: '/top', component: showQuestions },
@@ -27,6 +28,7 @@ export default[
     { path: '/game/data', component: data},
     { path: '/game/makeMoves', component: make_moves},
     { path: '/game/setupGame', component: setup_game},
-    { path: '/game/jquery', component: jquery}
+    { path: '/game/jquery', component: jquery},
+    { path: '/game/css', component: css}
 
 ]
