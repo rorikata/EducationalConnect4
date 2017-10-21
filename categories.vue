@@ -1,6 +1,5 @@
 <template>
   <div class="container" id="addquestion">
-
       <div class="well">
         <h4>Categories</h4>
         <select class="form-control" v-model="catNum">
@@ -14,13 +13,10 @@
         </form>
         <br>
       </div>
-
       <select class="form-control" v-model="subCat">
         <option v-for="subcategory in filteredSubCats">{{subcategory.name}} </option>
       </select>
-
       <button class="btn btn-b btn-success" v-on:click="showAddSub = true, addSub.numP = catNum" v-if="catNum != -1">Add Subcategory</button>
-
       <form>
         <br>
         <input type="answer" class="form-control" placeholder="Add Subcategory"v-model="addSub.name" v-if="showAddSub === true">
@@ -28,14 +24,32 @@
       </form>
       <br>
     <!--<button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI()" >Submit</button> -->
+    <select class="form-control" v-model="cond">
+      <option>Alphabetical Sort</option>
+      <option>Date Oldest</option>
+      <option>Date Newest</option>
+    </select>
     <h4>Questions</h4>
-    <ul class="list-group">
+    <ul v-if="cond === 'Alphabetical Sort'" class="list-group">
+      <li class="list-group-item" v-for="question in sortByAlphabet">
+         {{question.question}}
+      </li>
+    </ul>
+    <ul v-if="cond === 'Date Oldest'" class="list-group">
+      <li class="list-group-item" v-for="question in sortByDateLate">
+         {{question.question}}
+      </li>
+    </ul>
+    <ul v-if="cond === 'Date Newest'" class="list-group">
+      <li class="list-group-item" v-for="question in sortByDateEarly">
+         {{question.question}}
+      </li>
+    </ul>
+    <ul v-if="cond === '0'" class="list-group">
       <li class="list-group-item" v-for="question in filteredQs">
          {{question.question}}
-
       </li>
-  </ul>
-
+    </ul>
   </div>
 </template>
 
@@ -44,6 +58,7 @@ import axios from 'axios';
 export default {
   data () {
     return {
+      cond: '0',
       addCat: '',
       catNum: -1,
       addSub: [
@@ -66,13 +81,13 @@ export default {
         {name: 'Linear', numP: 2, num: 1}
       ],
       questions: [
-        {question: 'compilers1', answer_type: '0', multiple_choice: [
+        {question: 'Dompilers1', answer_type: '0', multiple_choice: [
           {fake1: 'yello'},
           {fake2: 'rello'},
           {fake3: 'mello'},
           {ans: 'u rite'}
         ], true_false: '0', catP: 'cs', catS: 'compilers'},
-        {question: 'compilers2', answer_type:'1', multiple_choice: [
+        {question: 'Compilers2', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
@@ -184,13 +199,45 @@ export default {
         return subcategory.numP === this.catNum;
       });
     },
-
     filteredQs: function() {
       return this.questions.filter((question) => {
         return question.catS === this.subCat;
       });
-    }
+    },
+    sortByAlphabet: function() {
+      function compare(a, b) {
+      if (a.question < b.question)
+        return -1;
+      if (a.question > b.question)
+        return 1;
+      return 0;
+      }
 
+      return this.filteredQs.sort(compare)
+    },
+
+    sortByDateEarly: function() {
+      function compare(a, b) {
+      if (a.created_at < b.created_at)
+        return -1;
+      if (a.created_at < b.created_at)
+        return 1;
+      return 0;
+      }
+
+      return this.filteredQs.sort(compare)
+    },
+    sortByDateLate: function() {
+      function compare(a, b) {
+      if (a.created_at < b.created_at)
+        return -1;
+      if (a.created_at > b.created_at)
+        return 1;
+      return 0;
+      }
+
+      return this.filteredQs.sort(compare)
+    }
   },
   created:function() {
     axios.get('http://localhost:3000/category/get')
@@ -222,5 +269,4 @@ li {
 a {
   color: #42b983;
 }
-
 </style>
