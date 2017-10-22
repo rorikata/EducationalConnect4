@@ -28,9 +28,20 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      questions: [''],
     }
-  }
+},
+created:function() {
+	axios.get('http://localhost:3000/question/get')
+		  .then((response) => {
+			console.log( response.data)
+			this.questions = response.data;
+		  })
+		  .catch((error) => {
+			console.log(error)
+		  })
+}
+
 }
 </script>
 
