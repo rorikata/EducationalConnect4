@@ -12,7 +12,7 @@
           <button class="btn btn-large btn-block btn-success full-width" type="button" v-if="showAddCat === true" v-on:click="submitCat">Submit</button>
         </form>
         <br>
-      </div>
+
       <select class="form-control" v-model="subCat">
         <option v-for="subcategory in filteredSubCats">{{subcategory.name}} </option>
       </select>
@@ -22,32 +22,140 @@
         <input type="answer" class="form-control" placeholder="Add Subcategory"v-model="addSub.name" v-if="showAddSub === true">
         <button class="btn btn-large btn-block btn-success full-width" type="button" v-if="showAddSub === true" v-on:click="submitSub">Submit</button>
       </form>
-      <br>
+      </div>
     <!--<button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI()" >Submit</button> -->
-    <select class="form-control" v-model="cond">
-      <option>Alphabetical Sort</option>
-      <option>Date Oldest</option>
-      <option>Date Newest</option>
-    </select>
-    <h4>Questions</h4>
-    <ul v-if="cond === 'Alphabetical Sort'" class="list-group">
-      <li class="list-group-item" v-for="question in sortByAlphabet">
-         {{question.question}}
+    <table>
+      <tr>
+        <td>
+        <h4>Questions&nbsp</h4>
+      </td>
+
+    <td>
+      <select class="form-control" v-model="cond">
+        <option>Popularity</option>
+        <option>Title</option>
+        <option>Date Oldest</option>
+        <option>Date Newest</option>
+      </select>
+    </td>
+    </tr>
+    </table>
+    <ul v-if="cond === 'Title'" class="list-group">
+      <li  v-for="question in sortByAlphabet">
+        <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+        <table>
+          <tr>
+            <td>
+              <button v-if="question.clickedUp ===0 && question.clickedDown ===1"  class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
+              <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
+              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled" v-on:click="submitUp(question)">↑</button>
+            </td>
+            <td>
+              <div class="list-group-item full-width"> Question: {{question.question}} </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button v-if="question.clickedDown ===0 && question.clickedUp ===1"  class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
+              <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
+              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled" v-on:click="submitDown(question)">↓</button>
+            </td>
+            <td>
+              <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
+              <div v-if="question.answer_type === '1'" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
+            </td>
+          </tr>
+        </table>
+        <br>
       </li>
     </ul>
     <ul v-if="cond === 'Date Oldest'" class="list-group">
-      <li class="list-group-item" v-for="question in sortByDateLate">
-         {{question.question}}
+      <li  v-for="question in sortByDateLate">
+        <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+        <table>
+          <tr>
+            <td>
+              <button v-if="question.clickedUp ===0 && question.clickedDown ===1"  class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
+              <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
+              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled" v-on:click="submitUp(question)">↑</button>
+            </td>
+            <td>
+              <div class="list-group-item full-width"> Question: {{question.question}} </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button v-if="question.clickedDown ===0 && question.clickedUp ===1"  class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
+              <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
+              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled" v-on:click="submitDown(question)">↓</button>
+            </td>
+            <td>
+              <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
+              <div v-if="question.answer_type === '1'" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
+            </td>
+          </tr>
+        </table>
+        <br>
       </li>
     </ul>
     <ul v-if="cond === 'Date Newest'" class="list-group">
-      <li class="list-group-item" v-for="question in sortByDateEarly">
-         {{question.question}}
+      <li  v-for="question in sortByDateEarly">
+        <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+        <table>
+          <tr>
+            <td>
+              <button v-if="question.clickedUp ===0 && question.clickedDown ===1"  class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
+              <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
+              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled" v-on:click="submitUp(question)">↑</button>
+            </td>
+            <td>
+              <div class="list-group-item full-width"> Question: {{question.question}} </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button v-if="question.clickedDown ===0 && question.clickedUp ===1"  class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
+              <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
+              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled" v-on:click="submitDown(question)">↓</button>
+            </td>
+            <td>
+              <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
+              <div v-if="question.answer_type === '1'" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
+            </td>
+          </tr>
+        </table>
+        <br>
       </li>
     </ul>
-    <ul v-if="cond === '0'" class="list-group">
-      <li class="list-group-item" v-for="question in filteredQs">
-         {{question.question}}
+
+
+    <ul v-if="cond === 'Popularity'" class="list-group">
+      <li  v-for="question in sortByPop">
+        <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+        <table>
+          <tr>
+            <td>
+              <button v-if="question.clickedUp ===0 && question.clickedDown ===1"  class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
+              <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
+              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled" v-on:click="submitUp(question)">↑</button>
+            </td>
+            <td>
+              <div class="list-group-item full-width"> Question: {{question.question}} </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button v-if="question.clickedDown ===0 && question.clickedUp ===1"  class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
+              <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
+              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled" v-on:click="submitDown(question)">↓</button>
+            </td>
+            <td>
+              <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
+              <div v-if="question.answer_type === '1'" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
+            </td>
+          </tr>
+        </table>
+        <br>
       </li>
     </ul>
   </div>
@@ -58,7 +166,7 @@ import axios from 'axios';
 export default {
   data () {
     return {
-      cond: '0',
+      cond: 'Popularity',
       addCat: '',
       catNum: -1,
       addSub: [
@@ -81,13 +189,13 @@ export default {
         {name: 'Linear', numP: 2, num: 1}
       ],
       questions: [
-        {question: 'Dompilers1', answer_type: '0', multiple_choice: [
+        {clickedUp: 0, clickedDown: 0, pop: 2, question: 'Dompilers1', answer_type: '0', multiple_choice: [
           {fake1: 'yello'},
           {fake2: 'rello'},
           {fake3: 'mello'},
           {ans: 'u rite'}
         ], true_false: '0', catP: 'cs', catS: 'compilers'},
-        {question: 'Compilers2', answer_type:'1', multiple_choice: [
+        {clickedUp: 0, clickedDown: 0, pop: 4, question: 'Compilers2', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
@@ -181,6 +289,31 @@ export default {
         console.log(error);
       });
 },
+
+submitUp(question) {
+  let newVote = question.vote + 1
+
+  console.log(newVote);
+  axios.post('https://localhost:8080/categories', newVote)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+},
+
+submitDown(question) {
+  let newVote = question.vote - 1
+  console.log(newVote);
+  axios.post('https://localhost:8080/categories', newVote)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+},
     addToAPI() {
       let subcatres = this.subCatNum
       console.log(subcatres);
@@ -209,6 +342,17 @@ export default {
       if (a.question < b.question)
         return -1;
       if (a.question > b.question)
+        return 1;
+      return 0;
+      }
+
+      return this.filteredQs.sort(compare)
+    },
+    sortByPop: function() {
+      function compare(a, b) {
+      if (a.question.pop < b.question.pop)
+        return -1;
+      if (a.question.pop > b.question.pop)
         return 1;
       return 0;
       }
@@ -263,10 +407,22 @@ ul {
   padding: 0;
 }
 li {
-  display: inline-block;
+
   margin: 0 10px;
 }
 a {
   color: #42b983;
+}
+
+.btn-up {
+  text-decoration: none;
+  display: block;
+  transition: 0.1s
+}
+
+.btn-down {
+  text-decoration: none;
+  display: block;
+  transition: 0.1s
 }
 </style>
