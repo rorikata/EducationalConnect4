@@ -42,13 +42,22 @@
     </table>
     <ul v-if="cond === 'Title'" class="list-group">
       <li  v-for="question in sortByAlphabet">
-        <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+        <table>
+          <tr>
+            <td>
+              <div class = "margin"> {{question.pop}} </div>
+            </td>
+            <td>
+              <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+            </td>
+          </tr>
+        </table>
         <table>
           <tr>
             <td>
               <button v-if="question.clickedUp ===0 && question.clickedDown ===1"  class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
               <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
-              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled" v-on:click="submitUp(question)">↑</button>
+              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
             </td>
             <td>
               <div class="list-group-item full-width"> Question: {{question.question}} </div>
@@ -58,7 +67,7 @@
             <td>
               <button v-if="question.clickedDown ===0 && question.clickedUp ===1"  class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
               <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
-              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled" v-on:click="submitDown(question)">↓</button>
+              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
             </td>
             <td>
               <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
@@ -71,13 +80,22 @@
     </ul>
     <ul v-if="cond === 'Date Oldest'" class="list-group">
       <li  v-for="question in sortByDateLate">
-        <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+        <table>
+          <tr>
+            <td>
+              <div class = "margin"> {{question.pop}} </div>
+            </td>
+            <td>
+              <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+            </td>
+          </tr>
+        </table>
         <table>
           <tr>
             <td>
               <button v-if="question.clickedUp ===0 && question.clickedDown ===1"  class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
               <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
-              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled" v-on:click="submitUp(question)">↑</button>
+              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
             </td>
             <td>
               <div class="list-group-item full-width"> Question: {{question.question}} </div>
@@ -87,7 +105,7 @@
             <td>
               <button v-if="question.clickedDown ===0 && question.clickedUp ===1"  class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
               <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
-              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled" v-on:click="submitDown(question)">↓</button>
+              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
             </td>
             <td>
               <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
@@ -100,13 +118,22 @@
     </ul>
     <ul v-if="cond === 'Date Newest'" class="list-group">
       <li  v-for="question in sortByDateEarly">
-        <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+        <table>
+          <tr>
+            <td>
+              <div class = "margin"> {{question.pop}} </div>
+            </td>
+            <td>
+              <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+            </td>
+          </tr>
+        </table>
         <table>
           <tr>
             <td>
               <button v-if="question.clickedUp ===0 && question.clickedDown ===1"  class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
               <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
-              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled" v-on:click="submitUp(question)">↑</button>
+              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
             </td>
             <td>
               <div class="list-group-item full-width"> Question: {{question.question}} </div>
@@ -116,7 +143,7 @@
             <td>
               <button v-if="question.clickedDown ===0 && question.clickedUp ===1"  class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
               <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
-              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled" v-on:click="submitDown(question)">↓</button>
+              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
             </td>
             <td>
               <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
@@ -131,13 +158,22 @@
 
     <ul v-if="cond === 'Popularity'" class="list-group">
       <li  v-for="question in sortByPop">
-        <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+        <table>
+          <tr>
+            <td>
+              <div class = "margin"> {{question.pop}} </div>
+            </td>
+            <td>
+              <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+            </td>
+          </tr>
+        </table>
         <table>
           <tr>
             <td>
               <button v-if="question.clickedUp ===0 && question.clickedDown ===1"  class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
               <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
-              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled" v-on:click="submitUp(question)">↑</button>
+              <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
             </td>
             <td>
               <div class="list-group-item full-width"> Question: {{question.question}} </div>
@@ -147,7 +183,7 @@
             <td>
               <button v-if="question.clickedDown ===0 && question.clickedUp ===1"  class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
               <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
-              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled" v-on:click="submitDown(question)">↓</button>
+              <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
             </td>
             <td>
               <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
@@ -195,7 +231,7 @@ export default {
           {fake3: 'mello'},
           {ans: 'u rite'}
         ], true_false: '0', catP: 'cs', catS: 'compilers'},
-        {clickedUp: 0, clickedDown: 0, pop: 4, question: 'Compilers2', answer_type:'1', multiple_choice: [
+        {clickedUp: 0, clickedDown: 0, pop: 2, question: 'Compilers2', answer_type:'1', multiple_choice: [
           {fake1:''},
           {fake2:''},
           {fake3:''},
@@ -291,7 +327,8 @@ export default {
 },
 
 submitUp(question) {
-  let newVote = question.vote + 1
+  question.pop = question.pop + 1;
+  let newVote = question.pop;
 
   console.log(newVote);
   axios.post('https://localhost:8080/categories', newVote)
@@ -304,7 +341,8 @@ submitUp(question) {
 },
 
 submitDown(question) {
-  let newVote = question.vote - 1
+  question.pop = question.pop-1;
+  let newVote = question.pop;
   console.log(newVote);
   axios.post('https://localhost:8080/categories', newVote)
     .then((response) => {
@@ -350,9 +388,9 @@ submitDown(question) {
     },
     sortByPop: function() {
       function compare(a, b) {
-      if (a.question.pop < b.question.pop)
+      if (a.pop > b.pop)
         return -1;
-      if (a.question.pop > b.question.pop)
+      if (a.pop < b.pop)
         return 1;
       return 0;
       }
@@ -424,5 +462,9 @@ a {
   text-decoration: none;
   display: block;
   transition: 0.1s
+}
+.margin {
+  margin-right: 16px;
+  margin-left: 12px
 }
 </style>
