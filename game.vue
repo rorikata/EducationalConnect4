@@ -10,8 +10,18 @@
 			<button id = "red-btn">Hotter than the Sun</button>
 			<button id = "blue-btn">Ice Cold</button>
 		</div>
-		<div id="dialog"></div>
-    <div>{{filteredQs[randomNumber()]}}</div>
+		<div id="dialog">
+      {{filteredQs[this.num].question}}|
+      {{filteredQs[this.num].answer_type}}|
+      {{filteredQs[this.num].multiple_choice[0].fake1}}|
+      {{filteredQs[this.num].multiple_choice[1].fake2}}|
+      {{filteredQs[this.num].multiple_choice[2].fake3}}|
+      {{filteredQs[this.num].multiple_choice[3].ans}}|
+      {{filteredQs[this.num].true_false}}
+
+    </div>
+    <button v-on:click="num = num + 1">OK</button>
+    <div>{{num}}</div>
 		<div class = "row">
 			<script2 src="/game/jquery"></script2>
 <!--			<script2 src="/game/data"></script2> -->
@@ -28,6 +38,7 @@ export default {
   name: 'hello',
   data () {
     return {
+      num: 0,
       questions: [
         {question: 'Dompilers1', answer_type: '0', multiple_choice: [
           {fake1: 'yello'},
@@ -66,10 +77,10 @@ export default {
           {ans:''}
         ], true_false: 'T', catP: 'eng', catS: 'Writing'},
         {question: 'Lit', answer_type:'1', multiple_choice: [
-          {fake1:''},
-          {fake2:''},
-          {fake3:''},
-          {ans:''}
+          {fake1:'f'},
+          {fake2:'d'},
+          {fake3:'s'},
+          {ans:'asdf'}
         ], true_false: 'T', catP: 'eng', catS: 'Lit'},
         {question: 'Lit2', answer_type:'1', multiple_choice: [
           {fake1:''},
@@ -108,6 +119,10 @@ export default {
 methods: {
   randomNumber: function() {
     return Math.floor((Math.random() * this.filteredQs.length) + 1);
+  },
+  diffList: function() {
+    this.num = this.num + 1;
+    return "{{this.filteredQs[this.num].question}}|this.filteredQs[this.num].answer_type|this.filteredQs[this.num].multiple_choice|this.filteredQs[this.num].multiple_choice.ans|this.filteredQs[this.num].true_false"
   }
 },
 created:function() {
