@@ -475,16 +475,16 @@ $(document).ready(function() {
   }
 
 
-  // for rows also, only check for a win in the row that the player(s) or computer chose.
+  
   function check_row (winning_mark) {
 
   	if (winning_mark === player_1.data_name) {
 
-  		// sort the array of the player's moves (numbers) in ascending order.
+  		
   		player_1_moves.sort();
 
   		for (var i = 0; i < player_1_moves.length - 2; i++) {
-  		// make the limit of i to the array's length - 2 so that there are no undefined objects that the computer tries to compare.
+  		
 
   			var first_match = player_1_moves[i];
   			var second_match = player_1_moves[i+1];
@@ -509,11 +509,11 @@ $(document).ready(function() {
 
   	} else if (winning_mark === player_2.data_name) {
 
-  		// sort the array of the player's moves (numbers) in ascending order.
+  		
   		player_2_moves.sort();
 
   		for (var i = 0; i < player_2_moves.length - 2; i++) {
-  		// make the limit of i to the array's length - 2 so that there are no undefined objects that the computer tries to compare.
+  		
 
   			var first_match = player_2_moves[i];
   			var second_match = player_2_moves[i+1];
@@ -538,11 +538,11 @@ $(document).ready(function() {
 
   	} else if (winning_mark === player.data_name) {
 
-  		// sort the array of the player's moves (numbers) in ascending order.
+  		
   		player_moves.sort();
 
   		for (var i = 0; i < player_moves.length - 2; i++) {
-  		// make the limit of i to the array's length - 2 so that there are no undefined objects that the computer tries to compare.
+  		
 
   			var first_match = player_moves[i];
   			var second_match = player_moves[i+1];
@@ -567,11 +567,11 @@ $(document).ready(function() {
 
   	} else if (winning_mark === computer.data_name) {
 
-  		// sort the array of the computer's moves (numbers) in ascending order.
+  		
   		computer_moves.sort();
 
   		for (var i = 0; i < player_moves.length - 2; i++) {
-  		// make the limit of i to the array's length - 2 so that there are no undefined objects that the computer tries to compare.
+  		
 
   			var first_match = computer_moves[i];
   			var second_match = computer_moves[i+1];
@@ -599,12 +599,12 @@ $(document).ready(function() {
   }
 
 
-  // for diagonals, go through all possible wins instead of just checking for the spot that the player(s) or computer chose.
+  
   function check_diagonal (winning_mark) {
 
   	for (var i = 0; i < diagonal_win.length; i++) {
 
-  		// data-value is assigned to each circle (div) and goes from 0 to 41.
+  		
   		var $check_1 = $("div[data-value='" + diagonal_win[i][0] + "']");
   		var $check_2 = $("div[data-value='" + diagonal_win[i][1] + "']");
   		var $check_3 = $("div[data-value='" + diagonal_win[i][2] + "']");
@@ -630,7 +630,7 @@ $(document).ready(function() {
   }
 
 
-  // announce who won.
+  
   function announce_winner (winning_mark) {
 
   	if (winning_mark === player_1.data_name) {
@@ -647,7 +647,7 @@ $(document).ready(function() {
 
   		}, 500);
 
-  		winner = true; // this stops the game.
+  		winner = true; 
 
   		player_1.wins++;
 
@@ -665,7 +665,7 @@ $(document).ready(function() {
 
    		}, 500);
 
-  		winner = true; // this stops the game.
+  		winner = true; 
 
   		player_2.wins++;
 
@@ -683,7 +683,7 @@ $(document).ready(function() {
 
   	 	}, 500);
 
-  		winner = true; // this stops the game.
+  		winner = true; 
 
   		player.wins++;
 
@@ -699,7 +699,7 @@ $(document).ready(function() {
 
   	 	}, 500);
 
-  		winner = true; // this stops the game.
+  		winner = true; 
 
   		computer.wins++;
 
@@ -708,7 +708,6 @@ $(document).ready(function() {
   }
 
 
-  // create a reset button.
   function play_again () {
 
   	setTimeout(function () {
@@ -724,8 +723,6 @@ $(document).ready(function() {
 
   	}, 950);
 
-  	// for storing player 1, player 2, player, computer's win numbers.
-  	// this is not 100% working and will work on it later.
   	var player_1_score = player_1.wins;
   	localStorage.setItem("player_1_score", player_1_score);
 
