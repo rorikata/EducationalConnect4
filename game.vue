@@ -11,25 +11,25 @@
 			<button id = "blue-btn">Ice Cold</button>
 		</div>
 		<div id="question">
-      			{{filteredQs[this.num].question}}
+      			{{sortByDiff[this.num].question}}
       		</div>
 		<div id="answer_type">
-      			{{filteredQs[this.num].answer_type}}
+      			{{sortByDiff[this.num].answer_type}}
       		</div>
 		<div id="fake1">
-      			{{filteredQs[this.num].multiple_choice[0].fake1}}
+      			{{sortByDiff[this.num].multiple_choice[0].fake1}}
       		</div>
 		<div id="fake2">
-      			{{filteredQs[this.num].multiple_choice[1].fake2}}
+      			{{sortByDiff[this.num].multiple_choice[1].fake2}}
       		</div>
 		<div id="fake3">
-      			{{filteredQs[this.num].multiple_choice[2].fake3}}
+      			{{sortByDiff[this.num].multiple_choice[2].fake3}}
       		</div>
 		<div id="ans">
-      			{{filteredQs[this.num].multiple_choice[3].ans}}
+      			{{sortByDiff[this.num].multiple_choice[3].ans}}
       		</div>
 		<div id="true_false">
-      			{{filteredQs[this.num].true_false}}
+      			{{sortByDiff[this.num].true_false}}
       		</div>
 
     </div>
@@ -154,6 +154,17 @@ computed: {
       this.count = this.count + 1
       return question.catS === this.subCat;
     });
+  },
+  sortByDiff: function() {
+    function compare(a, b) {
+    if (a.diff < b.diff)
+      return -1;
+    if (a.diff > b.diff)
+      return 1;
+    return 0;
+    }
+
+    return this.filteredQs.sort(compare)
   }
 }
 }
