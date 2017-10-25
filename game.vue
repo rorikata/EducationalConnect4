@@ -10,14 +10,27 @@
 			<button id = "red-btn">Hotter than the Sun</button>
 			<button id = "blue-btn">Ice Cold</button>
 		</div>
-		<div id="dialog">
-      {{filteredQs[this.num].question}}|
-      {{filteredQs[this.num].answer_type}}|
-      {{filteredQs[this.num].multiple_choice[0].fake1}}|
-      {{filteredQs[this.num].multiple_choice[1].fake2}}|
-      {{filteredQs[this.num].multiple_choice[2].fake3}}|
-      {{filteredQs[this.num].multiple_choice[3].ans}}|
-      {{filteredQs[this.num].true_false}}
+		<div id="question">
+      			{{filteredQs[this.num].question}}
+      		</div>
+		<div id="answer_type">
+      			{{filteredQs[this.num].answer_type}}
+      		</div>
+		<div id="fake1">
+      			{{filteredQs[this.num].multiple_choice[0].fake1}}
+      		</div>
+		<div id="fake2">
+      			{{filteredQs[this.num].multiple_choice[1].fake2}}
+      		</div>
+		<div id="fake3">
+      			{{filteredQs[this.num].multiple_choice[2].fake3}}
+      		</div>
+		<div id="ans">
+      			{{filteredQs[this.num].multiple_choice[3].ans}}
+      		</div>
+		<div id="true_false">
+      			{{filteredQs[this.num].true_false}}
+      		</div>
 
     </div>
     <button v-on:click="num = num + 1">OK</button>
