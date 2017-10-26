@@ -7,8 +7,9 @@ var Category = mongoose.model('Category');
 
 
 router.route('/add')
-    // add question
+    // add category
     .post(function(req, res) {
+        console.log(req.body);
             Category.findOne({
                 name: req.body.name
             }, function(err, cat) {
@@ -56,5 +57,7 @@ router.route('/get')
             return res.json(categories);
         });
     });
+
+
 
 module.exports = router;

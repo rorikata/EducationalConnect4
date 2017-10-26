@@ -65,9 +65,8 @@ router.route('/get')
 router.route('/update')
     .post(function(req, res) {
         console.log(req.body);
-        var userId = req.body.user._id;
-        var popular = req.body.question.popular;
-        var questionId = req.body.question._id;
+        var popular = req.body.popular;
+        var questionId = req.body.id;
         Question.findById(questionId, function(err, q) {
             console.log(q);
             var newQ = q;

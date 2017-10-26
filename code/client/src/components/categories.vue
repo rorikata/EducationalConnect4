@@ -16,7 +16,7 @@
       <select class="form-control" v-model="subCat">
         <option v-for="subcategory in filteredSubCats">{{subcategory.name}} </option>
       </select>
-      <button class="btn btn-b btn-success" v-on:click="showAddSub = true, addSub.numP = catNum" v-if="catNum != -1">Add Subcategory</button>
+      <button class="btn btn-b btn-success" v-on:click="showAddSub = true, addSub.parentId = catNum" v-if="catNum != -1">Add Subcategory</button>
       <form>
         <br>
         <input type="answer" class="form-control" placeholder="Add Subcategory"v-model="addSub.name" v-if="showAddSub === true">
@@ -208,7 +208,7 @@ export default {
       addCat: '',
       catNum: -1,
       addSub: [
-        {name: '', numP: ''}
+        {name: '', parentId: ''}
       ],
       showAddCat: false,
       showAddSub: false,
@@ -220,24 +220,47 @@ export default {
   },
   methods: {
     submitCat() {
-      let newCat = this.addCat
+      var addCat = {
+        name:this.addCat
+      }
       this.showAddCat = false
-      //console.log(newCat);
-      axios.post('http://localhost:8080/categories', newCat)
+      console.log(name);
+      axios.post('http://localhost:3000/category/add', addCat)
         .then((response) => {
           //console.log(response);
+          axios.get('http://localhost:3000/category/get')
+            .then((response) => {
+              //console.log(response)
+              this.categories = response.data;
+            })
+            .catch((error) => {
+              console.log(error)
+            })
         })
         .catch((error) => {
           console.log(error);
         });
   },
   submitSub() {
-    let newSub = this.addSub
+    var newSub = {
+      name: this.addSub.name,
+      parentId: this.addSub.parentId
+    }
     this.showAddSub = false
-    //console.log(newSub);
-    axios.post('http://localhost:8080/categories', newSub)
+    console.log("here");
+    //console.log(this.subcategories[0]);
+    console.log(newSub);
+    axios.post('http://localhost:3000/subcategory/add', newSub)
       .then((response) => {
         //console.log(response);
+        axios.get('http://localhost:3000/subcategory/getAll')
+            .then((response) => {
+              //console.log(response)
+              this.subcategories = response.data;
+            })
+            .catch((error) => {
+              console.log(error)
+            })
       })
       .catch((error) => {
         console.log(error);
@@ -247,11 +270,8 @@ submitUp(question) {
   question.popular = question.popular + 1;
   console.log(this.user);
   //console.log(newVote);
-  var info = {
     question: question,
-    user: this.user
-  }
-  axios.post('http://localhost:3000/question/update', info)
+  axios.post('http://localhost:3000/question/update', question)
     .then((response) => {
       //console.log(response);
     })
@@ -270,18 +290,7 @@ submitDown(question) {
     .catch((error) => {
       console.log(error);
     });
-},
-    addToAPI() {
-      let subcatres = this.subCatNum
-      //console.log(subcatres);
-      axios.post('https://localhost:8080/categories', subcatres)
-        .then((response) => {
-          //console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-  }
+}
   },
   computed: {
     filteredSubCats: function() {

@@ -7,6 +7,7 @@ var Subcategory = mongoose.model('Subcategory');
 
 router.route('/add')
     .post(function(req, res) {
+        //console.log(req.body);
         Subcategory.findOne({
             name: req.body.name
         }, function(err, subcat) {
