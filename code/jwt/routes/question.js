@@ -17,6 +17,9 @@ router.route('/add')
         question.subcategory_type = req.body.subcategory_type;
         question.checkMul = req.body.checkMul;
         question.text = req.body.text;
+        question.popular = 0;
+        question.clickedUp = 0;
+        question.clickedDown = 0;
         console.log(typeof req.body.checkMul);
         if(req.body.checkMul === true) {
             // multiple chose question
@@ -57,6 +60,25 @@ router.route('/get')
             }
             return res.json(questions);
         });
+    });
+
+router.route('/update')
+    .post(function(req, res) {
+        console.log(req.body);
+        var userId = req.body.user._id;
+        var popular = req.body.question.popular;
+        var questionId = req.body.question._id;
+        Question.findById(questionId, function(err, q) {
+            console.log(q);
+            var newQ = q;
+            newQ.popular = popular;
+            newQ.save(function(err, newQ) {
+                if(err) {
+                    return res.send(500, err);
+                }
+                return res.json(newQ);
+            });
+        })
     });
 
 module.exports = router;

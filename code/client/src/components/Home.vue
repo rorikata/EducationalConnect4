@@ -11,7 +11,7 @@
             <option v-for="subcategory in filterSubcategory">{{subcategory.name}}</option>
           </select>
         <!--<button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI()" >Submit</button> -->
-        <ul>
+        <ul v-if="user">
           <li v-if="catNum === 0" v-for="question in questions">
               {{ question.text }}
           </li>
@@ -55,8 +55,10 @@ computed: {
   }
 },
 created:function() {
-  if(this.user.authenticated === true) {
-    console.log(this.user);
+  //auth.checkAuth();
+  //console.log(this.user.authenticated);
+  //if(this.user.authenticated === true) {
+    //console.log("yoyo" + this.user);
     axios.get('http://localhost:3000/category/get')
       .then((response) => {
         console.log(response)
@@ -82,7 +84,7 @@ created:function() {
           .catch((error) => {
             console.log(error)
           })
-    }
+    //}
   }
 }
 </script>

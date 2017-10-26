@@ -6,6 +6,9 @@ var questionSchema = new mongoose.Schema({
     userId: String,
     category_type: String,
     subcategory_type: String,
+    clickedUp: [String],
+    clickedDown: [String],
+    popular: Number,
     // answer_type is 0 or 1.
     // 0: multiple_choice
     // 1: true_false

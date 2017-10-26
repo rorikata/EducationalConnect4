@@ -10,7 +10,11 @@
     <button id="red-btn">Hotter than the Sun</button>
     <button id="blue-btn">Ice Cold</button>
   </div>
-  <div id="dialog">{{filteredQs[randomNumber()].text}}</div>
+  <div id="dialog">
+    <button >ok</button>
+    <div v-view>{{filteredQs[randomNumber()].text}}</div>
+    <div>{{filteredQs[randomNumber()]}}</div>
+  </div>
   <div class="row">
     <script2 src="/game/jquery"></script2>
     <script2 src="/game/jquery_ui"></script2>
