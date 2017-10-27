@@ -344,7 +344,7 @@ $(document).ready(function() {
    	modal.style.display = "block";
 
 
-  	if (mark === player_1.data_name) {
+  } if (mark === player_1.data_name) {
 
   		player_1_moves.push(parseInt($(position).attr("data-value")));
 
