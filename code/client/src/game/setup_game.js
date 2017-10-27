@@ -287,38 +287,59 @@ $(document).ready(function() {
   function make_move (position, new_classname, mark) {
 
     console.log($("#dialog").dialog);
-      $("#dialog").dialog({
+    var qmodal = document.getElementById('question');
+    var qbutton = qmodal.innerHTML;
 
-      autoOpen: true,
-      buttons: {
+    var amodal = document.getElementById('ans');
+    var abutton = amodal.innerHTML;
 
-          Yes: function() {
+    var f1modal = document.getElementById('fake1');
+    var f1button = f1modal.innerHTML;
 
-              alert("Yes!");
-              $(this).dialog("close");
-          },
-          No: function() {
+    var f2modal = document.getElementById('fake2');
+    var f2button = f2modal.innerHTML;
 
-              alert("No!");
-              $(this).dialog("close");
+    var f3modal = document.getElementById('fake3');
+ 	  var f3button = f2modal.innerHTML;
 
-          },
-          Maybe: function() {
 
-              alert("Maybe!");
-              $(this).dialog("close");
-          },
+ 	qmodal.style.display = "block";
 
-          NoIdea: function() {
+//var button1 = modal.innerHTML;
+//var button2 = 'Not Ok';  
+	if (mark === player_1.data_name) {
+		$("#question").dialog({
+    
+    autoOpen: true,
+    buttons: [
+    {
+        text: abutton,
+        click: function() { $(this).dialog("close"); 
+          player_1_moves.push(parseInt($(position).attr("data-value")));
+          $(position).addClass(new_classname);
+          $(position).attr("data-name", mark);    
+          $(this).dialog("close");
+    	  }
+    },
 
-              alert("Maybe!");
-              $(this).dialog("close");
-          }
 
-      },
-      width: "800px"
+    {
+        text: f1button,
+        click: function() { $(this).dialog('close'); }
+    },
 
-  });
+
+    {
+        text: f2button,
+        click: function() { $(this).dialog('close'); }
+    },
+
+    {
+        text: f3button,
+        click: function() { $(this).dialog('close'); }
+    }
+
+] });
       var modal = document.getElementById('dialog');
    	modal.style.display = "block";
 
