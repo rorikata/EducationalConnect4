@@ -285,8 +285,9 @@ $(document).ready(function() {
   }
 
   function make_move (position, new_classname, mark) {
+    var modal = document.getElementById('dialog');
+    var button = modal.innerHTML;
 
-    console.log($("#dialog").dialog);
     var qmodal = document.getElementById('question');
     var qbutton = qmodal.innerHTML;
 
@@ -300,10 +301,7 @@ $(document).ready(function() {
     var f2button = f2modal.innerHTML;
 
     var f3modal = document.getElementById('fake3');
- 	  var f3button = f2modal.innerHTML;
-
-
- 	qmodal.style.display = "block";
+ 	var f3button = f2modal.innerHTML;
 
 //var button1 = modal.innerHTML;
 //var button2 = 'Not Ok';  
@@ -315,66 +313,178 @@ $(document).ready(function() {
     {
         text: abutton,
         click: function() { $(this).dialog("close"); 
-          player_1_moves.push(parseInt($(position).attr("data-value")));
-          $(position).addClass(new_classname);
-          $(position).attr("data-name", mark);    
-          $(this).dialog("close");
-    	  }
+        player_1_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+            
+            $(this).dialog("close");
+    	}
     },
 
 
     {
         text: f1button,
-        click: function() { $(this).dialog('close'); }
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
     },
 
 
     {
         text: f2button,
-        click: function() { $(this).dialog('close'); }
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
     },
 
     {
         text: f3button,
-        click: function() { $(this).dialog('close'); }
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
     }
 
 ] });
-      var modal = document.getElementById('dialog');
-   	modal.style.display = "block";
+
+/**{
+    
+        Yes: function() { 
+    	player_1_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+            
+            $(this).dialog("close"); 
+        },
+        No: function() { 
+            
+            $(this).dialog("close"); 
+
+        },
+        Maybe: function() { 
+            
+            alert("Maybe!"); 
+            $(this).dialog("close"); 
+        },
+
+        NoIdea: function() { 
+            
+            alert("Maybe!"); 
+            $(this).dialog("close"); 
+        }
+    
+    },
+    width: "800px"
+    
+});*/
+	var modal = document.getElementById('question');
+ 	modal.style.display = "block";
+		
+
+	} else if (mark === player_2.data_name) {
+
+		$("#question").dialog({
+    
+    autoOpen: true,
+    buttons: [
+    {
+        text: abutton,
+        click: function() { $(this).dialog("close"); 
+        player_2_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+            
+            $(this).dialog("close");
+    	}
+    },
 
 
-  } if (mark === player_1.data_name) {
+    {
+        text: f1button,
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    },
 
-  		player_1_moves.push(parseInt($(position).attr("data-value")));
 
-  		$(position).addClass(new_classname);
-  		$(position).attr("data-name", mark);
+    {
+        text: f2button,
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    },
 
-  	} else if (mark === player_2.data_name) {
+    {
+        text: f3button,
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    }
 
-  		player_2_moves.push(parseInt($(position).attr("data-value")));
+] });
 
-  		$(position).addClass(new_classname);
-  		$(position).attr("data-name", mark);
+	var modal = document.getElementById('question');
+ 	modal.style.display = "block";
+		
 
-  	} else if (mark === player.data_name) {
 
-  		player_moves.push(parseInt($(position).attr("data-value")));
+	} else if (mark === player.data_name) {
 
-  		$(position).addClass(new_classname);
-  		$(position).attr("data-name", mark);
+		
+		$("#question").dialog({
+    
+    autoOpen: true,
+    buttons: [
+    {
+        text: abutton,
+        click: function() { $(this).dialog("close"); 
+        player_moves.push(parseInt($(position).attr("data-value")));
 
-  	} else if (mark === computer.data_name) {
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+            
+            $(this).dialog("close");
+    	}
+    },
 
-  		computer_moves.push(parseInt($(position).attr("data-value")));
 
-  		$(position).addClass(new_classname);
-  		$(position).attr("data-name", mark);
+    {
+        text: f1button,
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    },
 
-  	}
 
-  }
+    {
+        text: f2button,
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    },
+
+    {
+        text: f3button,
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    }
+
+] });
+	var modal = document.getElementById('question');
+ 	modal.style.display = "block";
+
+	} else if (mark === computer.data_name) {
+
+		computer_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+
+	}
+}
 
 
   function two_players_move () {
