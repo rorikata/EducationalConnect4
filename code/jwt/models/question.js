@@ -15,11 +15,14 @@ var questionSchema = new mongoose.Schema({
     checkMul: Boolean,
     text: String,
     multiple_choice: {
-            a: String,
-            b: String,
-            c: String,
+            fake1: String,
+            fake2: String,
+            fake3: String,
             ans: String
         },
+    diff: Number,
+    ansRight: Number,
+    totalAns: Number, 
     true_false: Boolean,
     created_at: {type: Date, default: Date.now}
 

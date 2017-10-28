@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -12,41 +14,54 @@ router.route('/add')
         console.log(req.body);
 
         var question = new Question();
-        question.userId = req.body.userId;
-        question.category_type = req.body.category_type;
-        question.subcategory_type = req.body.subcategory_type;
-        question.checkMul = req.body.checkMul;
-        question.text = req.body.text;
-        question.popular = 0;
-        question.clickedUp = 0;
-        question.clickedDown = 0;
-        console.log(typeof req.body.checkMul);
-        if(req.body.checkMul === true) {
-            // multiple chose question
-            question.multiple_choice.a = req.body.mc_a;
-            question.multiple_choice.b = req.body.mc_b;
-            question.multiple_choice.c = req.body.mc_c;
-            question.multiple_choice.ans = req.body.mc_ans;
-            question.save(function(err, ques) {
-                if(err) {
+        Question.findOne({
+            text: req.body.text
+        }, function(err, q) {
+            if(!q) {
+                question.userId = req.body.userId;
+                question.category_type = req.body.category_type;
+                question.subcategory_type = req.body.subcategory_type;
+                question.checkMul = req.body.checkMul;
+                question.text = req.body.text;
+                question.popular = 0;
+                question.clickedUp = 0;
+                question.clickedDown = 0;
+                question.diff = 0;
+                question.ansRight = 0;
+                question.totalAns = 0;
+                console.log(typeof req.body.checkMul);
+                if(req.body.checkMul === true) {
+                    // multiple chose question
+                    question.multiple_choice.fake1 = req.body.fake1;
+                    question.multiple_choice.fake2 = req.body.fake2;
+                    question.multiple_choice.fake3 = req.body.fake3;
+                    question.multiple_choice.ans = req.body.ans;
+                    question.save(function(err, ques) {
+                        if(err) {
+                            return res.send(500);
+                        }
+                        return res.json(ques);
+                    });
+                } else if(req.body.checkMul === false) {
+                    // true or false question
+                    question.true_false = req.body.true_false;
+                    question.save(function(err, ques) {
+                        if(err) {
+                            return res.send(500);
+                        }
+                        return res.json(ques);
+                    });
+                } else {
+                    // error
+                    console.log('error occur');
                     return res.send(500);
                 }
-                return res.json(ques);
-            });
-        } else if(req.body.checkMul === false) {
-            // true or false question
-            question.true_false = req.body.true_false;
-            question.save(function(err, ques) {
-                if(err) {
-                    return res.send(500);
-                }
-                return res.json(ques);
-            });
-        } else {
-            // error
-            console.log('error occur');
-            return res.send(500);
-        }
+
+            } else {
+                res.send({success: false, message: 'question is already exists'});
+            }
+        })
+
 
     });
 
@@ -62,11 +77,19 @@ router.route('/get')
         });
     });
 
+router.route('/addReview')
+    .post(function(req, res) {
+        console.log(req.body);
+        console.log("HERE");
+        console.log(req.body.ids);
+    });
+
 router.route('/update')
     .post(function(req, res) {
         console.log(req.body);
+        console.log(req.body.popular);
         var popular = req.body.popular;
-        var questionId = req.body.id;
+        var questionId = req.body._id;
         Question.findById(questionId, function(err, q) {
             console.log(q);
             var newQ = q;

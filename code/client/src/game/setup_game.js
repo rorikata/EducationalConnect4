@@ -1,6 +1,6 @@
-
 $(document).ready(function() {
 
+  var wrong = [''];
 
   var player_1 = {
 
@@ -256,7 +256,7 @@ $(document).ready(function() {
 
  	var modal = document.getElementById('dialog');
  	modal.style.display = "none";
-  console.log(document.getElementById('two-players-btn'));
+  //console.log(document.getElementById('two-players-btn'));
  	start_game ();
 
 
@@ -284,76 +284,194 @@ $(document).ready(function() {
           alert('clicked');
   }
 
-  function make_move (position, new_classname, mark) {
-
-    console.log($("#dialog").dialog);
-      $("#dialog").dialog({
-
-      autoOpen: true,
-      buttons: {
-
-          Yes: function() {
-
-              alert("Yes!");
-              $(this).dialog("close");
-          },
-          No: function() {
-
-              alert("No!");
-              $(this).dialog("close");
-
-          },
-          Maybe: function() {
-
-              alert("Maybe!");
-              $(this).dialog("close");
-          },
-
-          NoIdea: function() {
-
-              alert("Maybe!");
-              $(this).dialog("close");
-          }
-
-      },
-      width: "800px"
-
-  });
-      var modal = document.getElementById('dialog');
-   	modal.style.display = "block";
-
-
-  	if (mark === player_1.data_name) {
-
-  		player_1_moves.push(parseInt($(position).attr("data-value")));
-
-  		$(position).addClass(new_classname);
-  		$(position).attr("data-name", mark);
-
-  	} else if (mark === player_2.data_name) {
-
-  		player_2_moves.push(parseInt($(position).attr("data-value")));
-
-  		$(position).addClass(new_classname);
-  		$(position).attr("data-name", mark);
-
-  	} else if (mark === player.data_name) {
-
-  		player_moves.push(parseInt($(position).attr("data-value")));
-
-  		$(position).addClass(new_classname);
-  		$(position).attr("data-name", mark);
-
-  	} else if (mark === computer.data_name) {
-
-  		computer_moves.push(parseInt($(position).attr("data-value")));
-
-  		$(position).addClass(new_classname);
-  		$(position).attr("data-name", mark);
-
-  	}
-
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.random() * (max - min) + min;
   }
+
+
+  function make_move (position, new_classname, mark) {
+    //var modal = document.getElementById('dialog');
+    //var button = modal.innerHTML;
+    //console.log(button);
+
+    var qmodal = document.getElementById('questions');
+    var obj = qmodal.innerHTML;
+    var questions = jQuery.parseJSON(obj);
+    //console.log(questions);
+    var len = questions.length;
+    //console.log("LEN: " + len);
+    var random = parseInt(getRandomInt(0, len));
+    //console.log(random);
+    var abutton, f1button, f2button, f3button;
+    var qbutton = String(questions[random].text);
+    var question = questions[random];
+    //console.log(questions[random]);
+    if(questions[random].checkMul == true) {
+      abutton = String(questions[random].multiple_choice.ans);
+      f1button = String(questions[random].multiple_choice.fake1);
+      f2button = String(questions[random].multiple_choice.fake2);
+      f3button = String(questions[random].multiple_choice.fake3);
+    } else {
+      abutton = String(questions[random].true_false);
+      f1button = String(!questions[random].true_false);
+      f2button = 'N/A';
+ 	    f3button = 'N/A';
+    }
+
+//var button1 = modal.innerHTML;
+//var button2 = 'Not Ok';
+	if (mark === player_1.data_name) {
+    $("#question").text(qbutton);
+		$("#question").dialog({
+
+    autoOpen: true,
+    buttons: [
+    {
+        text: abutton,
+        click: function() { $(this).dialog("close");
+        player_1_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+
+            $(this).dialog("close");
+    	}
+    },
+
+
+    {
+        text: f1button,
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+    	}
+    },
+
+
+    {
+        text: f2button,
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+    	}
+    },
+
+    {
+        text: f3button,
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+    	}
+    }
+
+] });
+
+	var modal = document.getElementById('question');
+ 	modal.style.display = "block";
+
+
+	} else if (mark === player_2.data_name) {
+    $("#question").text(qbutton);
+		$("#question").dialog({
+
+    autoOpen: true,
+    buttons: [
+    {
+        text: abutton,
+        click: function() { $(this).dialog("close");
+        player_2_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+
+            $(this).dialog("close");
+    	}
+    },
+
+
+    {
+        text: f1button,
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+    	}
+    },
+
+
+    {
+        text: f2button,
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+    	}
+    },
+
+    {
+        text: f3button,
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+    	}
+    }
+
+] });
+
+	var modal = document.getElementById('question');
+ 	modal.style.display = "block";
+
+
+
+	} else if (mark === player.data_name) {
+
+    $("#question").text(qbutton);
+		$("#question").dialog({
+
+    autoOpen: true,
+    buttons: [
+    {
+        text: abutton,
+        click: function() { $(this).dialog("close");
+        player_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+
+            $(this).dialog("close");
+    	}
+    },
+
+
+    {
+        text: f1button,
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+    	}
+    },
+
+
+    {
+        text: f2button,
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+    	}
+    },
+
+    {
+        text: f3button,
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+    	}
+    }
+
+] });
+	var modal = document.getElementById('question');
+ 	modal.style.display = "block";
+
+	} else if (mark === computer.data_name) {
+
+		computer_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+
+	}
+}
 
 
   function two_players_move () {
@@ -431,6 +549,8 @@ $(document).ready(function() {
   		setTimeout(function () {
 
   			$buttons_row.append("<h1 style='font-size: 6em; margin: 13vh 0 25px 0'>It's a Draw!</h1>");
+      //  console.log(wrong);
+        //$buttons_row.append("<button v-on:click=\"review(" + wrong +  ")\></button>");
 
   			play_again ();
 
@@ -452,7 +572,7 @@ $(document).ready(function() {
 
   			for (var j = column_arr.length - 1; j > 1; j--) {
 
-  				console.log(j);
+  				//console.log(j);
 
   				if (column_arr[j].getAttribute("data-name") === winning_mark &&
   					column_arr[j-1].getAttribute("data-name") === winning_mark &&
@@ -475,16 +595,16 @@ $(document).ready(function() {
   }
 
 
-  
+
   function check_row (winning_mark) {
 
   	if (winning_mark === player_1.data_name) {
 
-  		
+
   		player_1_moves.sort();
 
   		for (var i = 0; i < player_1_moves.length - 2; i++) {
-  		
+
 
   			var first_match = player_1_moves[i];
   			var second_match = player_1_moves[i+1];
@@ -509,11 +629,11 @@ $(document).ready(function() {
 
   	} else if (winning_mark === player_2.data_name) {
 
-  		
+
   		player_2_moves.sort();
 
   		for (var i = 0; i < player_2_moves.length - 2; i++) {
-  		
+
 
   			var first_match = player_2_moves[i];
   			var second_match = player_2_moves[i+1];
@@ -538,11 +658,11 @@ $(document).ready(function() {
 
   	} else if (winning_mark === player.data_name) {
 
-  		
+
   		player_moves.sort();
 
   		for (var i = 0; i < player_moves.length - 2; i++) {
-  		
+
 
   			var first_match = player_moves[i];
   			var second_match = player_moves[i+1];
@@ -567,11 +687,11 @@ $(document).ready(function() {
 
   	} else if (winning_mark === computer.data_name) {
 
-  		
+
   		computer_moves.sort();
 
   		for (var i = 0; i < player_moves.length - 2; i++) {
-  		
+
 
   			var first_match = computer_moves[i];
   			var second_match = computer_moves[i+1];
@@ -599,12 +719,12 @@ $(document).ready(function() {
   }
 
 
-  
+
   function check_diagonal (winning_mark) {
 
   	for (var i = 0; i < diagonal_win.length; i++) {
 
-  		
+
   		var $check_1 = $("div[data-value='" + diagonal_win[i][0] + "']");
   		var $check_2 = $("div[data-value='" + diagonal_win[i][1] + "']");
   		var $check_3 = $("div[data-value='" + diagonal_win[i][2] + "']");
@@ -630,7 +750,7 @@ $(document).ready(function() {
   }
 
 
-  
+
   function announce_winner (winning_mark) {
 
   	if (winning_mark === player_1.data_name) {
@@ -643,11 +763,36 @@ $(document).ready(function() {
   		setTimeout(function () {
 
   			$buttons_row.append("<h1 style='font-size: 6em; margin: 13vh 0 25px 0'>"+ winning_mark + " wins!</h1>").fadeIn();
-  			play_again ();
+        console.log(wrong);
+        //$buttons_row.append("<button v-on:click=\"review(" + wrong +  ")\"></button>").fadeIn();
+        var review = {
+          ids: []
+        };
+        for(var i = 1; i < wrong.length; i++) {
+            console.log(wrong[i]._id);
+            review.ids.push(wrong[i]._id);
+        }
+        console.log(review);
+        //$.ajax({ url:url, type:"POST", data:data, contentType:"application/json", dataType:"json", success: function(){ ... } })
+        $.ajax({
+          url: 'http://localhost:3000/question/addReview',
+          data: {'ids': review.ids},
+          contentType: "application/x-www-form-urlencoded",
+          type: 'POST',
+          dataType:"json",
+          success: function() {
+            console.log('success');
+          },
+          error: function() {
+            console.log('error');
+          }
+        });
+        //$.post("http://localhost:3000/question/addReview", review);
+        play_again ();
 
   		}, 500);
 
-  		winner = true; 
+  		winner = true;
 
   		player_1.wins++;
 
@@ -661,11 +806,13 @@ $(document).ready(function() {
   		setTimeout(function () {
 
    			$buttons_row.append("<h1 style='font-size: 6em; margin: 13vh 0 25px 0'>"+ winning_mark + " wins!</h1>");
+      //  console.log(wrong);
+        $buttons_row.append("<button style='font-size: 6em; margin: 13vh 0 25px 0' v-on:click=\"review(" + wrong +  ")\">Put to Review?</button>").fadeIn();
    			play_again ();
 
    		}, 500);
 
-  		winner = true; 
+  		winner = true;
 
   		player_2.wins++;
 
@@ -683,7 +830,7 @@ $(document).ready(function() {
 
   	 	}, 500);
 
-  		winner = true; 
+  		winner = true;
 
   		player.wins++;
 
@@ -699,7 +846,7 @@ $(document).ready(function() {
 
   	 	}, 500);
 
-  		winner = true; 
+  		winner = true;
 
   		computer.wins++;
 
@@ -716,7 +863,7 @@ $(document).ready(function() {
 
   	 	// onclick, reload the window.
   		$("#play-again").click(function () {
-  		console.log("clicked");
+  		//console.log("clicked");
   		location.reload();
 
   	});

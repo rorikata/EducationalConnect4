@@ -1,8 +1,19 @@
 <template>
 <div class="container">
   <link rel="stylesheet" href="/game/css">
-  <h1 id="disclaimer">Please make your browser bigger!</h1>
-  <div class="buttons-row">
+  <div class="well" v-show="sel === 0">
+    <h4>Categories</h4>
+    <select class="form-control" v-model="catNum">
+        <option v-for="category in categories" v-bind:value="category._id">{{category.name}} </option>
+      </select>
+    <br>
+    <select class="form-control" v-model="subCat">
+      <option v-for="subcategory in filteredSubCats">{{subcategory.name}} </option>
+    </select>
+    <button class="button" v-on:click="select">Select</button>
+  </div>
+  <h2 id="disclaimer">Please make your browser bigger!</h2>
+  <div class="buttons-row" v-show="sel !== 0">
     <h2 id="question">Do you want to play with a friend or with the ultra unbeatable computer?</h2>
     <button id="two-players-btn">With a Friend</button>
     <button id="one-player-btn">Bring on the Computer</button>
@@ -11,13 +22,14 @@
     <button id="blue-btn">Ice Cold</button>
   </div>
   <div id="dialog">
-    <button >ok</button>
-    <div v-view>{{filteredQs[randomNumber()].text}}</div>
-    <div>{{filteredQs[randomNumber()]}}</div>
+    <div id="questions">
+      {{sortByDiff}}
+    </div>
+    <div id="question">
+    </div>
   </div>
   <div class="row">
     <script2 src="/game/jquery"></script2>
-    <script2 src="/game/jquery_ui"></script2>
     <script2 src="/game/setupGame"></script2>
   </div>
 </div>
@@ -25,49 +37,87 @@
 
 <script>
 import axios from 'axios';
-
 export default {
   name: 'hello',
   data() {
     return {
+      sel: 0,
+      subCat: 0,
+      categories: [''],
+      subcategories: [''],
+      catNum: 0,
+      num: 0,
       questions: [''],
+      subcategories: [''],
+      categories: [''],
+      sorted: [''],
+      incorrect: ['']
     }
   },
-    methods: {
-        randomNumber: function() {
-          return Math.floor((Math.random() * this.filteredQs.length) + 1);
-        }
-      },
-      created: function() {
-        axios.get('http://localhost:3000/question/get')
-          .then((response) => {
-            console.log(response.data)
-            this.questions = response.data;
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      }, //need another get for the subcategory questions are in
-      computed: {
-        filteredQs: function() {
-          return this.questions.filter((question) => {
-            this.count = this.count + 1
-            return question.catS === this.subCat;
-          });
-        }
-      },
-      created: function() {
-        axios.get('http://localhost:3000/question/get')
-          .then((response) => {
-            console.log(response.data)
-            this.questions = response.data;
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+  methods: {
+    select: function() {
+      this.sel = 1;
+    },
+    randomNumber: function() {
+      return Math.floor((Math.random() * this.filteredQs.length) + 1);
+    },
+    diffList: function() {
+      this.num = this.num + 1;
+      return "{{this.filteredQs[this.num].text}}|this.filteredQs[this.num].answer_type|this.filteredQs[this.num].multiple_choice|this.filteredQs[this.num].multiple_choice.ans|this.filteredQs[this.num].true_false"
+    }
+  },
+  created: function() {
+    axios.get('http://localhost:3000/question/get')
+      .then((response) => {
+        console.log(response.data)
+        this.questions = response.data;
+      })
+      .catch((error) => {
+        console.log(error)
+      })
 
+    axios.get('http://localhost:3000/subcategory/getAll')
+      .then((response) => {
+        //console.log(response)
+        this.subcategories = response.data;
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    axios.get('http://localhost:3000/category/get')
+      .then((response) => {
+        //console.log(response.data)
+        this.categories = response.data;
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, //need another get for the subcategory questions are in
+  computed: {
+    filteredSubCats: function() {
+      //console.log(this.categories)
+      this.subCat = -1
+      return this.subcategories.filter((subcategory) => {
+        return subcategory.parentId === this.catNum;
+      });
+    },
+    filteredQs: function() {
+      return this.questions.filter((question) => {
+        return question.subcategory_type === this.subCat;
+      });
+    },
+    sortByDiff: function() {
+      function compare(a, b) {
+        if (a.diff < b.diff)
+          return -1;
+        if (a.diff > b.diff)
+          return 1;
+        return 0;
       }
+      return this.filteredQs.sort(compare)
+    }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -221,26 +271,20 @@ h2 {
 }
 
 @media (max-width: 785px) {
-
   #disclaimer {
     display: inline;
   }
-
   .container {
     padding-top: 20vh;
   }
-
   #title {
     display: none;
   }
-
   .row {
     display: none;
   }
-
   .buttons-row {
     display: none;
   }
-
 }
 </style>

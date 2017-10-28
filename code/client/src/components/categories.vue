@@ -24,6 +24,7 @@
       </form>
       </div>
     <!--<button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI()" >Submit</button> -->
+    <div>
     <table>
       <tr>
         <td>
@@ -31,24 +32,30 @@
       </td>
 
     <td>
-      <select class="form-control" v-model="cond">
+      <select class="form-control" v-model="temp">
         <option>Popularity</option>
-        <option>Title</option>
         <option>Date Oldest</option>
         <option>Date Newest</option>
       </select>
     </td>
+      <td>
+      <button class="btn btn-large btn-block btn-success full-width" v-if="temp === 'Popularity'" v-on:click="popUpdate(sortByPop)"> OK </button>
+      <button class="btn btn-large btn-block btn-success full-width" v-if="temp === 'Date Oldest'" v-on:click="oldUpdate(sortByDateLate)"> OK </button>
+      <button class="btn btn-large btn-block btn-success full-width" v-if="temp === 'Date Newest'" v-on:click="newUpdate(sortByDateEarly)"> OK </button>
+    </td>
     </tr>
     </table>
-    <ul v-if="cond === 'Title'" class="list-group">
-      <li  v-for="question in sortByAlphabet">
+
+    <ul v-if="cond === 'Popularity'" class="list-group" >
+      <li  v-for="question in sortByPop" >
+
         <table>
           <tr>
             <td>
               <div class = "margin"> {{question.popular}} </div>
             </td>
             <td>
-              <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+              <div> Category: {{categories[question.category_type].name}} <br>Sub-category: {{question.subcategory_type}} </div>
             </td>
           </tr>
         </table>
@@ -60,7 +67,7 @@
               <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
             </td>
             <td>
-              <div class="list-group-item full-width"> Question: {{question.question}} </div>
+              <div class="list-group-item full-width"> Question: {{question.text}} </div>
             </td>
           </tr>
           <tr>
@@ -70,8 +77,8 @@
               <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
             </td>
             <td>
-              <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
-              <div v-if="question.answer_type === '1'" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
+              <div v-if="question.checkMul === true" class="list-group-item full-width"> Answer: {{question.multiple_choice.ans}}</div>
+              <div v-if="question.checkMul === false" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
             </td>
           </tr>
         </table>
@@ -86,7 +93,7 @@
               <div class = "margin"> {{question.popular}} </div>
             </td>
             <td>
-              <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+              <div> Category: {{categories[question.category_type].name}} <br>Sub-category: {{question.subcategory_type}} </div>
             </td>
           </tr>
         </table>
@@ -98,7 +105,7 @@
               <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
             </td>
             <td>
-              <div class="list-group-item full-width"> Question: {{question.question}} </div>
+              <div class="list-group-item full-width"> Question: {{question.text}} </div>
             </td>
           </tr>
           <tr>
@@ -108,8 +115,8 @@
               <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
             </td>
             <td>
-              <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
-              <div v-if="question.answer_type === '1'" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
+              <div v-if="question.checkMul === true" class="list-group-item full-width"> Answer: {{question.multiple_choice.ans}}</div>
+              <div v-if="question.checkMul === false" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
             </td>
           </tr>
         </table>
@@ -124,7 +131,7 @@
               <div class = "margin"> {{question.popular}} </div>
             </td>
             <td>
-              <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+              <div> Category: {{categories[question.category_type].name}} <br>Sub-category: {{question.subcategory_type}} </div>
             </td>
           </tr>
         </table>
@@ -136,7 +143,7 @@
               <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
             </td>
             <td>
-              <div class="list-group-item full-width"> Question: {{question.question}} </div>
+              <div class="list-group-item full-width"> Question: {{question.text}} </div>
             </td>
           </tr>
           <tr>
@@ -146,25 +153,23 @@
               <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
             </td>
             <td>
-              <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
-              <div v-if="question.answer_type === '1'" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
+              <div v-if="question.checkMul === true" class="list-group-item full-width"> Answer: {{question.multiple_choice.ans}}</div>
+              <div v-if="question.checkMul === false" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
             </td>
           </tr>
         </table>
         <br>
       </li>
     </ul>
-
-
-    <ul v-if="cond === 'Popularity'" class="list-group">
-      <li  v-for="question in sortByPop">
+    <ul v-if="cond === 'Title'" class="list-group">
+      <li  v-for="question in sortByAlphabet">
         <table>
           <tr>
             <td>
               <div class = "margin"> {{question.popular}} </div>
             </td>
             <td>
-              <div> Category: {{question.catP}} <br>Sub-category: {{question.catS}} </div>
+              <div> Category: {{categories[question.category_type].name}} <br>Sub-category: {{question.subcategory_type}} </div>
             </td>
           </tr>
         </table>
@@ -176,7 +181,7 @@
               <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
             </td>
             <td>
-              <div class="list-group-item full-width"> Question: {{question.question}} </div>
+              <div class="list-group-item full-width"> Question: {{question.text}} </div>
             </td>
           </tr>
           <tr>
@@ -186,14 +191,15 @@
               <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
             </td>
             <td>
-              <div v-if="question.answer_type === '0'" class="list-group-item full-width"> Answer: {{question.multiple_choice[3].ans}}</div>
-              <div v-if="question.answer_type === '1'" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
+              <div v-if="question.checkMul === true" class="list-group-item full-width"> Answer: {{question.multiple_choice.ans}}</div>
+              <div v-if="question.checkMul === false" class="list-group-item full-width"> Answer: {{question.true_false}} </div>
             </td>
           </tr>
         </table>
         <br>
       </li>
     </ul>
+  </div>
   </div>
 </template>
 
@@ -203,6 +209,8 @@ import auth from '../auth/index';
 export default {
   data () {
     return {
+      temp: 'Popularity',
+      cat: '',
       user: '',
       cond: 'Popularity',
       addCat: '',
@@ -253,6 +261,7 @@ export default {
     axios.post('http://localhost:3000/subcategory/add', newSub)
       .then((response) => {
         //console.log(response);
+        // BUG POINT
         axios.get('http://localhost:3000/subcategory/getAll')
             .then((response) => {
               //console.log(response)
@@ -268,9 +277,8 @@ export default {
 },
 submitUp(question) {
   question.popular = question.popular + 1;
-  console.log(this.user);
+  //console.log(this.user);
   //console.log(newVote);
-    question: question,
   axios.post('http://localhost:3000/question/update', question)
     .then((response) => {
       //console.log(response);
@@ -278,6 +286,56 @@ submitUp(question) {
     .catch((error) => {
       console.log(error);
     });
+},
+update(){
+  console.log("update")
+  vm.$forceUpdate();
+},
+
+popUpdate(question){
+  this.cond = this.temp;
+  var i;
+  for (i= 0; i < question.length; i++) {
+    question[i].popular = question[i].popular + 1;
+    question[i].popular = question[i].popular - 1;
+  }
+  console.log("update pop")
+},
+
+alpUpdate(question){
+  this.cond = this.temp;
+  var i;
+  var a;
+  for (i= 0; i < question.length; i++) {
+    a = question[i].text;
+    question[i].text = 'a';
+    question[i].text = a;
+  }
+  console.log("update title")
+},
+
+oldUpdate(question){
+  this.cond = this.temp;
+  var i;
+  var a;
+  for (i= 0; i < question.length; i++) {
+    a = question[i].popular;
+    question[i].created_at = 'a';
+    question[i].created_at = a;
+  }
+  console.log("update old")
+},
+
+newUpdate(question){
+  this.cond = this.temp;
+  var i;
+  var a;
+  for (i= 0; i < question.length; i++) {
+    a = question[i].popular;
+    question[i].created_at = 'a';
+    question[i].created_at = a;
+  }
+  console.log("update new")
 },
 submitDown(question) {
   question.popular = question.popular - 1;
@@ -305,9 +363,12 @@ submitDown(question) {
     },
     sortByAlphabet: function() {
       function compare(a, b) {
-      if (a.question < b.question)
+      if (a.text < b.text)
+        console.log(a.text)
+        console.log(b.text)
         return -1;
-      if (a.question > b.question)
+      if (a.text > b.text)
+        console.log("more" + a.text > b.text)
         return 1;
       return 0;
       }
@@ -315,9 +376,9 @@ submitDown(question) {
     },
     sortByPop: function() {
       function compare(a, b) {
-      if (a.pop > b.pop)
+      if (a.popular > b.popular)
         return -1;
-      if (a.pop < b.pop)
+      if (a.popular < b.popular)
         return 1;
       return 0;
       }
@@ -325,7 +386,7 @@ submitDown(question) {
     },
     sortByDateEarly: function() {
       function compare(a, b) {
-      if (a.created_at < b.created_at)
+      if (a.created_at > b.created_at)
         return -1;
       if (a.created_at < b.created_at)
         return 1;
@@ -335,6 +396,8 @@ submitDown(question) {
     },
     sortByDateLate: function() {
       function compare(a, b) {
+        console.log(a)
+        console.log(b)
       if (a.created_at < b.created_at)
         return -1;
       if (a.created_at > b.created_at)
@@ -403,5 +466,137 @@ a {
 .margin {
   margin-right: 16px;
   margin-left: 12px
+}
+button {
+  font-family: "Montserrat", Futura, Helvetica, sans-serif;
+  ;
+  font-size: 1em;
+  color: #fff;
+  background-color: #3DC4A7;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 5px;
+  margin: 0px 0 0px 0;
+  transition: all .2s ease;
+}
+
+button:hover {
+  background-color: #FFDF00;
+}
+
+button:focus {
+  outline: 0;
+}
+
+#submit {
+  margin-left: 10px;
+}
+
+#red-btn,
+#blue-btn {
+  display: none;
+}
+
+input {
+  font-family: "Montserrat", Futura, Helvetica, sans-serif;
+  ;
+  font-size: 1.25em;
+  padding: 15px 30px;
+  background-color: #f4f4f4;
+  border: 1px solid #B3B3B3;
+  border-radius: 5px;
+  margin: 10px auto;
+  transition: all .25s ease;
+}
+
+input:focus {
+  outline: 0;
+  border: 1px solid #333;
+}
+
+h1 {
+  font-size: 4em;
+  margin-top: 7vh;
+}
+
+#disclaimer {
+  display: none;
+}
+
+#pick-color {
+  display: none;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 2px 0;
+  line-height: 1.5;
+}
+
+.circle {
+  position: relative;
+  display: inherit;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  margin: 3px 5px;
+  border: 3px solid #b3b3b3;
+  border-radius: 50%;
+  background-color: #fff;
+  vertical-align: center;
+  transition: all .1s ease;
+}
+
+.circle:hover,
+.circle:active {
+  border: 3px solid #797979;
+}
+
+.circle>p {
+  font-family: 'Inconsolata', Helvetica, Arial, sans-serif;
+  position: absolute;
+  font-size: 4em;
+  color: #fff;
+  top: 0px;
+  left: 15px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.circle-background-color-blue {
+  background-color: #4189C7;
+  border: 3px solid #4189C7;
+}
+
+.circle-background-color-blue:hover {
+  border: 3px solid #4189C7;
+}
+
+.circle-background-color-red {
+  background-color: #C73D47;
+  border: 3px solid #C73D47;
+}
+
+.circle-background-color-red:hover {
+  border: 3px solid #C73D47;
+}
+
+@media (max-width: 785px) {
+  #disclaimer {
+    display: inline;
+  }
+  .container {
+    padding-top: 5vh;
+  }
+  #title {
+    display: none;
+  }
+  .row {
+    display: none;
+  }
+  .buttons-row {
+    display: none;
+  }
 }
 </style>

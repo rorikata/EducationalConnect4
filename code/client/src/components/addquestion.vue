@@ -20,10 +20,10 @@
           <label class="pull-left">Answer</label>
           <input type="answer" class="form-control" placeholder="True/ False" v-model="Question.true_false" v-if="Question.checkMul === false">
           <div v-else>
-            <input type="answer" class="form-control" placeholder="Fake Answer 1" v-model="Question.mc_a">
-            <input type="answer" class="form-control" placeholder="Fake Answer 2" v-model="Question.mc_b">
-            <input type="answer" class="form-control" placeholder="Fake Answer 3" v-model="Question.mc_c">
-            <input type="answer" class="form-control" placeholder="Real Answer" v-model="Question.mc_ans">
+            <input type="answer" class="form-control" placeholder="Fake Answer 1" v-model="Question.multiple_choice.fake1">
+            <input type="answer" class="form-control" placeholder="Fake Answer 2" v-model="Question.multiple_choice.fake2">
+            <input type="answer" class="form-control" placeholder="Fake Answer 3" v-model="Question.multiple_choice.fake3">
+            <input type="answer" class="form-control" placeholder="Real Answer" v-model="Question.multiple_choice.ans">
           </div>
         </div>
       </div>
@@ -39,10 +39,12 @@ export default {
       Question: {
         text: '',
         checkMul: true,
-        mc_a: '',
-        mc_b: '',
-        mc_c: '',
-        mc_ans: '',
+        multiple_choice: {
+          fake1: '',
+          fake2: '',
+          fake3: '',
+          ans: ''
+        },
         true_false: ''
       },
       categories: [''],
@@ -57,13 +59,16 @@ export default {
       let newQ = {
         text: this.Question.text,
         checkMul: this.Question.checkMul,
-        fake1: this.Question.mc_a,
-        fake2: this.Question.mc_b,
-        fake3: this.Question.mc_c,
-        ans: this.Question.ans,
+        fake1: this.Question.multiple_choice.fake1,
+        fake2: this.Question.multiple_choice.fake2,
+        fake3: this.Question.multiple_choice.fake3,
+        ans: this.Question.multiple_choice.ans,
         true_false: this.Question.true_false,
         category_type: this.catNum,
-        subcategory_type: this.subCat
+        subcategory_type: this.subCat,
+        ansRight: 0,
+        totalAns: 0,
+        diff: 0
       }
       console.log(newQ)
       axios.post('http://localhost:3000/question/add', newQ)
@@ -125,5 +130,171 @@ li {
 }
 a {
   color: #42b983;
+}
+
+html {
+  font-family: "Montserrat", Futura, Helvetica, sans-serif;
+  text-align: center;
+  -webkit-font-smoothing: subpixel-antialiased;
+  color: #333;
+}
+
+#title {
+  cursor: pointer;
+}
+
+.container {
+  width: 670px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.buttons-row {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.row {
+  margin: 30px auto 7vh auto;
+  padding: 20px 10px;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+
+button {
+  font-family: "Montserrat", Futura, Helvetica, sans-serif;
+  ;
+  font-size: 1em;
+  color: #fff;
+  background-color: #3DC4A7;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 5px;
+  margin: 5px 0 5px 0;
+  transition: all .2s ease;
+}
+
+button:hover {
+  background-color: #FFDF00;
+}
+
+button:focus {
+  outline: 0;
+}
+
+#submit {
+  margin-left: 10px;
+}
+
+#red-btn,
+#blue-btn {
+  display: none;
+}
+
+input {
+  font-family: "Montserrat", Futura, Helvetica, sans-serif;
+  ;
+  font-size: 1.25em;
+  padding: 15px 30px;
+  background-color: #f4f4f4;
+  border: 1px solid #B3B3B3;
+  border-radius: 5px;
+  margin: 10px auto;
+  transition: all .25s ease;
+}
+
+input:focus {
+  outline: 0;
+  border: 1px solid #333;
+}
+
+h1 {
+  font-size: 4em;
+  margin-top: 7vh;
+}
+
+#disclaimer {
+  display: none;
+}
+
+#pick-color {
+  display: none;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 2px 0;
+  line-height: 1.5;
+}
+
+.circle {
+  position: relative;
+  display: inherit;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  margin: 3px 5px;
+  border: 3px solid #b3b3b3;
+  border-radius: 50%;
+  background-color: #fff;
+  vertical-align: center;
+  transition: all .25s ease;
+}
+
+.circle:hover,
+.circle:active {
+  border: 3px solid #797979;
+}
+
+.circle>p {
+  font-family: 'Inconsolata', Helvetica, Arial, sans-serif;
+  position: absolute;
+  font-size: 4em;
+  color: #fff;
+  top: 15px;
+  left: 15px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.circle-background-color-blue {
+  background-color: #4189C7;
+  border: 3px solid #4189C7;
+}
+
+.circle-background-color-blue:hover {
+  border: 3px solid #4189C7;
+}
+
+.circle-background-color-red {
+  background-color: #C73D47;
+  border: 3px solid #C73D47;
+}
+
+.circle-background-color-red:hover {
+  border: 3px solid #C73D47;
+}
+
+@media (max-width: 785px) {
+  #disclaimer {
+    display: inline;
+  }
+  .container {
+    padding-top: 5vh;
+  }
+  #title {
+    display: none;
+  }
+  .row {
+    display: none;
+  }
+  .buttons-row {
+    display: none;
+  }
 }
 </style>
