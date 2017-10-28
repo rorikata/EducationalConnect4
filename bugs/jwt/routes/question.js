@@ -29,10 +29,10 @@ router.route('/add')
             //console.log(typeof req.body.checkMul);
             if (req.body.checkMul === true) {
                 // multiple chose question
-                question.multiple_choice.fake1 = req.body.fake1;
-                question.multiple_choice.fake2 = req.body.fake2;
-                question.multiple_choice.fake3 = req.body.fake3;
-                question.multiple_choice.ans = req.body.ans;
+                question.multiple_choice.fake1 = req.body.multiple_choice.fake1;
+                question.multiple_choice.fake2 = req.body.multiple_choice.fake2;
+                question.multiple_choice.fake3 = req.body.multiple_choice.fake3;
+                question.multiple_choice.ans = req.body.multiple_choice.ans;
                 question.save(function(err, ques) {
                     if (err) {
                         return res.send(500);

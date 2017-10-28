@@ -790,7 +790,6 @@ $(document).ready(function() {
         $.ajax({
           url: 'http://localhost:3000/question/addReview',
           data: {'ids': review.ids, 'userId': userId},
-          contentType: "application/x-www-form-urlencoded",
           type: 'POST',
           dataType:"json",
           success: function() {
@@ -833,7 +832,6 @@ $(document).ready(function() {
         $.ajax({
           url: 'http://localhost:3000/question/addReview',
           data: {'ids': review.ids, 'userId': userId},
-          contentType: "application/x-www-form-urlencoded",
           type: 'POST',
           dataType:"json",
           success: function() {
@@ -873,7 +871,6 @@ $(document).ready(function() {
         $.ajax({
           url: 'http://localhost:3000/question/addReview',
           data: {'ids': review.ids, 'userId': userId},
-          contentType: "application/x-www-form-urlencoded",
           type: 'POST',
           dataType:"json",
           success: function() {
@@ -911,7 +908,6 @@ $(document).ready(function() {
         $.ajax({
           url: 'http://localhost:3000/question/addReview',
           data: {'ids': review.ids, 'userId': userId},
-          contentType: "application/x-www-form-urlencoded",
           type: 'POST',
           dataType:"json",
           success: function() {

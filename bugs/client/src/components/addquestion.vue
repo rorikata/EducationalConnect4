@@ -15,8 +15,8 @@
         </div>
         <div class="form-group">
           <!-- checkMul is boolean: 0 => true 1 => false  -->
-          <button type="button" v-on:click="Question.checkMul = false">T/F</button>
-          <button type="button"  v-on:click="Question.checkMul = true">M/C</button> </br></br>
+          <button type="button" v-on:click="Question.checkMul = true">T/F</button>
+          <button type="button"  v-on:click="Question.checkMul = false">M/C</button> </br></br>
           <label class="pull-left">Answer</label>
           <input type="answer" class="form-control" placeholder="True/ False" v-model="Question.true_false" v-if="Question.checkMul === false">
           <div v-else>
@@ -59,9 +59,9 @@ export default {
       let newQ = {
         text: this.Question.text,
         checkMul: this.Question.checkMul,
-        fake1: this.Question.multiple_choice.fake1,
-        fake2: this.Question.multiple_choice.fake2,
-        fake3: this.Question.multiple_choice.fake3,
+        fake1: this.Question.multiple_choice[0].fake1,
+        fake2: this.Question.multiple_choice[1].fake2,
+        fake3: this.Question.multiple_choice[2].fake3,
         ans: this.Question.multiple_choice.ans,
         true_false: this.Question.true_false,
         category_type: this.catNum,
