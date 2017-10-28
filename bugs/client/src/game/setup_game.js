@@ -18,7 +18,7 @@ $(document).ready(function() {
 
   var player_2 = {
 
-  	"mark_color" : "red",
+  	"mark_color" : "blue",
 
   	"data_name" : "Player 2",
 
@@ -120,7 +120,8 @@ $(document).ready(function() {
  			$one_player_btn.remove();
 
  			$question.html("What are your names?");
- 			two_players ();
+ 			//two_players ();
+        one_player ();
 
  		});
 
@@ -130,7 +131,8 @@ $(document).ready(function() {
  			$two_players_btn.remove();
  			$one_player_btn.remove();
  			$question.html("What is your name?");
- 			one_player ();
+ 			//one_player ();
+      two_players ();
 
  		});
 
@@ -255,8 +257,8 @@ $(document).ready(function() {
     }
   }
 
- 	var modal = document.getElementById('dialog');
- 	modal.style.display = "none";
+ 	//var modal = document.getElementById('dialog');
+ 	//modal.style.display = "none";
   //console.log(document.getElementById('two-players-btn'));
  	start_game ();
 
@@ -350,7 +352,7 @@ $(document).ready(function() {
     {
         text: f1button,
         click: function() { $(this).dialog('close');
-        	wrong.push(question);
+        	//wrong.push(question);
     	}
     },
 
@@ -358,14 +360,14 @@ $(document).ready(function() {
     {
         text: f2button,
         click: function() { $(this).dialog('close');
-        	wrong.push(question);
+        	//wrong.push(question);
     	}
     },
 
     {
         text: f3button,
         click: function() { $(this).dialog('close');
-        	wrong.push(question);
+        	//wrong.push(question);
     	}
     }
 
@@ -409,7 +411,7 @@ $(document).ready(function() {
         text: f2button,
 
         click: function() { $(this).dialog('close');
-        	wrong.push(question);
+        	//wrong.push(question);
 
     	}
     },
@@ -418,7 +420,7 @@ $(document).ready(function() {
         text: f3button,
 
         click: function() { $(this).dialog('close');
-        	wrong.push(question);
+        	//wrong.push(question);
     	}
     }
 
@@ -452,7 +454,7 @@ $(document).ready(function() {
     {
         text: f1button,
         click: function() { $(this).dialog('close');
-        	wrong.push(question);
+        	//wrong.push(question);
     	}
     },
 
@@ -460,14 +462,14 @@ $(document).ready(function() {
     {
         text: f2button,
         click: function() { $(this).dialog('close');
-        	wrong.push(question);
+        	//wrong.push(question);
     	}
     },
 
     {
         text: f3button,
         click: function() { $(this).dialog('close');
-        	wrong.push(question);
+        	//wrong.push(question);
     	}
     }
 
@@ -939,7 +941,7 @@ $(document).ready(function() {
   	 	// onclick, reload the window.
   		$("#play-again").click(function () {
   		//console.log("clicked");
-  		location.reload();
+  		//location.reload();
 
   	});
 
