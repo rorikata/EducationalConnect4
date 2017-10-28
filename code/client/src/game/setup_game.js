@@ -292,6 +292,7 @@ $(document).ready(function() {
 
 
   function make_move (position, new_classname, mark) {
+<<<<<<< HEAD
     //var modal = document.getElementById('dialog');
     //var button = modal.innerHTML;
     //console.log(button);
@@ -373,16 +374,40 @@ $(document).ready(function() {
     $("#question").text(qbutton);
 		$("#question").dialog({
 
+=======
+    var modal = document.getElementById('dialog');
+    var button = modal.innerHTML;
+
+    var qmodal = document.getElementById('question');
+    var qbutton = qmodal.innerHTML;
+
+    var amodal = document.getElementById('ans');
+    var abutton = amodal.innerHTML;
+
+    var f1modal = document.getElementById('fake1');
+    var f1button = f1modal.innerHTML;
+
+    var f2modal = document.getElementById('fake2');
+    var f2button = f2modal.innerHTML;
+
+    var f3modal = document.getElementById('fake3');
+ 	var f3button = f2modal.innerHTML;
+
+//var button1 = modal.innerHTML;
+//var button2 = 'Not Ok';  
+	if (mark === player_1.data_name) {
+		$("#question").dialog({
+    
     autoOpen: true,
     buttons: [
     {
         text: abutton,
-        click: function() { $(this).dialog("close");
-        player_2_moves.push(parseInt($(position).attr("data-value")));
+        click: function() { $(this).dialog("close"); 
+        player_1_moves.push(parseInt($(position).attr("data-value")));
 
 		$(position).addClass(new_classname);
 		$(position).attr("data-name", mark);
-
+            
             $(this).dialog("close");
     	}
     },
@@ -390,21 +415,119 @@ $(document).ready(function() {
 
     {
         text: f1button,
-        click: function() { $(this).dialog('close');
-        	wrong.push(question);
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
     	}
     },
 
 
     {
         text: f2button,
-        click: function() { $(this).dialog('close');
-        	wrong.push(question);
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
     	}
     },
 
     {
         text: f3button,
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    }
+
+] });
+
+/**{
+    
+        Yes: function() { 
+    	player_1_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+            
+            $(this).dialog("close"); 
+        },
+        No: function() { 
+            
+            $(this).dialog("close"); 
+
+        },
+        Maybe: function() { 
+            
+            alert("Maybe!"); 
+            $(this).dialog("close"); 
+        },
+
+        NoIdea: function() { 
+            
+            alert("Maybe!"); 
+            $(this).dialog("close"); 
+        }
+    
+    },
+    width: "800px"
+    
+});*/
+	var modal = document.getElementById('question');
+ 	modal.style.display = "block";
+		
+
+	} else if (mark === player_2.data_name) {
+
+		$("#question").dialog({
+    
+>>>>>>> 7d4962c6d493330dd04668af5e70974a1e9f63e2
+    autoOpen: true,
+    buttons: [
+    {
+        text: abutton,
+<<<<<<< HEAD
+        click: function() { $(this).dialog("close");
+=======
+        click: function() { $(this).dialog("close"); 
+>>>>>>> 7d4962c6d493330dd04668af5e70974a1e9f63e2
+        player_2_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+<<<<<<< HEAD
+
+=======
+            
+>>>>>>> 7d4962c6d493330dd04668af5e70974a1e9f63e2
+            $(this).dialog("close");
+    	}
+    },
+
+
+    {
+        text: f1button,
+<<<<<<< HEAD
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+=======
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+>>>>>>> 7d4962c6d493330dd04668af5e70974a1e9f63e2
+    	}
+    },
+
+
+    {
+        text: f2button,
+<<<<<<< HEAD
+        click: function() { $(this).dialog('close');
+        	wrong.push(question);
+=======
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+>>>>>>> 7d4962c6d493330dd04668af5e70974a1e9f63e2
+    	}
+    },
+
+    {
+        text: f3button,
+<<<<<<< HEAD
         click: function() { $(this).dialog('close');
         	wrong.push(question);
     	}
@@ -470,6 +593,73 @@ $(document).ready(function() {
 		$(position).addClass(new_classname);
 		$(position).attr("data-name", mark);
 
+=======
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    }
+
+] });
+
+	var modal = document.getElementById('question');
+ 	modal.style.display = "block";
+		
+
+
+	} else if (mark === player.data_name) {
+
+		
+		$("#question").dialog({
+    
+    autoOpen: true,
+    buttons: [
+    {
+        text: abutton,
+        click: function() { $(this).dialog("close"); 
+        player_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+            
+            $(this).dialog("close");
+    	}
+    },
+
+
+    {
+        text: f1button,
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    },
+
+
+    {
+        text: f2button,
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    },
+
+    {
+        text: f3button,
+        click: function() { $(this).dialog('close'); 
+        	wrong.push(qbutton);
+    	}
+    }
+
+] });
+	var modal = document.getElementById('question');
+ 	modal.style.display = "block";
+
+	} else if (mark === computer.data_name) {
+
+		computer_moves.push(parseInt($(position).attr("data-value")));
+
+		$(position).addClass(new_classname);
+		$(position).attr("data-name", mark);
+
+>>>>>>> 7d4962c6d493330dd04668af5e70974a1e9f63e2
 	}
 }
 
