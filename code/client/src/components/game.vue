@@ -25,6 +25,7 @@
     <div id="questions">
       {{sortByDiff}}
     </div>
+    <div id="user">{{user}}</div>
     <div id="question">
     </div>
   </div>
@@ -37,6 +38,7 @@
 
 <script>
 import axios from 'axios';
+import auth from '../auth/index';
 export default {
   name: 'hello',
   data() {
@@ -51,7 +53,8 @@ export default {
       subcategories: [''],
       categories: [''],
       sorted: [''],
-      incorrect: ['']
+      incorrect: [''],
+      user: ''
     }
   },
   methods: {
@@ -92,6 +95,7 @@ export default {
       .catch((error) => {
         console.log(error)
       })
+      auth.getUserData(this);
   }, //need another get for the subcategory questions are in
   computed: {
     filteredSubCats: function() {

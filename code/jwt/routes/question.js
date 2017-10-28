@@ -80,8 +80,38 @@ router.route('/get')
 router.route('/addReview')
     .post(function(req, res) {
         console.log(req.body);
-        console.log("HERE");
-        console.log(req.body.ids);
+        var userId = req.body.userId;
+        var reviews = req.body.ids;
+        User.findById(userId, function(err, user) {
+            console.log(user);
+            var newUser = user;
+            console.log('check');
+            console.log(newUser.reviews.length);
+            if(newUser.reviews.length !== 0) {
+                for(var i = 0; i < newUser.reviews.length; i++) {
+                    var exist = false;
+                    var num = 0;
+                    for(var j = 0; j < reviews.length; j++) {
+                        if(newUser.reviews[i] === reviews[j]) {
+                            exist = true;
+                            num = j;
+                        }
+                    }
+                    if(!exist) {
+                        newUser.reviews.push(reviews[num]);
+                    }
+                }
+            } else {
+                newUser.reviews = reviews;
+            }
+            console.log(newUser.reviews);
+            newUser.save(function(err, newU) {
+                if(err) {
+                    return res.send(500, err);
+                }
+                return res.json(newU);
+            })
+        })
     });
 
 router.route('/update')

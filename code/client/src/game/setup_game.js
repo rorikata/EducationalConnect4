@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
   var wrong = [''];
+  var userId = '';
 
   var player_1 = {
 
@@ -296,7 +297,11 @@ $(document).ready(function() {
     //var modal = document.getElementById('dialog');
     //var button = modal.innerHTML;
     //console.log(button);
-
+    var usermodal = document.getElementById('user');
+    var uobj = usermodal.innerHTML;
+    var userInfo = jQuery.parseJSON(uobj);
+    //console.log(userInfo._id);
+    userId = userInfo._id;
     var qmodal = document.getElementById('questions');
     var obj = qmodal.innerHTML;
     var questions = jQuery.parseJSON(obj);
@@ -784,7 +789,7 @@ $(document).ready(function() {
         //$.ajax({ url:url, type:"POST", data:data, contentType:"application/json", dataType:"json", success: function(){ ... } })
         $.ajax({
           url: 'http://localhost:3000/question/addReview',
-          data: {'ids': review.ids},
+          data: {'ids': review.ids, 'userId': userId},
           contentType: "application/x-www-form-urlencoded",
           type: 'POST',
           dataType:"json",
@@ -827,7 +832,7 @@ $(document).ready(function() {
         //$.ajax({ url:url, type:"POST", data:data, contentType:"application/json", dataType:"json", success: function(){ ... } })
         $.ajax({
           url: 'http://localhost:3000/question/addReview',
-          data: {'ids': review.ids},
+          data: {'ids': review.ids, 'userId': userId},
           contentType: "application/x-www-form-urlencoded",
           type: 'POST',
           dataType:"json",
@@ -867,7 +872,7 @@ $(document).ready(function() {
         //$.ajax({ url:url, type:"POST", data:data, contentType:"application/json", dataType:"json", success: function(){ ... } })
         $.ajax({
           url: 'http://localhost:3000/question/addReview',
-          data: {'ids': review.ids},
+          data: {'ids': review.ids, 'userId': userId},
           contentType: "application/x-www-form-urlencoded",
           type: 'POST',
           dataType:"json",
@@ -905,7 +910,7 @@ $(document).ready(function() {
         //$.ajax({ url:url, type:"POST", data:data, contentType:"application/json", dataType:"json", success: function(){ ... } })
         $.ajax({
           url: 'http://localhost:3000/question/addReview',
-          data: {'ids': review.ids},
+          data: {'ids': review.ids, 'userId': userId},
           contentType: "application/x-www-form-urlencoded",
           type: 'POST',
           dataType:"json",

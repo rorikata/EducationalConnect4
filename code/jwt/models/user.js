@@ -15,7 +15,8 @@ var UserSchema = new mongoose.Schema({
     },
     nickname: {
         type: String
-    }
+    },
+    reviews: [String]
 });
 
 // save the user's hashed password

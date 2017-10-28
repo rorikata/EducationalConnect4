@@ -31,7 +31,9 @@
 
                   <div class="modal-body">
                     <slot name="body">
-                      {{Wbody}}
+                      <li v-for="question in filteredQs">
+                               {{ question.text }}
+                           </li>
                     </slot>
                   </div>
 
@@ -47,7 +49,7 @@
             </div>
           </transition>
         </div>
-
+<!--
         <button  class="btn btn-large btn-block btn-success full-width" @click="showModal2 = true">Starred Questions</button></br></br>
         <div v-if="showModal2">
           <transition name="modal">
@@ -78,8 +80,8 @@
               </div>
             </div>
           </transition>
-        </div>
-
+      </div> -->
+<!--
         <button  class="btn btn-large btn-block btn-success full-width" @click="showModal3 = true">Ranking</button>
         <div v-if="showModal3">
           <transition name="modal">
@@ -110,7 +112,7 @@
               </div>
             </div>
           </transition>
-        </div>
+        </div>-->
       </div>
     </div>
     </div>
@@ -126,17 +128,15 @@
 
 <script>
 import axios from 'axios';
+import auth from '../auth/index';
 export default {
   data () {
     return {
-      Wbody: '',
-      Sbody: '',
-      Rbody: '',
       showNick: false,
       nickname: '',
       showModal1: false,
-      showModal2: false,
-      showModal3: false
+      user: '',
+      question: ['']
     }
   },
   methods: {
@@ -164,6 +164,29 @@ export default {
     submitNick() {
       this.showNick = false
     }
+  },
+  computed: {
+    filteredQs: function() {
+      return this.questions.filter((question) => {
+        for(var i = 0; i < this.user.reviews.length; i++) {
+          if(this.user.reviews[i] === question._id) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
+  },
+  created: function() {
+    axios.get('http://localhost:3000/question/get')
+          .then((response) => {
+            console.log( response.data)
+            this.questions = response.data;
+          })
+          .catch((error) => {
+            console.log(error)
+          });
+    auth.getUserData(this);
   }
 }
 </script>
