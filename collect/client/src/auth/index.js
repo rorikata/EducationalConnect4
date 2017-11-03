@@ -18,6 +18,7 @@ export default {
     },
 
     login(context, creds, redirect) {
+        localStorage.removeItem('token_id');
         axios.post(LOGIN_URL, creds)
             .then((response) => {
                 if(response.data.success === false) {
@@ -86,6 +87,7 @@ export default {
         axios.get(TOKEN_URL)
             .then((res) => {
                 //console.log(res.data);
+                console.log(res.data);
                 context.user = res.data;
             })
             .catch((error) => {

@@ -88,21 +88,44 @@ router.route('/addReview')
             console.log('check');
             console.log(newUser.reviews.length);
             if(newUser.reviews.length !== 0) {
-                for(var i = 0; i < newUser.reviews.length; i++) {
+                for(var i = 0; i < reviews.length; i++) {
                     var exist = false;
                     var num = 0;
-                    for(var j = 0; j < reviews.length; j++) {
-                        if(newUser.reviews[i] === reviews[j]) {
+                    console.log("reviews: " + reviews[i]);
+                    for(var j = 0; j < newUser.reviews.length; j++) {
+                        console.log("newUser.reviews: " + newUser.reviews[j] + " " + num);
+                        num = i;
+                        if(newUser.reviews[j] === reviews[i]) {
                             exist = true;
-                            num = j;
+                            break;
                         }
+
                     }
                     if(!exist) {
+                        console.log("pushed " + num);
                         newUser.reviews.push(reviews[num]);
                     }
                 }
             } else {
-                newUser.reviews = reviews;
+                newUser.reviews.push(reviews[0]);
+                for(var i = 0; i < reviews.length; i++) {
+                    var exist = false;
+                    var num = 0;
+                    console.log("reviews: " + reviews[i]);
+                    for(var j = 0; j < newUser.reviews.length; j++) {
+                        num = i;
+                        console.log("newUser.reviews: " + newUser.reviews[j] + " " + num);
+                        if(newUser.reviews[j] === reviews[i]) {
+                            exist = true;
+                            break;
+                        }
+
+                    }
+                    if(!exist) {
+                        console.log("pushed " + num);
+                        newUser.reviews.push(reviews[num]);
+                    }
+                }
             }
             console.log(newUser.reviews);
             newUser.save(function(err, newU) {

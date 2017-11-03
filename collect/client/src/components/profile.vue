@@ -168,9 +168,12 @@ export default {
   computed: {
     filteredQs: function() {
       return this.questions.filter((question) => {
-        for(var i = 0; i < this.user.reviews.length; i++) {
-          if(this.user.reviews[i] === question._id) {
-            return true;
+        //console.log(this.user.reviews);
+        if(this.user.reviews !== undefined) {
+          for(var i = 0; i < this.user.reviews.length; i++) {
+            if(String(this.user.reviews[i]) === String(question._id)) {
+              return true;
+            }
           }
         }
         return false;

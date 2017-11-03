@@ -74,10 +74,12 @@ module.exports = function(passport) {
 	// protect dashboard route with jwt
 	router.get('/authToken', passport.authenticate('jwt', { session: false}), function(req, res) {
 		//res.send('It worked! User id is: ' + req.user._id + '.');
+		console.log(req.user);
 		var user_info = {
 			nickname: ''
 		}
 		User.findById(req.user._id, function(err, user) {
+			//console.log(user);
 			if(err) {
 				res.send(err);
 			}

@@ -18,8 +18,22 @@
           <button type="button" v-on:click="Question.checkMul = false">T/F</button>
           <button type="button"  v-on:click="Question.checkMul = true">M/C</button> </br></br>
           <label class="pull-left">Answer</label>
-          <input type="answer" class="form-control" placeholder="True/ False" v-model="Question.true_false" v-if="Question.checkMul === false">
-          <div v-else>
+          <br>
+          <div v-if="Question.checkMul === false">
+          <table>
+            <tr>
+              <td>
+                <button v-if="Question.true_false !== true" v-on:click="Question.true_false = true">True</button>
+                <button class ="btn disabled" v-if="Question.true_false === true">True</button>
+              </td>
+              <td>
+                <button v-if="Question.true_false !== false" v-on:click="Question.true_false = false">False</button>
+                <button class ="btn disabled" v-if="Question.true_false === false">False</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+          <div v-if="Question.checkMul === true">
             <input type="answer" class="form-control" placeholder="Fake Answer 1" v-model="Question.multiple_choice.fake1">
             <input type="answer" class="form-control" placeholder="Fake Answer 2" v-model="Question.multiple_choice.fake2">
             <input type="answer" class="form-control" placeholder="Fake Answer 3" v-model="Question.multiple_choice.fake3">
@@ -51,7 +65,6 @@ export default {
       subcategories: [''],
       catNum: '',
       subCat: ''
-
     }
   },
   methods: {
@@ -131,29 +144,24 @@ li {
 a {
   color: #42b983;
 }
-
 html {
   font-family: "Montserrat", Futura, Helvetica, sans-serif;
   text-align: center;
   -webkit-font-smoothing: subpixel-antialiased;
   color: #333;
 }
-
 #title {
   cursor: pointer;
 }
-
 .container {
   width: 670px;
   margin: 0 auto;
   text-align: center;
 }
-
 .buttons-row {
   width: 100%;
   margin: 0 auto;
 }
-
 .row {
   margin: 30px auto 7vh auto;
   padding: 20px 10px;
@@ -164,7 +172,6 @@ html {
   -ms-user-select: none;
   /* IE10+ */
 }
-
 button {
   font-family: "Montserrat", Futura, Helvetica, sans-serif;
   ;
@@ -177,24 +184,19 @@ button {
   margin: 5px 0 5px 0;
   transition: all .2s ease;
 }
-
 button:hover {
   background-color: #FFDF00;
 }
-
 button:focus {
   outline: 0;
 }
-
 #submit {
   margin-left: 10px;
 }
-
 #red-btn,
 #blue-btn {
   display: none;
 }
-
 input {
   font-family: "Montserrat", Futura, Helvetica, sans-serif;
   ;
@@ -206,31 +208,25 @@ input {
   margin: 10px auto;
   transition: all .25s ease;
 }
-
 input:focus {
   outline: 0;
   border: 1px solid #333;
 }
-
 h1 {
   font-size: 4em;
   margin-top: 7vh;
 }
-
 #disclaimer {
   display: none;
 }
-
 #pick-color {
   display: none;
 }
-
 h2 {
   font-size: 1.5em;
   margin: 2px 0;
   line-height: 1.5;
 }
-
 .circle {
   position: relative;
   display: inherit;
@@ -244,12 +240,10 @@ h2 {
   vertical-align: center;
   transition: all .25s ease;
 }
-
 .circle:hover,
 .circle:active {
   border: 3px solid #797979;
 }
-
 .circle>p {
   font-family: 'Inconsolata', Helvetica, Arial, sans-serif;
   position: absolute;
@@ -261,25 +255,20 @@ h2 {
   margin: 0 auto;
   text-align: center;
 }
-
 .circle-background-color-blue {
   background-color: #4189C7;
   border: 3px solid #4189C7;
 }
-
 .circle-background-color-blue:hover {
   border: 3px solid #4189C7;
 }
-
 .circle-background-color-red {
   background-color: #C73D47;
   border: 3px solid #C73D47;
 }
-
 .circle-background-color-red:hover {
   border: 3px solid #C73D47;
 }
-
 @media (max-width: 785px) {
   #disclaimer {
     display: inline;
