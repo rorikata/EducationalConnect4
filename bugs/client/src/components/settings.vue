@@ -1,66 +1,35 @@
 <template>
   <div class="container" id="addquestion">
-      <div class="well">
-        <h4>Settings</h4>
-      </div>
-      <p v-if= "error1 === true"> {{msg1}}</p>
-      <button type="button" v-on:click="showGrid = true">Change Grid Size</button>
 
-      <form>
-      <input type="answer" class="form-control" placeholder="Grid Size" v-model="gridSize" v-if="showGrid === true">
-      <button type="button" class = "btn btn-large btn-block btn-success full-width" v-if= "showGrid === true" v-on:click="submitGrid">Submit</button> </br></br>
-    </form>
-
-    <p> Grid Size : {{gridSize}} </p>
-
-    <p v-if= "error2 === true"> {{msg2}}</p>
-    <button type="button" class = "btn btn-large btn-block btn-success full-width" v-on:click="showWin = true">Set Amount of blocks to connect to Win</button>
-
-    <form>
-    <input type="answer" class="form-control" placeholder="Win Number" v-model="winNum" v-if="showWin === true">
-    <button type="button" class = "btn btn-large btn-block btn-success full-width" v-if= "showWin === true" v-on:click="submitWin">Submit</button> </br></br>
-  </form>
-
-  <p> Blocks to connect to win: {{winNum}} </p>
-
-      <button @click="showModal = true">Rules Page</button> </br></br>
-
-      <div v-if="showModal">
-        <transition name="modal">
-          <div class="modal-mask">
-            <div class="modal-wrapper">
-              <div class="modal-container">
-
-                <div class="modal-header">
-                  <slot name="header">
-                    default header
-                  </slot>
-                </div>
-
-                <div class="modal-body">
-                  <slot name="body">
-                    default body
-                  </slot>
-                </div>
-
-                <div class="modal-footer">
-                  <slot name="footer">
-                    <button class="modal-default-button" @click="showModal = false">
-                      OK
-                    </button>
-                  </slot>
-                </div>
-              </div>
-            </div>
+    <section id="one" class="wrapper special">
+      <div class="inner">
+        <header class="major">
+          <h2>Rules</h2>
+        </header>
+        <div class="features">
+          <div class="feature">
+            <h3>Rule 1</h3>
+            <p>Select a Category and SubCategory</p>
           </div>
-        </transition>
+          <div class="feature">
+            <h3>Rule 2</h3>
+            <p>Pick an opponent, your friend or computer</p>
+          </div>
+          <div class="feature">
+            <h3>Rule 3</h3>
+            <p>Write your name(s) and start the game</p>
+          </div>
+          <div class="feature">
+            <h3>Rule 4</h3>
+            <p>Click to place a block, and answer correctly for the block to be placed</p>
+          </div>
+          <div class="feature">
+            <h3>Rule 5</h3>
+            <p>When someone wins, the opponent gets an extra question so both players get the same number of questions</p>
+          </div>
+        </div>
       </div>
-      <!-- use the modal component, pass in the prop -->
-      <button class="btn btn-large btn-block btn-success full-width" v-on:click="start">Start Game</button> </br></br>
-      <div class="alert alert-success" v-if="success">
-        <p>{{ success }}</p>
-      </div>
-
+    </section>
   </div>
 </template>
 
