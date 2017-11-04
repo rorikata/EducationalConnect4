@@ -8,11 +8,11 @@ var User = mongoose.model('User');
 
 router.route('/updateNickname')
     .post(function(req, res) {
-        console.log(req.body);
+        //console.log(req.body);
         var nickname = req.body.nickname;
         var userId = req.body.id;
         User.findById(userId, function(err, userData) {
-            console.log(userData);
+            //console.log(userData);
             var user = userData;
             user.nickname = nickname;
             user.save(function(err, user) {

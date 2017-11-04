@@ -449,6 +449,7 @@ export default {
         console.log(error)
       })
       //auth.getUserData(this);
+      //console.log(this.user);
     //console.log("hello");
 
   }

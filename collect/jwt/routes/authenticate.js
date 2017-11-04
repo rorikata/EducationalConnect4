@@ -24,7 +24,7 @@ module.exports = function(passport) {
 						password: req.body.password
 					});
 					// Attempt to save the new users
-					console.log('here');
+					//console.log('here');
 					newUser.save(function(err) {
 						if(err) {
 							res.json({ success: false, message: 'That email address already exists.'});
@@ -74,9 +74,9 @@ module.exports = function(passport) {
 	router.get('/authToken', passport.authenticate('jwt', { session: false}), function(req, res) {
 		//res.send('It worked! User id is: ' + req.user._id + '.');
 		//console.log(req.user);
-		var user_info = {
-			nickname: ''
-		}
+		//var user_info = {
+		//	nickname: ''
+		//}
 		User.findById(req.user._id, function(err, user) {
 			//console.log(user);
 			if(err) {

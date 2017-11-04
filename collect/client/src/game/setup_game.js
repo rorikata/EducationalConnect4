@@ -907,7 +907,7 @@ $(document).ready(function() {
         }
         console.log(review);
         //$.ajax({ url:url, type:"POST", data:data, contentType:"application/json", dataType:"json", success: function(){ ... } })
-        $.ajax({
+        /*$.ajax({
           url: 'http://localhost:3000/question/addReview',
           data: {'ids': review.ids, 'userId': userId},
           type: 'POST',
@@ -918,7 +918,7 @@ $(document).ready(function() {
           error: function() {
             console.log('error');
           }
-        });
+      });*/
         play_again ();
 
   	 	}, 500);

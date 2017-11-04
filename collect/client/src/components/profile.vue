@@ -203,7 +203,19 @@ export default {
           .catch((error) => {
             console.log(error)
           });
-    auth.getUserData(this);
+      var jwt = localStorage.getItem('token_id')
+      axios.defaults.headers.common['Authorization'] = localStorage.getItem('token_id');
+      axios.get('http://localhost:3000/auth/getReviews')
+          .then((res) => {
+              console.log(res);
+              //console.log(res.data);
+              //console.log("je;;p");
+              //console.log(res.data);
+              context.user = res.data;
+          })
+          .catch((error) => {
+              console.log(error);
+          })
   }
 }
 </script>

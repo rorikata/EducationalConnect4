@@ -79,21 +79,24 @@ router.route('/get')
 
 router.route('/addReview')
     .post(function(req, res) {
-        console.log(req.body);
+        //console.log(req.body);
         var userId = req.body.userId;
         var reviews = req.body.ids;
-        User.findById(userId, function(err, user) {
+        User.findOne(userId, function(err, user) {
             console.log(user);
             var newUser = user;
-            console.log('check');
-            console.log(newUser.reviews.length);
+            //console.log('check');
+            //console.log(newUser.reviews.length);
+            for(var i = 0; i < reviews.length; i++) {
+                newUser.reviews.push(reviews[i]);
+            }/*
             if(newUser.reviews.length !== 0) {
                 for(var i = 0; i < reviews.length; i++) {
                     var exist = false;
                     var num = 0;
                     console.log("reviews: " + reviews[i]);
                     for(var j = 0; j < newUser.reviews.length; j++) {
-                        console.log("newUser.reviews: " + newUser.reviews[j] + " " + num);
+                        //console.log("newUser.reviews: " + newUser.reviews[j] + " " + num);
                         num = i;
                         if(newUser.reviews[j] === reviews[i]) {
                             exist = true;
@@ -102,7 +105,7 @@ router.route('/addReview')
 
                     }
                     if(!exist) {
-                        console.log("pushed " + num);
+                        //console.log("pushed " + num);
                         newUser.reviews.push(reviews[num]);
                     }
                 }
@@ -111,10 +114,10 @@ router.route('/addReview')
                 for(var i = 0; i < reviews.length; i++) {
                     var exist = false;
                     var num = 0;
-                    console.log("reviews: " + reviews[i]);
+                //    console.log("reviews: " + reviews[i]);
                     for(var j = 0; j < newUser.reviews.length; j++) {
                         num = i;
-                        console.log("newUser.reviews: " + newUser.reviews[j] + " " + num);
+                    //    console.log("newUser.reviews: " + newUser.reviews[j] + " " + num);
                         if(newUser.reviews[j] === reviews[i]) {
                             exist = true;
                             break;
@@ -122,12 +125,12 @@ router.route('/addReview')
 
                     }
                     if(!exist) {
-                        console.log("pushed " + num);
+                    //    console.log("pushed " + num);
                         newUser.reviews.push(reviews[num]);
                     }
                 }
-            }
-            console.log(newUser.reviews);
+            }*/
+            //console.log(newUser.reviews);
             newUser.save(function(err, newU) {
                 if(err) {
                     return res.send(500, err);
@@ -137,14 +140,15 @@ router.route('/addReview')
         })
     });
 
+
 router.route('/update')
     .post(function(req, res) {
-        console.log(req.body);
-        console.log(req.body.popular);
+        //console.log(req.body);
+        //console.log(req.body.popular);
         var popular = req.body.popular;
         var questionId = req.body._id;
         Question.findById(questionId, function(err, q) {
-            console.log(q);
+            //console.log(q);
             var newQ = q;
             newQ.popular = popular;
             newQ.save(function(err, newQ) {

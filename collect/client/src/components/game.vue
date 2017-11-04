@@ -66,9 +66,9 @@ export default {
       this.catNum = 1;
       this.subCat = this.filteredSubCats[0].name;
       this.sel = 1;
-      console.log(this.catNum)
-      console.log(this.subCat)
-      console.log(this.sel)
+      //console.log(this.catNum)
+      //console.log(this.subCat)
+      //console.log(this.sel)
     },
     randomNumber: function() {
       return Math.floor((Math.random() * this.filteredQs.length) + 1);
