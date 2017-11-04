@@ -19,7 +19,7 @@
           <button type="button"  v-on:click="Question.checkMul = true">M/C</button> </br></br>
           <label class="pull-left">Answer</label>
           <br>
-          <div v-if="Question.checkMul === false">
+          <div v-if="Question.checkMul === true">
           <table>
             <tr>
               <td>
@@ -33,7 +33,7 @@
             </tr>
           </table>
         </div>
-          <div v-if="Question.checkMul === true">
+          <div v-if="Question.checkMul === false">
             <input type="answer" class="form-control" placeholder="Fake Answer 1" v-model="Question.multiple_choice.fake1">
             <input type="answer" class="form-control" placeholder="Fake Answer 2" v-model="Question.multiple_choice.fake2">
             <input type="answer" class="form-control" placeholder="Fake Answer 3" v-model="Question.multiple_choice.fake3">
@@ -41,7 +41,8 @@
           </div>
         </div>
       </div>
-      <button type="submit" v-on:click="submit()">Submit</button>
+        <button type="submit" v-on:click="submit()">Submit</button>
+
   </div>
 </template>
 
@@ -63,7 +64,7 @@ export default {
       },
       categories: [''],
       subcategories: [''],
-      catNum: '',
+      catNum: '0',
       subCat: ''
     }
   },
@@ -100,6 +101,9 @@ export default {
       });
     },
     filterSubcategory: function() {
+      if(this.catNum == 0){
+        return this.subcategories
+      }
       console.log(this.catNum);
       return this.subcategories.filter((subcategory) => {
         return subcategory.parentId == this.catNum;

@@ -21,8 +21,7 @@ module.exports = function(passport) {
 				if(!user) {
 					var newUser = new User({
 						email: req.body.email,
-						password: req.body.password,
-						nickname: req.body.nickname
+						password: req.body.password
 					});
 					// Attempt to save the new users
 					console.log('here');
@@ -74,7 +73,7 @@ module.exports = function(passport) {
 	// protect dashboard route with jwt
 	router.get('/authToken', passport.authenticate('jwt', { session: false}), function(req, res) {
 		//res.send('It worked! User id is: ' + req.user._id + '.');
-		console.log(req.user);
+		//console.log(req.user);
 		var user_info = {
 			nickname: ''
 		}

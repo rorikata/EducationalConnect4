@@ -1,15 +1,12 @@
 <template>
 <div id="app-home">
-  <h1 v-if="!user.authenticated">Need to Login</h1>
-  <div v-if="user.authenticated" class="container" id="addquestion">
+  <h1 v-if="!auth.authenticated">Need to Login</h1>
+  <div v-if="auth.authenticated" class="container" id="addquestion">
     <div class="well">
       <h4>Categories</h4>
       <select class="form-control" v-model="catNum">
-              <option v-for="category in categories" v-bind:value="category._id">{{category.name}} </option>
-        </select>
-      <div class="alert alert-danger" v-if="errorCategory">
-        <p>{{ errorCategory }}</p>
-      </div>
+                    <option v-for="category in categories" v-bind:value="category._id">{{category.name}} </option>
+              </select>
       <button class="btn btn-b btn-success" v-on:click="showAddCat = true">Add Category</button>
       <form>
         <br>
@@ -19,12 +16,10 @@
       <br>
 
       <select class="form-control" v-model="subCat">
-            <option v-for="subcategory in filteredSubCats">{{subcategory.name}} </option>
-          </select>
-      <div class="alert alert-danger" v-if="errorSubcategory">
-        <p>{{ errorSubcategory }}</p>
-      </div>
-      <button class="btn btn-b btn-success" v-on:click="showAddSub = true, addSub.parentId = catNum" v-if="catNum != -1">Add Subcategory</button>
+
+                  <option v-for="subcategory in filterSubcategory">{{subcategory.name}} </option>
+                </select>
+      <button class="btn btn-b btn-success" v-on:click="showAddSub = true, addSub.parentId = catNum" v-if="catNum != 0">Add Subcategory</button>
       <form>
         <br>
         <input type="answer" class="form-control" placeholder="Add Subcategory" v-model="addSub.name" v-if="showAddSub === true">
@@ -41,10 +36,10 @@
 
           <td>
             <select class="form-control" v-model="temp">
-            <option>Popularity</option>
-            <option>Date Oldest</option>
-            <option>Date Newest</option>
-          </select>
+                  <option>Popularity</option>
+                  <option>Date Oldest</option>
+                  <option>Date Newest</option>
+                </select>
           </td>
           <td>
             <button class="btn btn-large btn-block btn-success full-width" v-if="temp === 'Popularity'" v-on:click="popUpdate(sortByPop)"> OK </button>
@@ -71,7 +66,7 @@
             <tr>
               <td>
                 <button v-if="question.clickedUp ===0 && question.clickedDown ===1" class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
-                <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
+                <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 0">↑</button>
                 <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
               </td>
               <td>
@@ -81,7 +76,7 @@
             <tr>
               <td>
                 <button v-if="question.clickedDown ===0 && question.clickedUp ===1" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
-                <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
+                <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 0">↓</button>
                 <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
               </td>
               <td>
@@ -109,7 +104,7 @@
             <tr>
               <td>
                 <button v-if="question.clickedUp ===0 && question.clickedDown ===1" class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
-                <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
+                <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 0">↑</button>
                 <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
               </td>
               <td>
@@ -119,7 +114,7 @@
             <tr>
               <td>
                 <button v-if="question.clickedDown ===0 && question.clickedUp ===1" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
-                <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
+                <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 0">↓</button>
                 <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
               </td>
               <td>
@@ -147,7 +142,7 @@
             <tr>
               <td>
                 <button v-if="question.clickedUp ===0 && question.clickedDown ===1" class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
-                <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
+                <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 0">↑</button>
                 <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
               </td>
               <td>
@@ -157,7 +152,7 @@
             <tr>
               <td>
                 <button v-if="question.clickedDown ===0 && question.clickedUp ===1" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
-                <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
+                <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 0">↓</button>
                 <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
               </td>
               <td>
@@ -185,7 +180,7 @@
             <tr>
               <td>
                 <button v-if="question.clickedUp ===0 && question.clickedDown ===1" class="btn btn-success btn-up" v-on:click="submitUp(question), question.clickedDown = 0">↑</button>
-                <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 1">↑</button>
+                <button v-else-if="question.clickedUp ===0" class="btn btn-success btn-up" v-on:click="submitUp(question),question.clickedUp = 0">↑</button>
                 <button v-else-if="question.clickedUp ===1" class="btn btn-success btn-up disabled">↑</button>
               </td>
               <td>
@@ -195,7 +190,7 @@
             <tr>
               <td>
                 <button v-if="question.clickedDown ===0 && question.clickedUp ===1" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedUp = 0">↓</button>
-                <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 1">↓</button>
+                <button v-else-if="question.clickedDown ===0" class="btn btn-danger btn-down" v-on:click="submitDown(question), question.clickedDown = 0">↓</button>
                 <button v-else-if="question.clickedDown ===1" class="btn btn-danger btn-down disabled">↓</button>
               </td>
               <td>
@@ -218,64 +213,58 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      auth: auth.user,
+      catNum: 0,
+      subCat: '',
+      categories: [''],
+      subcategories: [''],
+      questions: [''],
+      true_false: true,
       temp: 'Popularity',
       cat: '',
       cond: 'Popularity',
       addCat: '',
-      catNum: 0,
       addSub: [{
         name: '',
         parentId: ''
       }],
       showAddCat: false,
       showAddSub: false,
-      subCat: '',
-      categories: [''],
-      subcategories: [''],
-      questions: [''],
       errorCategory: '',
       errorSubcategory: '',
-      user: auth.user,
-      true_false: true
+      user: ''
     }
   },
   methods: {
     submitCat() {
-      if (this.addCat !== '') {
-        var addCat = {
-          name: this.addCat
-        }
-        this.showAddCat = false
-        //console.log(name);
-        axios.post('http://localhost:3000/category/add', addCat)
-          .then((response) => {
-            if (response.data.success === false) {
-              this.errorCategory = response.data.message;
-            } else {
-              //console.log(response);
-              axios.get('http://localhost:3000/category/get')
-                .then((response) => {
-                  //console.log(response)
-                  this.errorCategory = '';
-                  this.categories = response.data;
-                })
-                .catch((error) => {
-                  //console.log(error)
-                  this.errorCategory = error;
-                })
-            }
-          })
-          .catch((error) => {
-            this.errorCategory = error;
-            //console.log(error);
-          });
-
-      } else {
-        this.errorCategory = "Please fill out the field";
+      var addCat = {
+        name: this.addCat
       }
+      this.showAddCat = false
+      //console.log(name);
+      axios.post('http://localhost:3000/category/add', addCat)
+        .then((response) => {
+          //console.log(response);
+          axios.get('http://localhost:3000/category/get')
+            .then((response) => {
+              //console.log(response)
+              this.errorCategory = '';
+              this.categories = response.data;
+            })
+            .catch((error) => {
+              //console.log(error)
+              this.errorCategory = error;
+            })
+
+        })
+        .catch((error) => {
+          this.errorCategory = error;
+          //console.log(error);
+        });
+
     },
     submitSub() {
-      if (this.addSub.name !== '') {
+      if (true) {
         console.log(this.addSub.parentId);
         var newSub = {
           name: this.addSub.name,
@@ -287,22 +276,20 @@ export default {
         //console.log(newSub);
         axios.post('http://localhost:3000/subcategory/add', newSub)
           .then((response) => {
-            if (response.data.success === false) {
-              this.errorSubcategory = response.data.message;
-            } else {
-              //console.log(response);
-              // BUG POINT
-              axios.get('http://localhost:3000/subcategory/getAll')
-                .then((response) => {
-                  //console.log(response)
-                  this.errorSubcategory = '';
-                  this.subcategories = response.data;
-                })
-                .catch((error) => {
-                  this.errorSubcategory = error;
-                  //console.log(error)
-                })
-            }
+
+            //console.log(response);
+            // BUG POINT
+            axios.get('http://localhost:3000/subcategory/getAll')
+              .then((response) => {
+                //console.log(response)
+                this.errorSubcategory = '';
+                this.subcategories = response.data;
+              })
+              .catch((error) => {
+                this.errorSubcategory = error;
+                //console.log(error)
+              })
+
           })
           .catch((error) => {
             //console.log(error);
@@ -314,7 +301,7 @@ export default {
       }
     },
     submitUp(question) {
-      question.popular = question.popular + 1;
+      question.popular = question.popular - 1;
       //console.log(this.user);
       //console.log(newVote);
       axios.post('http://localhost:3000/question/update', question)
@@ -376,7 +363,7 @@ export default {
       console.log("update new")
     },
     submitDown(question) {
-      question.popular = question.popular - 1;
+      question.popular = question.popular + 1;
       console.log(question.popular);
       //console.log(newVote);
       axios.post('http://localhost:3000/question/update', question)
@@ -389,41 +376,23 @@ export default {
     }
   },
   computed: {
-    filteredSubCats: function() {
-      if(this.catNum == 0){
-        return this.subcategories
-      }
-      return this.subcategories.filter((subcategory) => {
-        return subcategory.parentId === this.catNum;
-      });
-    },
-    filteredQs: function() {
+    filterQuestion: function() {
       return this.questions.filter((question) => {
         return question.subcategory_type === this.subCat;
       });
     },
-    sortByAlphabet: function() {
-      function compare(a, b) {
-        if (a.text < b.text)
-          console.log(a.text)
-        console.log(b.text)
-        return -1;
-        if (a.text > b.text)
-          console.log("more" + a.text > b.text)
-        return 1;
-        return 0;
-      }
-      return this.filteredQs.sort(compare)
+    filterSubcategory: function() {
+      return this.subcategories
     },
     sortByPop: function() {
       function compare(a, b) {
-        if (a.popular > b.popular)
-          return -1;
         if (a.popular < b.popular)
+          return -1;
+        if (a.popular > b.popular)
           return 1;
         return 0;
       }
-      return this.filteredQs.sort(compare)
+      return this.filterQuestion.sort(compare)
     },
     sortByDateEarly: function() {
       function compare(a, b) {
@@ -433,7 +402,7 @@ export default {
           return 1;
         return 0;
       }
-      return this.filteredQs.sort(compare)
+      return this.sortByPop.sort(compare)
     },
     sortByDateLate: function() {
       function compare(a, b) {
@@ -445,11 +414,14 @@ export default {
           return 1;
         return 0;
       }
-      return this.filteredQs.sort(compare)
+      return this.sortByPop.sort(compare)
     }
   },
   created: function() {
-    //auth.checkAuth();
+    auth.checkAuth();
+    //console.log(this.user.authenticated);
+    //if(this.user.authenticated === true) {
+    //console.log("yoyo" + this.user);
     axios.get('http://localhost:3000/category/get')
       .then((response) => {
         //console.log(response)
@@ -471,14 +443,18 @@ export default {
       .then((response) => {
         console.log(response.data)
         this.questions = response.data;
+        //console.log(this.user);
       })
       .catch((error) => {
         console.log(error)
       })
-    //auth.getUserData(this);
+      //auth.getUserData(this);
+    //console.log("hello");
+
   }
 }
 </script>
+
 
 <style scoped>
 h1,

@@ -8,15 +8,18 @@
       <div class="row profile">
 		  <div class="col-md-3">
       <div class="profile-sidebar">
+        <h4>Current nicname: {{user.nickname}}</h4>
       <div class="profile-userbuttons">
-        <button type="button"  v-on:click="showNick = true">Edit Nickname</button>
+        <h2 v-if="nick !== ''"> Nickname: {{nick}}asdf </h2>
+        <button type="button" class = "btn btn-large btn-success" v-on:click="showNick = true">Edit Nickname</button>
 
         <form>
-        <input type="answer" class="form-control" placeholder="Nickname" v-model="nickname" v-if="showNick === true">
-        <button type="button" class = "btn btn-large btn-block btn-success full-width" v-if= "showNick === true" v-on:click="submitNick">Submit</button> </br></br>
+
+        <input type="answer" class="form-control" placeholder="Nickname" v-model="nick" v-if="showNick === true">
+        <button type="button" class = "btn btn-large btn-block btn-success " v-if= "showNick === true" v-on:click="submitNick">Submit</button> </br></br>
       </form>
 
-        <button  class="btn btn-large btn-block btn-success full-width" @click="showModal1 = true">Wrong Questions</button></br></br>
+        <button  class="btn btn-large btn-success" @click="showModal1 = true">Wrong Questions</button></br></br>
         <div v-if="showModal1">
           <transition name="modal">
             <div class="modal-mask">
@@ -31,15 +34,13 @@
 
                   <div class="modal-body">
                     <slot name="body">
-                      <li v-for="question in filteredQs">
-                               {{ question.text }}
-                           </li>
+
                     </slot>
                   </div>
 
                   <div class="modal-footer">
                     <slot name="footer">
-                      <button class="modal-default-button" @click="showModal1 = false">
+                      <button class="btn btn-large btn-success" @click="showModal1 = false">
                         OK
                       </button>
                     </slot>
@@ -134,6 +135,7 @@ export default {
     return {
       showNick: false,
       nickname: '',
+      nick: '',
       showModal1: false,
       user: '',
       question: ['']
@@ -142,10 +144,10 @@ export default {
   methods: {
     getW () {
       let newUser = { //what to send?
-        email: this.User.email,
-        nickname: this.User.nickname,
-        password: this.User.password,
-        confirmation_password: this.User.confirmation_password
+        email: this.user.email,
+        nickname: this.user.nickname,
+        password: this.user.password,
+        confirmation_password: this.user.confirmation_password
       }
       console.log(newUser)
       axios.post('http://localhost:3000/users', newUser)
@@ -162,7 +164,19 @@ export default {
     getR() {
     },
     submitNick() {
-      this.showNick = false
+        var newUser = {
+            id: this.user._id,
+            nickname: this.nick
+        }
+        axios.post('http://localhost:3000/profile/updateNickname', newUser)
+          .then((response) => {
+            console.log(response)
+            auth.getUserData(this);
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        this.showNick = false;
     }
   },
   computed: {
@@ -196,6 +210,173 @@ export default {
 
 
 <style scoped>
+h1,
+h2 {
+  font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+
+.btn-up {
+  text-decoration: none;
+  display: block;
+  transition: 0.1s
+}
+
+.btn-down {
+  text-decoration: none;
+  display: block;
+  transition: 0.1s
+}
+
+.margin {
+  margin-right: 16px;
+  margin-left: 12px
+}
+
+button {
+  font-family: "Montserrat", Futura, Helvetica, sans-serif;
+  ;
+  font-size: 1em;
+  color: #fff;
+  background-color: #3DC4A7;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 5px;
+  margin: 0px 0 0px 0;
+  transition: all .2s ease;
+}
+
+button:hover {
+  background-color: #FFDF00;
+}
+
+button:focus {
+  outline: 0;
+}
+
+#submit {
+  margin-left: 10px;
+}
+
+#red-btn,
+#blue-btn {
+  display: none;
+}
+
+input {
+  font-family: "Montserrat", Futura, Helvetica, sans-serif;
+  ;
+  font-size: 1.25em;
+  padding: 15px 30px;
+  background-color: #f4f4f4;
+  border: 1px solid #B3B3B3;
+  border-radius: 5px;
+  margin: 10px auto;
+  transition: all .25s ease;
+}
+
+input:focus {
+  outline: 0;
+  border: 1px solid #333;
+}
+
+h1 {
+  font-size: 4em;
+  margin-top: 7vh;
+}
+
+#disclaimer {
+  display: none;
+}
+
+#pick-color {
+  display: none;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 2px 0;
+  line-height: 1.5;
+}
+
+.circle {
+  position: relative;
+  display: inherit;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  margin: 3px 5px;
+  border: 3px solid #b3b3b3;
+  border-radius: 50%;
+  background-color: #fff;
+  vertical-align: center;
+  transition: all .1s ease;
+}
+
+.circle:hover,
+.circle:active {
+  border: 3px solid #797979;
+}
+
+.circle>p {
+  font-family: 'Inconsolata', Helvetica, Arial, sans-serif;
+  position: absolute;
+  font-size: 4em;
+  color: #fff;
+  top: 0px;
+  left: 15px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.circle-background-color-blue {
+  background-color: #4189C7;
+  border: 3px solid #4189C7;
+}
+
+.circle-background-color-blue:hover {
+  border: 3px solid #4189C7;
+}
+
+.circle-background-color-red {
+  background-color: #C73D47;
+  border: 3px solid #C73D47;
+}
+
+.circle-background-color-red:hover {
+  border: 3px solid #C73D47;
+}
+
+@media (max-width: 785px) {
+  #disclaimer {
+    display: inline;
+  }
+  .container {
+    padding-top: 5vh;
+  }
+  #title {
+    display: none;
+  }
+  .row {
+    display: none;
+  }
+  .buttons-row {
+    display: none;
+  }
+}
 .modal-mask {
   position: fixed;
   z-index: 9998;
