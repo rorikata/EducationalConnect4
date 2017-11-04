@@ -131,7 +131,7 @@ $(document).ready(function() {
  			$two_players_btn.remove();
  			$one_player_btn.remove();
  			$question.html("What is your name?");
- 			//one_player ();
+ 			one_player ();
       two_players ();
 
  		});
