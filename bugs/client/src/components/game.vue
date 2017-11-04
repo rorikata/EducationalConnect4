@@ -18,8 +18,8 @@
     <button id="two-players-btn">With a Friend</button>
     <button id="one-player-btn">Bring on the Computer</button>
     <h2 id="pick-color"></h2>
-    <button id="red-btn">Hotter than the Sun</button>
-    <button id="blue-btn">Ice Cold</button>
+    <button id="red-btn">Blue</button>
+    <button id="blue-btn">Red</button>
   </div>
   <div id="dialog">
     <div id="questions">
