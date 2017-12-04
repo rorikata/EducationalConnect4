@@ -19,7 +19,7 @@
           <button type="button"  v-on:click="Question.checkMul = true">M/C</button> </br></br>
           <label class="pull-left">Answer</label>
           <br>
-          <div v-if="Question.checkMul === true">
+          <div v-if="Question.checkMul === false">
           <table>
             <tr>
               <td>
@@ -33,7 +33,7 @@
             </tr>
           </table>
         </div>
-          <div v-if="Question.checkMul === false">
+          <div v-if="Question.checkMul === true">
             <input type="answer" class="form-control" placeholder="Fake Answer 1" v-model="Question.multiple_choice.fake1">
             <input type="answer" class="form-control" placeholder="Fake Answer 2" v-model="Question.multiple_choice.fake2">
             <input type="answer" class="form-control" placeholder="Fake Answer 3" v-model="Question.multiple_choice.fake3">
@@ -41,7 +41,31 @@
           </div>
         </div>
       </div>
-        <button type="submit" v-on:click="submit()">Submit</button>
+      <div v-if="this.Question.checkMul === true">
+        <div v-if="this.Question.multiple_choice.ans !== ''">
+          <div v-if="this.subCat !== ''">
+            <div v-if="this.Question.multiple_choice.fake1 !== ''">
+              <div v-if="this.Question.multiple_choice.fake2 !== ''">
+                <div v-if="this.Question.multiple_choice.fake3 !== ''">
+                  <div v-if="this.Question.text !== ''">
+                    <button type="submit" v-on:click="submit()">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="this.Question.checkMul === false">
+        <div v-if="this.Question.true_false !== ''">
+          <div v-if="this.Question.text !== ''">
+            <div v-if="this.subCat !== ''">
+              <button type="submit" v-on:click="submit()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>

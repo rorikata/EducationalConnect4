@@ -19,14 +19,14 @@
     <button id="two-players-btn">With a Friend</button>
     <button id="one-player-btn">Bring on the Computer</button>
     <h2 id="pick-color"></h2>
-    <button id="red-btn">Blue</button>
-    <button id="blue-btn">Red</button>
+    <button id="red-btn">Hotter than the Sun</button>
+    <button id="blue-btn">Ice Cold</button>
   </div>
   <div id="dialog">
     <div id="questions">
       {{sortByDiff}}
     </div>
-    <div id="user">{{user}}</div>
+    <div id="user" style="display: none;">{{user}}</div>
     <div id="question">
     </div>
   </div>
@@ -51,8 +51,6 @@ export default {
       catNum: 0,
       num: 0,
       questions: [''],
-      subcategories: [''],
-      categories: [''],
       sorted: [''],
       incorrect: [''],
       user: ''
@@ -63,8 +61,8 @@ export default {
       this.sel = 1;
     },
     random: function() {
-      this.catNum = 1;
-      this.subCat = this.filteredSubCats[0].name;
+      this.catNum = Math.floor(Math.random()*this.categories.length);
+      this.subCat = this.filteredSubCats[Math.floor(Math.random()*this.filteredSubCats.length) - 1].name;
       this.sel = 1;
       //console.log(this.catNum)
       //console.log(this.subCat)
@@ -87,6 +85,7 @@ export default {
       .catch((error) => {
         console.log(error)
       })
+
     axios.get('http://localhost:3000/subcategory/getAll')
       .then((response) => {
         //console.log(response)
@@ -108,6 +107,9 @@ export default {
   computed: {
     filteredSubCats: function() {
       //console.log(this.categories)
+      if(this.catNum == 0){
+        return this.subcategories
+      }
       this.subCat = -1
       return this.subcategories.filter((subcategory) => {
         return subcategory.parentId === this.catNum;
@@ -140,18 +142,22 @@ html {
   -webkit-font-smoothing: subpixel-antialiased;
   color: #333;
 }
+
 #title {
   cursor: pointer;
 }
+
 .container {
   width: 670px;
   margin: 0 auto;
   text-align: center;
 }
+
 .buttons-row {
   width: 100%;
   margin: 0 auto;
 }
+
 .row {
   margin: 30px auto 7vh auto;
   padding: 20px 10px;
@@ -162,6 +168,7 @@ html {
   -ms-user-select: none;
   /* IE10+ */
 }
+
 button {
   font-family: "Montserrat", Futura, Helvetica, sans-serif;
   ;
@@ -174,19 +181,24 @@ button {
   margin: 20px 0 30px 0;
   transition: all .2s ease;
 }
+
 button:hover {
   background-color: #FFDF00;
 }
+
 button:focus {
   outline: 0;
 }
+
 #submit {
   margin-left: 10px;
 }
+
 #red-btn,
 #blue-btn {
   display: none;
 }
+
 input {
   font-family: "Montserrat", Futura, Helvetica, sans-serif;
   ;
@@ -198,25 +210,31 @@ input {
   margin: 10px auto;
   transition: all .25s ease;
 }
+
 input:focus {
   outline: 0;
   border: 1px solid #333;
 }
+
 h1 {
   font-size: 4em;
   margin-top: 7vh;
 }
+
 #disclaimer {
   display: none;
 }
+
 #pick-color {
   display: none;
 }
+
 h2 {
   font-size: 1.5em;
   margin: 10px 0;
   line-height: 1.5;
 }
+
 .circle {
   position: relative;
   display: inherit;
@@ -230,10 +248,12 @@ h2 {
   vertical-align: center;
   transition: all .25s ease;
 }
+
 .circle:hover,
 .circle:active {
   border: 3px solid #797979;
 }
+
 .circle>p {
   font-family: 'Inconsolata', Helvetica, Arial, sans-serif;
   position: absolute;
@@ -245,20 +265,25 @@ h2 {
   margin: 0 auto;
   text-align: center;
 }
+
 .circle-background-color-blue {
   background-color: #4189C7;
   border: 3px solid #4189C7;
 }
+
 .circle-background-color-blue:hover {
   border: 3px solid #4189C7;
 }
+
 .circle-background-color-red {
   background-color: #C73D47;
   border: 3px solid #C73D47;
 }
+
 .circle-background-color-red:hover {
   border: 3px solid #C73D47;
 }
+
 @media (max-width: 785px) {
   #disclaimer {
     display: inline;

@@ -18,7 +18,7 @@ $(document).ready(function() {
 
   var player_2 = {
 
-  	"mark_color" : "blue",
+  	"mark_color" : "red",
 
   	"data_name" : "Player 2",
 
@@ -120,8 +120,7 @@ $(document).ready(function() {
  			$one_player_btn.remove();
 
  			$question.html("What are your names?");
- 			//two_players ();
-        one_player ();
+ 			two_players ();
 
  		});
 
@@ -132,7 +131,6 @@ $(document).ready(function() {
  			$one_player_btn.remove();
  			$question.html("What is your name?");
  			one_player ();
-      two_players ();
 
  		});
 
@@ -257,8 +255,8 @@ $(document).ready(function() {
     }
   }
 
- 	//var modal = document.getElementById('dialog');
- 	//modal.style.display = "none";
+ 	var modal = document.getElementById('dialog');
+ 	modal.style.display = "none";
   //console.log(document.getElementById('two-players-btn'));
  	start_game ();
 
@@ -324,8 +322,8 @@ $(document).ready(function() {
     } else {
       abutton = String(questions[random].true_false);
       f1button = String(!questions[random].true_false);
-      f2button = 'N/A';
- 	    f3button = 'N/A';
+      f2button = '';
+ 	    f3button = '';
     }
 
 //var button1 = modal.innerHTML;
@@ -347,12 +345,10 @@ $(document).ready(function() {
             $(this).dialog("close");
     	}
     },
-
-
     {
         text: f1button,
         click: function() { $(this).dialog('close');
-        	//wrong.push(question);
+        	wrong.push(question);
     	}
     },
 
@@ -360,14 +356,14 @@ $(document).ready(function() {
     {
         text: f2button,
         click: function() { $(this).dialog('close');
-        	//wrong.push(question);
+        	wrong.push(question);
     	}
     },
 
     {
         text: f3button,
         click: function() { $(this).dialog('close');
-        	//wrong.push(question);
+        	wrong.push(question);
     	}
     }
 
@@ -411,7 +407,7 @@ $(document).ready(function() {
         text: f2button,
 
         click: function() { $(this).dialog('close');
-        	//wrong.push(question);
+        	wrong.push(question);
 
     	}
     },
@@ -420,7 +416,7 @@ $(document).ready(function() {
         text: f3button,
 
         click: function() { $(this).dialog('close');
-        	//wrong.push(question);
+        	wrong.push(question);
     	}
     }
 
@@ -454,7 +450,7 @@ $(document).ready(function() {
     {
         text: f1button,
         click: function() { $(this).dialog('close');
-        	//wrong.push(question);
+        	wrong.push(question);
     	}
     },
 
@@ -462,14 +458,14 @@ $(document).ready(function() {
     {
         text: f2button,
         click: function() { $(this).dialog('close');
-        	//wrong.push(question);
+        	wrong.push(question);
     	}
     },
 
     {
         text: f3button,
         click: function() { $(this).dialog('close');
-        	//wrong.push(question);
+        	wrong.push(question);
     	}
     }
 
@@ -789,18 +785,21 @@ $(document).ready(function() {
         }
         console.log(review);
         //$.ajax({ url:url, type:"POST", data:data, contentType:"application/json", dataType:"json", success: function(){ ... } })
-        $.ajax({
-          url: 'http://localhost:3000/question/addReview',
-          data: {'ids': review.ids, 'userId': userId},
-          type: 'POST',
-          dataType:"json",
-          success: function() {
-            console.log('success');
-          },
-          error: function() {
-            console.log('error');
-          }
-        });
+        if(reviews.ids.length !== undefined) {
+            $.ajax({
+              url: 'http://localhost:3000/question/addReview',
+              data: {'ids': review.ids, 'userId': userId},
+              contentType: "application/x-www-form-urlencoded",
+              type: 'POST',
+              dataType:"json",
+              success: function() {
+                console.log('success');
+              },
+              error: function() {
+                console.log('error');
+              }
+            });
+        }
         //$.post("http://localhost:3000/question/addReview", review);
         play_again ();
 
@@ -831,18 +830,21 @@ $(document).ready(function() {
         }
         console.log(review);
         //$.ajax({ url:url, type:"POST", data:data, contentType:"application/json", dataType:"json", success: function(){ ... } })
-        $.ajax({
-          url: 'http://localhost:3000/question/addReview',
-          data: {'ids': review.ids, 'userId': userId},
-          type: 'POST',
-          dataType:"json",
-          success: function() {
-            console.log('success');
-          },
-          error: function() {
-            console.log('error');
-          }
-        });
+        if(reviews.ids.length !== undefined) {
+            $.ajax({
+              url: 'http://localhost:3000/question/addReview',
+              data: {'ids': review.ids, 'userId': userId},
+              contentType: "application/x-www-form-urlencoded",
+              type: 'POST',
+              dataType:"json",
+              success: function() {
+                console.log('success');
+              },
+              error: function() {
+                console.log('error');
+              }
+            });
+        }
         play_again ();
 
    		}, 500);
@@ -870,18 +872,21 @@ $(document).ready(function() {
         }
         console.log(review);
         //$.ajax({ url:url, type:"POST", data:data, contentType:"application/json", dataType:"json", success: function(){ ... } })
-        $.ajax({
-          url: 'http://localhost:3000/question/addReview',
-          data: {'ids': review.ids, 'userId': userId},
-          type: 'POST',
-          dataType:"json",
-          success: function() {
-            console.log('success');
-          },
-          error: function() {
-            console.log('error');
-          }
-        });
+        if(reviews.ids.length !== undefined) {
+          $.ajax({
+            url: 'http://localhost:3000/question/addReview',
+            data: {'ids': review.ids, 'userId': userId},
+            contentType: "application/x-www-form-urlencoded",
+            type: 'POST',
+            dataType:"json",
+            success: function() {
+              console.log('success');
+            },
+            error: function() {
+              console.log('error');
+            }
+          });
+        }
         play_again ();
 
   	 	}, 500);
@@ -907,18 +912,21 @@ $(document).ready(function() {
         }
         console.log(review);
         //$.ajax({ url:url, type:"POST", data:data, contentType:"application/json", dataType:"json", success: function(){ ... } })
-        /*$.ajax({
-          url: 'http://localhost:3000/question/addReview',
-          data: {'ids': review.ids, 'userId': userId},
-          type: 'POST',
-          dataType:"json",
-          success: function() {
-            console.log('success');
-          },
-          error: function() {
-            console.log('error');
-          }
-      });*/
+        if(reviews.ids.length !== undefined) {
+          $.ajax({
+            url: 'http://localhost:3000/question/addReview',
+            data: {'ids': review.ids, 'userId': userId},
+            contentType: "application/x-www-form-urlencoded",
+            type: 'POST',
+            dataType:"json",
+            success: function() {
+              console.log('success');
+            },
+            error: function() {
+              console.log('error');
+            }
+          });
+        }
         play_again ();
 
   	 	}, 500);
@@ -941,7 +949,7 @@ $(document).ready(function() {
   	 	// onclick, reload the window.
   		$("#play-again").click(function () {
   		//console.log("clicked");
-  		//location.reload();
+  		location.reload();
 
   	});
 

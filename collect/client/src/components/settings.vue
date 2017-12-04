@@ -9,18 +9,23 @@
         <div class="features">
           <div class="feature">
             <h3>Rule 1</h3>
+            <p>Select a Category and SubCategory</p>
           </div>
           <div class="feature">
             <h3>Rule 2</h3>
+            <p>Pick an opponent, your friend or computer</p>
           </div>
           <div class="feature">
             <h3>Rule 3</h3>
+            <p>Write your name(s) and start the game</p>
           </div>
           <div class="feature">
             <h3>Rule 4</h3>
+            <p>Click to place a block, and answer correctly for the block to be placed</p>
           </div>
           <div class="feature">
             <h3>Rule 5</h3>
+            <p>When someone wins, the opponent gets an extra question so both players get the same number of questions</p>
           </div>
         </div>
       </div>

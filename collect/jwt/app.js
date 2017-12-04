@@ -17,7 +17,7 @@ var autoIncrement = require('mongoose-auto-increment');
 
 var connection = mongoose.connect(config.database);
 autoIncrement.initialize(connection);
-
+ 
 // routes
 var index = require('./routes/index');
 var authenticate = require('./routes/authenticate')(passport);
